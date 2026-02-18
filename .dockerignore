@@ -1,0 +1,25 @@
+# .dockerignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.venv
+
+# Git
+-.git        
++.gitignore
+-# .gitattributes 
+
+# Docker
+-Dockerfile
+.dockerignore
+
+
+# Fichiers spécifiques à l'OS ou à l'éditeur
+.DS_Store
+Thumbs.db
+*.swp

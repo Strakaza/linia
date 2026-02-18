@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linia — Créateur d'Itinéraire</title>
+    <meta name="description" content="Créez votre itinéraire de bus étape par étape avec Linia.">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
+    <script src="{{ url_for('static', filename='i18n.js') }}"></script>
+</head>
+
+<body>
+    <div class="planner-page">
+        
+        <svg style="width:0;height:0;position:absolute;">
+            <defs>
+                <linearGradient id="mixedGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#73d700;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#0070d2;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+        <div id="plannerMap"></div>
+        <a href="/" class="linia-nav-btn nav-btn-home">
+            <div class="icon-circle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </div>
+            <div class="btn-label" data-i18n="nav_home">Accueil</div>
+        </a>
+        <div class="planner-sidebar" id="plannerSidebar">
+            <div class="planner-sidebar-header">
+                <h2 data-i18n="itinerary_title">Mon Itinéraire</h2>
+                <div class="planner-sidebar-actions">
+                    <button class="planner-btn planner-btn-ghost" id="undoBtn" title="Retirer la dernière étape"
+                        data-i18n-title="btn_undo" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="1 4 1 10 7 10"></polyline>
+                            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                        </svg>
+                    </button>
+                    <button class="planner-btn planner-btn-ghost" id="resetBtn" title="Tout effacer"
+                        data-i18n-title="btn_reset" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="planner-sidebar-body" id="plannerTimeline">
+                <div class="planner-empty-state">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                        stroke-linecap="round" stroke-linejoin="round" style="opacity:0.3; margin-bottom:12px;">
+                        <circle cx="12" cy="10" r="3"></circle>
+                        <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"></path>
+                    </svg>
+                    <p data-i18n="planner_empty">Recherchez une ville pour commencer votre itinéraire</p>
+                </div>
+            </div>
+            <div class="planner-disclaimer">
+                <div class="disclaimer-header">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <strong data-i18n="disclaimer_title">Note d'information</strong>
+                </div>
+                <p data-i18n="disclaimer_text"></p>
+            </div>
+            <div class="planner-sidebar-footer" id="plannerFooter">
+                <input type="file" id="loadItineraryInput" accept=".json" style="display: none;">
+                <button id="loadBtn" class="planner-footer-btn" title="Charger un itinéraire"
+                    data-i18n-title="btn_load">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span data-i18n="btn_load">Charger</span>
+                </button>
+                <button id="saveBtn" class="planner-footer-btn" title="Sauvegarder l'itinéraire"
+                    data-i18n-title="btn_save">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    <span data-i18n="btn_save">Sauvegarder</span>
+                </button>
+                <div class="planner-footer-divider"></div>
+                <button class="linia-btn-premium" id="generatePdfBtn" style="width: 100%;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                    <span data-i18n="btn_pdf">Générer le PDF</span>
+                </button>
+            </div>
+        </div>
+        <div class="planner-search-container" id="plannerSearchContainer">
+            <div class="planner-search-wrapper">
+                <input type="text" class="planner-search-bar" id="plannerSearchInput"
+                    placeholder="Rechercher une ville de départ..." data-i18n-placeholder="search_start"
+                    autocomplete="off">
+                <svg class="planner-search-icon" id="plannerSearchIcon" width="18" height="18" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <div class="spinner planner-search-spinner" id="plannerSearchSpinner" style="display:none;"></div>
+            </div>
+            <div class="planner-suggestions" id="plannerSuggestions"></div>
+        </div>
+        <div class="planner-connected-panel" id="connectedPanel">
+            <div class="planner-connected-header">
+                <div>
+                    <h3 id="connectedTitle" data-i18n="connected_cities">Villes connectées</h3>
+                    <span id="connectedSubtitle" class="planner-connected-subtitle"></span>
+                </div>
+                <button class="planner-connected-close" id="connectedClose" title="Fermer"
+                    data-i18n-title="btn_close">&times;</button>
+            </div>
+            <div class="planner-connected-search">
+                <input type="text" id="connectedSearchInput" placeholder="🔍 Filtrer les villes..."
+                    data-i18n-placeholder="filter_cities">
+            </div>
+            <div class="planner-connected-body" id="connectedBody">
+            </div>
+        </div>
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div>
+            <span id="loadingText" data-i18n="loading">Chargement...</span>
+        </div>
+        <footer class="app-footer"
+            style="position: absolute; bottom: 0; padding: 12px; font-size: 11px; pointer-events: none; z-index: 10000;">
+            <p style="margin-bottom: 4px;" data-i18n="footer_signature">"Страказа жывая"</p>
+            <div class="color-bar-signature" style="max-width: 150px;"></div>
+        </footer>
+        <nav class="bottom-nav">
+            <a href="/" class="bottom-nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span data-i18n="nav_home">Accueil</span>
+            </a>
+            <a href="/planner" class="bottom-nav-item active">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="6" cy="19" r="3"></circle>
+                    <path d="M9 19h8.5a3.5 3.5 0 1 0 0-7h-11a3.5 3.5 0 1 1 0-7H15"></path>
+                    <circle cx="18" cy="5" r="3"></circle>
+                </svg>
+                <span data-i18n="nav_itinerary">Itinéraire</span>
+            </a>
+            <a href="/about" class="bottom-nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span data-i18n="nav_info">Info</span>
+            </a>
+        </nav>
+    </div>
+    <div id="toastContainer" class="toast-container"></div>
+    <script>window.L_DISABLE_3D = true;</script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="{{ url_for('static', filename='planner.js') }}"></script>
+</body>
+
+</html>

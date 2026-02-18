@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linia — Explorez les lignes de bus</title>
+    <meta name="description"
+        content="Linia vous permet de visualiser les lignes de bus Flixbus et BlaBlaCar sur une carte interactive.">
+    <meta name="theme-color" content="#34a853">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
+    <script src="{{ url_for('static', filename='i18n.js') }}"></script>
+</head>
+
+<body>
+    <div class="landing-page">
+        <div id="landingMap" class="landing-map-bg"></div>
+        <div class="landing-map-overlay"></div>
+        <div class="landing-content">
+            <div class="landing-text-block">
+                <div class="welcome-line">
+                    <span class="cycling-text" id="cyclingText" data-i18n="welcome">Bienvenue sur</span>
+                </div>
+                <h1 class="brand-name"><span class="highlight">Linia</span></h1>
+            </div>
+            <div class="landing-search-container">
+                <div class="landing-search-wrapper">
+                    <button class="lang-switcher-btn" id="langSwitcher" title="Changer la langue">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                    </button>
+                    <input type="text" class="landing-search-bar" id="landingSearchInput"
+                        placeholder="D'où voulez vous partir ?" data-i18n-placeholder="search_placeholder"
+                        autocomplete="off">
+                    <svg class="landing-search-icon" id="landingSearchIcon" width="20" height="20" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <div class="spinner landing-search-spinner" id="landingSearchSpinner" style="display:none;"></div>
+                </div>
+                <div class="landing-suggestions" id="landingSuggestions"></div>
+            </div>
+            <div class="landing-actions">
+                <a href="/planner" class="planner-launch-btn landing-action-btn linia-btn-premium">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="10" r="3"></circle>
+                        <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"></path>
+                    </svg>
+                    <span data-i18n="btn_planner">Créer un itinéraire</span>
+                </a>
+                <a href="/about" class="how-it-works-btn landing-action-btn linia-btn-premium">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span data-i18n="btn_how">Fonctionnement de l'application</span>
+                </a>
+            </div>
+            <div class="mobile-landing-extras">
+                <div class="mobile-section-header">
+                    <h3 data-i18n="recent_searches">Recherches récentes</h3>
+                </div>
+                <div class="mobile-recents-list" id="recentSearchesList">
+                </div>
+            </div>
+            <nav class="bottom-nav">
+                <a href="/" class="bottom-nav-item active">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span data-i18n="nav_home">Accueil</span>
+                </a>
+                <a href="/planner" class="bottom-nav-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="6" cy="19" r="3"></circle>
+                        <path d="M9 19h8.5a3.5 3.5 0 1 0 0-7h-11a3.5 3.5 0 1 1 0-7H15"></path>
+                        <circle cx="18" cy="5" r="3"></circle>
+                    </svg>
+                    <span data-i18n="nav_itinerary">Itinéraire</span>
+                </a>
+                <a href="/about" class="bottom-nav-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span data-i18n="nav_info">Info</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+    <footer
+        style="position: absolute; bottom: 0; left: 0; right: 0; padding: 24px; text-align: center; pointer-events: none; z-index: 10;">
+        <div class="landing-disclaimer"
+            style="max-width: 600px; margin: 0 auto 12px; font-size: 11px; opacity: 0.6; pointer-events: auto;">
+            <p data-i18n="disclaimer_text"></p>
+        </div>
+        <p data-i18n="footer_signature">"Страказа жывая"</p>
+        <div class="color-bar-signature"></div>
+    </footer>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cities = [
+                { name: "'s-Hertogenbosch", center: [51.69917, 5.30417] },
+                { name: "A Coruña", center: [43.37135, -8.396] },
+                { name: "Aachen", center: [50.77664, 6.08342] },
+                { name: "Aalborg", center: [57.048, 9.9187] },
+                { name: "Aberdeen", center: [57.14369, -2.09814] },
+                { name: "Acilia-Castel Fusano-Ostia Antica", center: [41.76337, 12.33078] },
+                { name: "Adana", center: [36.98615, 35.32531] },
+                { name: "Adapazarı", center: [40.78056, 30.40333] },
+                { name: "Adıyaman", center: [37.76441, 38.27629] },
+                { name: "Afyonkarahisar", center: [38.75667, 30.54333] },
+                { name: "Aix-en-Provence", center: [43.5283, 5.44973] },
+                { name: "Aksaray", center: [38.37255, 34.02537] },
+                { name: "Alanya", center: [36.54375, 31.99982] },
+                { name: "Albacete", center: [38.99424, -1.85643] },
+                { name: "Alcalá de Henares", center: [40.48205, -3.35996] },
+                { name: "Alchevsk", center: [48.46893, 38.81669] },
+                { name: "Alcobendas", center: [40.54746, -3.64197] },
+                { name: "Alcorcón", center: [40.34582, -3.82487] },
+                { name: "Algeciras", center: [36.13326, -5.45051] },
+                { name: "Alicante", center: [38.34517, -0.48149] },
+                { name: "Almere Stad", center: [52.37025, 5.21413] },
+                { name: "Almería", center: [36.83814, -2.45974] },
+                { name: "Altona", center: [53.55, 9.93333] },
+                { name: "Amadora", center: [38.75382, -9.23083] },
+                { name: "Amasya", center: [40.65333, 35.83306] },
+                { name: "Amersfoort", center: [52.155, 5.3875] },
+                { name: "Amiens", center: [49.9, 2.3] },
+                { name: "Amsterdam", center: [52.37403, 4.88969] },
+                { name: "Anderlecht", center: [50.83619, 4.31454] },
+                { name: "Angers", center: [47.47156, -0.55202] },
+                { name: "Ankara", center: [39.91987, 32.85427] },
+                { name: "Antakya", center: [36.20655, 36.15722] },
+                { name: "Antalya", center: [36.90812, 30.69556] },
+                { name: "Antwerpen", center: [51.22047, 4.40026] },
+                { name: "Apeldoorn", center: [52.21, 5.96944] },
+                { name: "Arad", center: [46.18333, 21.31667] },
+                { name: "Archway", center: [51.56733, -0.13415] },
+                { name: "Arezzo", center: [43.46276, 11.88068] },
+                { name: "Arganzuela", center: [40.40021, -3.69618] },
+                { name: "Argenteuil", center: [48.94788, 2.24744] },
+                { name: "Arnavutköy", center: [41.18355, 28.7402] },
+                { name: "Arnhem", center: [51.98, 5.91111] },
+                { name: "Ataşehir", center: [40.9833, 29.1167] },
+                { name: "Athens", center: [37.98376, 23.72784] },
+                { name: "Augsburg", center: [48.37154, 10.89851] },
+                { name: "Aydın", center: [37.84501, 27.83963] },
+                { name: "Ağrı", center: [39.71467, 43.04015] },
+                { name: "Bacău", center: [46.56718, 26.91384] },
+                { name: "Badajoz", center: [38.87789, -6.97061] },
+                { name: "Badalona", center: [41.45004, 2.24741] },
+                { name: "Bahçelievler", center: [41.00231, 28.8598] },
+                { name: "Baia Mare", center: [47.65729, 23.56808] },
+                { name: "Balıkesir", center: [39.64917, 27.88611] },
+                { name: "Bandırma", center: [40.35222, 27.97667] },
+                { name: "Banja Luka", center: [44.77842, 17.19386] },
+                { name: "Barakaldo", center: [43.29639, -2.98813] },
+                { name: "Barcelona", center: [41.38879, 2.15899] },
+                { name: "Bari", center: [41.12066, 16.86982] },
+                { name: "Basel", center: [47.55839, 7.57327] },
+                { name: "Basildon", center: [51.56844, 0.45782] },
+                { name: "Basingstoke", center: [51.26249, -1.08708] },
+                { name: "Bath", center: [51.3751, -2.36172] },
+                { name: "Batikent", center: [39.96833, 32.73083] },
+                { name: "Batman", center: [37.88738, 41.13221] },
+                { name: "Bağcılar", center: [41.03903, 28.85671] },
+                { name: "Başakşehir", center: [41.106, 28.791] },
+                { name: "Bedford", center: [52.13459, -0.46632] },
+                { name: "Belfast", center: [54.59682, -5.92541] },
+                { name: "Belgrade", center: [44.80401, 20.46513] },
+                { name: "Bemowo", center: [52.2546, 20.90844] },
+                { name: "Bender", center: [46.83156, 29.47769] },
+                { name: "Berdyansk", center: [46.75578, 36.78815] },
+                { name: "Bergamo", center: [45.69601, 9.66721] },
+                { name: "Bergedorf", center: [53.48462, 10.22904] },
+                { name: "Bergen", center: [60.39299, 5.32415] },
+                { name: "Bergisch Gladbach", center: [50.9856, 7.13298] },
+                { name: "Berlin", center: [52.52437, 13.41053] },
+                { name: "Bern", center: [46.94809, 7.44744] },
+                { name: "Besançon", center: [47.24878, 6.01815] },
+                { name: "Bexley", center: [51.44162, 0.14866] },
+                { name: "Beylikdüzü", center: [40.982, 28.6399] },
+                { name: "Białołeka", center: [52.32127, 20.97204] },
+                { name: "Białystok", center: [53.13333, 23.16433] },
+                { name: "Bielany", center: [52.29242, 20.93531] },
+                { name: "Bielefeld", center: [52.03333, 8.53333] },
+                { name: "Bielsko-Biala", center: [49.82245, 19.04686] },
+                { name: "Bila Tserkva", center: [49.8004, 30.12851] },
+                { name: "Bilbao", center: [43.26271, -2.92528] },
+                { name: "Bingöl", center: [38.88472, 40.49389] },
+                { name: "Birkenhead", center: [53.39337, -3.01479] },
+                { name: "Birmingham", center: [52.48142, -1.89983] },
+                { name: "Blackburn", center: [53.75, -2.48333] },
+                { name: "Blackpool", center: [53.81667, -3.05] },
+                { name: "Bochum", center: [51.48165, 7.21648] },
+                { name: "Bologna", center: [44.49381, 11.33875] },
+                { name: "Bolton", center: [53.58333, -2.43333] },
+                { name: "Bolu", center: [40.73583, 31.60611] },
+                { name: "Bolzano", center: [46.49067, 11.33982] },
+                { name: "Bonn", center: [50.73438, 7.09549] },
+                { name: "Bordeaux", center: [44.84044, -0.5805] },
+                { name: "Bottrop", center: [51.52392, 6.9285] },
+                { name: "Boulogne-Billancourt", center: [48.83545, 2.24128] },
+                { name: "Bournemouth", center: [50.72048, -1.8795] },
+                { name: "Bradford", center: [53.79391, -1.75206] },
+                { name: "Braga", center: [41.55032, -8.42005] },
+                { name: "Bratislava", center: [48.14816, 17.10674] },
+                { name: "Braunschweig", center: [52.26594, 10.52673] },
+                { name: "Braşov", center: [45.64861, 25.60613] },
+                { name: "Breda", center: [51.58656, 4.77596] },
+                { name: "Bremen", center: [53.07582, 8.80717] },
+                { name: "Bremerhaven", center: [53.55357, 8.57553] },
+                { name: "Brent", center: [51.55306, -0.3023] },
+                { name: "Brescia", center: [45.53558, 10.21472] },
+                { name: "Brest", center: [48.39029, -4.48628] },
+                { name: "Brighton", center: [50.82838, -0.13947] },
+                { name: "Bristol", center: [51.45523, -2.59665] },
+                { name: "Brno", center: [49.19522, 16.60796] },
+                { name: "Brovary", center: [50.51809, 30.80671] },
+                { name: "Brugge", center: [51.20892, 3.22424] },
+                { name: "Brussels", center: [50.85045, 4.34878] },
+                { name: "Brăila", center: [45.27152, 27.97429] },
+                { name: "Bucharest", center: [44.43225, 26.10626] },
+                { name: "Budapest", center: [47.49835, 19.04045] },
+                { name: "Budapest III. kerület", center: [47.54157, 19.04501] },
+                { name: "Budapest XI. kerület", center: [47.47603, 19.03605] },
+                { name: "Budapest XIII. kerület", center: [47.52978, 19.08068] },
+                { name: "Burgas", center: [42.50606, 27.46781] },
+                { name: "Burgos", center: [42.34106, -3.70184] },
+                { name: "Burnley", center: [53.8, -2.23333] },
+                { name: "Bursa", center: [40.19559, 29.06013] },
+                { name: "Burton upon Trent", center: [52.80728, -1.64263] },
+                { name: "Buzău", center: [45.15, 26.83333] },
+                { name: "Bydgoszcz", center: [53.1235, 18.00762] },
+                { name: "Bytom", center: [50.34802, 18.93282] },
+                { name: "Büyükçekmece", center: [41.02072, 28.58502] },
+                { name: "Bălţi", center: [47.76314, 27.92932] },
+                { name: "Cadiz", center: [36.52672, -6.2891] },
+                { name: "Caen", center: [49.18585, -0.35912] },
+                { name: "Cagliari", center: [39.23054, 9.11917] },
+                { name: "Cambridge", center: [52.2, 0.11667] },
+                { name: "Carabanchel", center: [40.39094, -3.7242] },
+                { name: "Cardiff", center: [51.48, -3.18] },
+                { name: "Cartagena", center: [37.60197, -0.98397] },
+                { name: "Castelló de la Plana", center: [39.98567, -0.04935] },
+                { name: "Catania", center: [37.49223, 15.07041] },
+                { name: "Cergy-Pontoise", center: [49.03894, 2.07805] },
+                { name: "Chamartín", center: [40.46206, -3.6766] },
+                { name: "Chamberí", center: [40.43404, -3.70379] },
+                { name: "Charleroi", center: [50.41136, 4.44448] },
+                { name: "Charlottenburg", center: [52.51667, 13.28333] },
+                { name: "Chelmsford", center: [51.73575, 0.46958] },
+                { name: "Cheltenham", center: [51.90006, -2.07972] },
+                { name: "Chemnitz", center: [50.8357, 12.92922] },
+                { name: "Cherkasy", center: [49.44452, 32.05738] },
+                { name: "Chernihiv", center: [51.50541, 31.28656] },
+                { name: "Chernivtsi", center: [48.29045, 25.93241] },
+                { name: "Chesterfield", center: [53.25, -1.41667] },
+                { name: "Chisinau", center: [47.00902, 28.85938] },
+                { name: "Chorzów", center: [50.30582, 18.9742] },
+                { name: "City of Westminster", center: [51.4975, -0.1357] },
+                { name: "Ciudad Lineal", center: [40.44505, -3.65132] },
+                { name: "Ciutat Vella", center: [41.38022, 2.17319] },
+                { name: "Clermont-Ferrand", center: [45.77969, 3.08682] },
+                { name: "Cluj-Napoca", center: [46.76667, 23.6] },
+                { name: "Coimbra", center: [40.20564, -8.41955] },
+                { name: "Colchester", center: [51.88921, 0.90421] },
+                { name: "Constanţa", center: [44.18073, 28.63432] },
+                { name: "Copenhagen", center: [55.67594, 12.56553] },
+                { name: "Cork", center: [51.89797, -8.47061] },
+                { name: "Coventry", center: [52.40656, -1.51217] },
+                { name: "Craiova", center: [44.31667, 23.8] },
+                { name: "Crawley", center: [51.11303, -0.18312] },
+                { name: "Croydon", center: [51.38333, -0.1] },
+                { name: "Częstochowa", center: [50.79646, 19.12409] },
+                { name: "Córdoba", center: [37.89155, -4.77275] },
+                { name: "Dagenham", center: [51.55, 0.16667] },
+                { name: "Darmstadt", center: [49.87167, 8.65027] },
+                { name: "Debrecen", center: [47.53167, 21.62444] },
+                { name: "Delicias", center: [41.64928, -0.90757] },
+                { name: "Denizli", center: [37.77417, 29.0875] },
+                { name: "Derby", center: [52.92277, -1.47663] },
+                { name: "Derince", center: [40.75694, 29.81472] },
+                { name: "Dijon", center: [47.31667, 5.01667] },
+                { name: "Diyarbakır", center: [37.91363, 40.21721] },
+                { name: "Dnipro", center: [48.46664, 35.04066] },
+                { name: "Donaustadt", center: [48.2333, 16.46002] },
+                { name: "Doncaster", center: [53.52285, -1.13116] },
+                { name: "Donetsk", center: [48.023, 37.80224] },
+                { name: "Donostia / San Sebastián", center: [43.31283, -1.97499] },
+                { name: "Dordrecht", center: [51.81, 4.67361] },
+                { name: "Dortmund", center: [51.51494, 7.466] },
+                { name: "Dos Hermanas", center: [37.28287, -5.92088] },
+                { name: "Drammen", center: [59.74389, 10.20449] },
+                { name: "Dresden", center: [51.05089, 13.73832] },
+                { name: "Dublin", center: [53.33306, -6.24889] },
+                { name: "Dudley", center: [52.5, -2.08333] },
+                { name: "Duisburg", center: [51.43247, 6.76516] },
+                { name: "Dundee", center: [56.46913, -2.97489] },
+                { name: "Durrës", center: [41.32355, 19.45469] },
+                { name: "Düsseldorf", center: [51.22172, 6.77616] },
+                { name: "Düzce", center: [40.83889, 31.16389] },
+                { name: "Dąbrowa Górnicza", center: [50.33394, 19.20479] },
+                { name: "East Helsinki", center: [60.21043, 25.08289] },
+                { name: "Eastbourne", center: [50.76871, 0.28453] },
+                { name: "Edinburgh", center: [55.95206, -3.19648] },
+                { name: "Edirne", center: [41.67719, 26.55597] },
+                { name: "Eimsbüttel", center: [53.57416, 9.95679] },
+                { name: "Eindhoven", center: [51.44083, 5.47778] },
+                { name: "Eixample", center: [41.38896, 2.16179] },
+                { name: "Elazığ", center: [38.67431, 39.22321] },
+                { name: "Elbasan", center: [41.1125, 20.08222] },
+                { name: "Elbląg", center: [54.1522, 19.40884] },
+                { name: "Elche", center: [38.26218, -0.70107] },
+                { name: "Enfield Town", center: [51.65147, -0.08497] },
+                { name: "Enschede", center: [52.21833, 6.89583] },
+                { name: "Erfurt", center: [50.9787, 11.03283] },
+                { name: "Erlangen", center: [49.59099, 11.00783] },
+                { name: "Erzincan", center: [39.73919, 39.49015] },
+                { name: "Erzurum", center: [39.90861, 41.27694] },
+                { name: "Esenler", center: [41.0435, 28.87619] },
+                { name: "Esenyurt", center: [41.02697, 28.67732] },
+                { name: "Eskişehir", center: [39.77667, 30.52056] },
+                { name: "Espoo", center: [60.2052, 24.6522] },
+                { name: "Essen", center: [51.45657, 7.01228] },
+                { name: "Exeter", center: [50.7236, -3.52751] },
+                { name: "Favoriten", center: [48.16116, 16.38233] },
+                { name: "Ferrara", center: [44.83804, 11.62057] },
+                { name: "Florence", center: [43.77925, 11.24626] },
+                { name: "Floridsdorf", center: [48.25, 16.4] },
+                { name: "Foggia", center: [41.45845, 15.55188] },
+                { name: "Forlì", center: [44.22177, 12.04144] },
+                { name: "Frankfurt am Main", center: [50.11552, 8.68417] },
+                { name: "Freiburg", center: [47.9959, 7.85222] },
+                { name: "Friedrichshain", center: [52.51559, 13.45482] },
+                { name: "Fuencarral", center: [40.5, -3.68333] },
+                { name: "Fuencarral-El Pardo", center: [40.4984, -3.7314] },
+                { name: "Fuenlabrada", center: [40.28419, -3.79415] },
+                { name: "Funchal", center: [32.66568, -16.92547] },
+                { name: "Fürth", center: [49.47593, 10.98856] },
+                { name: "Galaţi", center: [45.43687, 28.05028] },
+                { name: "Gasteiz / Vitoria", center: [42.84998, -2.67268] },
+                { name: "Gaziantep", center: [37.05944, 37.3825] },
+                { name: "Gdańsk", center: [54.35227, 18.64912] },
+                { name: "Gdynia", center: [54.51889, 18.53188] },
+                { name: "Gebze", center: [40.80276, 29.43068] },
+                { name: "Gelsenkirchen", center: [51.50508, 7.09654] },
+                { name: "Genoa", center: [44.40478, 8.94439] },
+                { name: "Gent", center: [51.05, 3.71667] },
+                { name: "Genève", center: [46.20222, 6.14569] },
+                { name: "Gera", center: [50.88029, 12.08187] },
+                { name: "Getafe", center: [40.30571, -3.73295] },
+                { name: "Gijón", center: [43.53573, -5.66152] },
+                { name: "Gillingham", center: [51.38914, 0.54863] },
+                { name: "Giresun", center: [40.91698, 38.38741] },
+                { name: "Girona", center: [41.98311, 2.82493] },
+                { name: "Glasgow", center: [55.86515, -4.25763] },
+                { name: "Gliwice", center: [50.29761, 18.67658] },
+                { name: "Gloucester", center: [51.86568, -2.2431] },
+                { name: "Gorzów Wielkopolski", center: [52.73679, 15.22878] },
+                { name: "Granada", center: [37.18817, -3.60667] },
+                { name: "Graz", center: [47.06667, 15.45] },
+                { name: "Grenoble", center: [45.17869, 5.71479] },
+                { name: "Groningen", center: [53.21917, 6.56667] },
+                { name: "Gràcia", center: [41.40237, 2.15641] },
+                { name: "Győr", center: [47.68333, 17.63512] },
+                { name: "Göteborg", center: [57.70716, 11.96679] },
+                { name: "Göttingen", center: [51.53443, 9.93228] },
+                { name: "Haarlem", center: [52.38084, 4.63683] },
+                { name: "Hagen", center: [51.36081, 7.47168] },
+                { name: "Halle (Saale)", center: [51.48158, 11.97947] },
+                { name: "Hamburg", center: [53.55073, 9.99302] },
+                { name: "Hamburg-Mitte", center: [53.55, 10.01667] },
+                { name: "Hamburg-Nord", center: [53.58935, 9.984] },
+                { name: "Hamm", center: [51.68033, 7.82089] },
+                { name: "Hannover", center: [52.37052, 9.73322] },
+                { name: "Harburg", center: [53.46057, 9.98388] },
+                { name: "Harrow", center: [51.57835, -0.33208] },
+                { name: "Hastings", center: [50.85568, 0.58009] },
+                { name: "Heidelberg", center: [49.40768, 8.69079] },
+                { name: "Heilbronn", center: [49.13995, 9.22054] },
+                { name: "Helsingborg", center: [56.04673, 12.69437] },
+                { name: "Helsinki", center: [60.16952, 24.93545] },
+                { name: "Hengelo", center: [52.26583, 6.79306] },
+                { name: "Herne", center: [51.5388, 7.22572] },
+                { name: "High Wycombe", center: [51.62907, -0.74934] },
+                { name: "Hildesheim", center: [52.15077, 9.95112] },
+                { name: "Hoofddorp", center: [52.3025, 4.68889] },
+                { name: "Horlivka", center: [48.33576, 38.05325] },
+                { name: "Horta-Guinardó", center: [41.41849, 2.1677] },
+                { name: "Hortaleza", center: [40.47444, -3.6411] },
+                { name: "Huddersfield", center: [53.64904, -1.78416] },
+                { name: "Huelva", center: [37.26638, -6.94004] },
+                { name: "Iaşi", center: [47.16667, 27.6] },
+                { name: "Ilford", center: [51.55765, 0.07278] },
+                { name: "Ingolstadt", center: [48.76508, 11.42372] },
+                { name: "Innsbruck", center: [47.26266, 11.39454] },
+                { name: "Ipswich", center: [52.05917, 1.15545] },
+                { name: "Irákleion", center: [35.32787, 25.14341] },
+                { name: "Islington", center: [51.53622, -0.10304] },
+                { name: "Isparta", center: [37.76444, 30.55222] },
+                { name: "Istanbul", center: [41.01384, 28.94966] },
+                { name: "Ivano-Frankivsk", center: [48.92312, 24.71248] },
+                { name: "Iğdır", center: [39.92371, 44.045] },
+                { name: "Jaén", center: [37.76922, -3.79028] },
+                { name: "Jena", center: [50.92878, 11.5899] },
+                { name: "Jerez de la Frontera", center: [36.68645, -6.13606] },
+                { name: "Jyväskylä", center: [62.24147, 25.72088] },
+                { name: "Jönköping", center: [57.78145, 14.15618] },
+                { name: "Kahramanmaraş", center: [37.5847, 36.92641] },
+                { name: "Kalisz", center: [51.76109, 18.09102] },
+                { name: "Kallithéa", center: [37.95, 23.7] },
+                { name: "Kamyanske", center: [48.51716, 34.60617] },
+                { name: "Karabağlar", center: [38.382, 27.132] },
+                { name: "Karabük", center: [41.20488, 32.62768] },
+                { name: "Karaman", center: [37.18111, 33.215] },
+                { name: "Karlsruhe", center: [49.00937, 8.40444] },
+                { name: "Kassel", center: [51.31667, 9.5] },
+                { name: "Kastamonu", center: [41.37805, 33.77528] },
+                { name: "Katowice", center: [50.25841, 19.02754] },
+                { name: "Kaunas", center: [54.90272, 23.90961] },
+                { name: "Kayseri", center: [38.73222, 35.48528] },
+                { name: "Kecskemét", center: [46.90618, 19.69128] },
+                { name: "Kerch", center: [45.35675, 36.47542] },
+                { name: "Kharkiv", center: [49.98177, 36.25475] },
+                { name: "Kherson", center: [46.63695, 32.61458] },
+                { name: "Khmelnytskyi", center: [49.41835, 26.97936] },
+                { name: "Kiel", center: [54.32133, 10.13489] },
+                { name: "Kielce", center: [50.87033, 20.62752] },
+                { name: "Kilis", center: [36.71611, 37.115] },
+                { name: "Kingston upon Hull", center: [53.7446, -0.33525] },
+                { name: "Klagenfurt am Wörthersee", center: [46.62472, 14.30528] },
+                { name: "Klaipėda", center: [55.7068, 21.13912] },
+                { name: "Koblenz", center: [50.35357, 7.57883] },
+                { name: "Konya", center: [37.87135, 32.48464] },
+                { name: "Korabel", center: [46.61884, 32.5796] },
+                { name: "Koszalin", center: [54.19438, 16.17222] },
+                { name: "Košice", center: [48.71395, 21.25808] },
+                { name: "Kragujevac", center: [44.01667, 20.91667] },
+                { name: "Kraków", center: [50.06143, 19.93658] },
+                { name: "Kramatorsk", center: [48.73049, 37.58793] },
+                { name: "Krefeld", center: [51.33645, 6.55381] },
+                { name: "Kremenchuk", center: [49.06253, 33.40484] },
+                { name: "Kreuzberg", center: [52.49973, 13.40338] },
+                { name: "Kristiansand", center: [58.14671, 7.9956] },
+                { name: "Kropyvnytskyy", center: [48.50834, 32.26618] },
+                { name: "Kryvyy Rih", center: [47.90572, 33.39404] },
+                { name: "Kuopio", center: [62.89238, 27.67703] },
+                { name: "Kyiv", center: [50.45466, 30.5238] },
+                { name: "Köln", center: [50.93333, 6.95] },
+                { name: "Kütahya", center: [39.42417, 29.98333] },
+                { name: "Kırıkkale", center: [39.84528, 33.50639] },
+                { name: "Kırşehir", center: [39.14583, 34.16389] },
+                { name: "Kızıltepe", center: [37.18836, 40.57723] },
+                { name: "L'Hospitalet de Llobregat", center: [41.35967, 2.10028] },
+                { name: "La Laguna", center: [28.4853, -16.32014] },
+                { name: "Lahti", center: [60.98267, 25.66151] },
+                { name: "Las Palmas de Gran Canaria", center: [28.09973, -15.41343] },
+                { name: "Latina", center: [40.38897, -3.74569] },
+                { name: "Lausanne", center: [46.516, 6.63282] },
+                { name: "Le Havre", center: [49.49346, 0.10785] },
+                { name: "Le Mans", center: [48.0021, 0.20251] },
+                { name: "Leeds", center: [53.79648, -1.54785] },
+                { name: "Leganés", center: [40.32718, -3.7635] },
+                { name: "Legnica", center: [51.21006, 16.1619] },
+                { name: "Leicester", center: [52.6386, -1.13169] },
+                { name: "Leiden", center: [52.15833, 4.49306] },
+                { name: "Leipzig", center: [51.33962, 12.37129] },
+                { name: "Leuven", center: [50.87959, 4.70093] },
+                { name: "Leverkusen", center: [51.0303, 6.98432] },
+                { name: "León", center: [42.60003, -5.57032] },
+                { name: "Liberec", center: [50.76711, 15.05619] },
+                { name: "Lille", center: [50.63297, 3.05858] },
+                { name: "Limoges", center: [45.83362, 1.24759] },
+                { name: "Lincoln", center: [53.22683, -0.53792] },
+                { name: "Linköping", center: [58.41086, 15.62157] },
+                { name: "Linz", center: [48.30639, 14.28611] },
+                { name: "Lisbon", center: [38.72509, -9.1498] },
+                { name: "Liverpool", center: [53.41058, -2.97794] },
+                { name: "Livorno", center: [43.54427, 10.32615] },
+                { name: "Liège", center: [50.63373, 5.56749] },
+                { name: "Ljubljana", center: [46.05108, 14.50513] },
+                { name: "Lleida", center: [41.61674, 0.62218] },
+                { name: "Logroño", center: [42.46667, -2.45] },
+                { name: "London", center: [51.50853, -0.12574] },
+                { name: "Lublin", center: [51.25, 22.56667] },
+                { name: "Ludwigshafen am Rhein", center: [49.48121, 8.44641] },
+                { name: "Luhansk", center: [48.56814, 39.30553] },
+                { name: "Luton", center: [51.87967, -0.41748] },
+                { name: "Lutsk", center: [50.75784, 25.35024] },
+                { name: "Lviv", center: [49.83826, 24.02324] },
+                { name: "Lyon", center: [45.74846, 4.84671] },
+                { name: "Lyon 03", center: [45.76124, 4.85184] },
+                { name: "Lárisa", center: [39.63689, 22.41761] },
+                { name: "Lübeck", center: [53.86893, 10.68729] },
+                { name: "Maastricht", center: [50.84833, 5.68889] },
+                { name: "Madrid", center: [40.4165, -3.70256] },
+                { name: "Madrid Centro", center: [40.41831, -3.70275] },
+                { name: "Magdeburg", center: [52.12773, 11.62916] },
+                { name: "Maidstone", center: [51.26667, 0.51667] },
+                { name: "Mainz", center: [49.98419, 8.2791] },
+                { name: "Makiivka", center: [48.04782, 37.92576] },
+                { name: "Malatya", center: [38.35018, 38.31667] },
+                { name: "Malmö", center: [55.60587, 13.00073] },
+                { name: "Maltepe", center: [40.93567, 29.15507] },
+                { name: "Manchester", center: [53.48095, -2.23743] },
+                { name: "Manisa", center: [38.61202, 27.42647] },
+                { name: "Mannheim", center: [49.4891, 8.46694] },
+                { name: "Mansfield", center: [53.13333, -1.2] },
+                { name: "Marbella", center: [36.51543, -4.88583] },
+                { name: "Mardin", center: [37.31309, 40.74357] },
+                { name: "Marienthal", center: [53.56667, 10.08333] },
+                { name: "Mariupol", center: [47.09514, 37.54131] },
+                { name: "Marne La Vallée", center: [48.83584, 2.64241] },
+                { name: "Marseille", center: [43.29695, 5.38107] },
+                { name: "Marzahn", center: [52.54525, 13.56983] },
+                { name: "Mataró", center: [41.54211, 2.4445] },
+                { name: "Melitopol", center: [46.84735, 35.38196] },
+                { name: "Mendip", center: [51.2372, -2.6266] },
+                { name: "Merkezefendi", center: [37.80544, 29.04236] },
+                { name: "Mersin", center: [36.81196, 34.63886] },
+                { name: "Messina", center: [38.19394, 15.55256] },
+                { name: "Mestre", center: [45.49167, 12.24538] },
+                { name: "Metz", center: [49.11911, 6.17269] },
+                { name: "Middlesbrough", center: [54.57623, -1.23483] },
+                { name: "Milan", center: [45.46427, 9.18951] },
+                { name: "Milton Keynes", center: [52.04172, -0.75583] },
+                { name: "Miskolc", center: [48.10306, 20.77806] },
+                { name: "Mitte", center: [52.52003, 13.40489] },
+                { name: "Modena", center: [44.64783, 10.92539] },
+                { name: "Moers", center: [51.45342, 6.6326] },
+                { name: "Mokotów", center: [52.1934, 21.03487] },
+                { name: "Moncloa-Aravaca", center: [40.43547, -3.7317] },
+                { name: "Montpellier", center: [43.61093, 3.87635] },
+                { name: "Montreuil", center: [48.86415, 2.44322] },
+                { name: "Monza", center: [45.58005, 9.27246] },
+                { name: "Moratalaz", center: [40.40742, -3.64935] },
+                { name: "Mostar", center: [43.34333, 17.80806] },
+                { name: "Mulhouse", center: [47.75205, 7.32866] },
+                { name: "Munich", center: [48.13743, 11.57549] },
+                { name: "Muratpaşa", center: [36.89157, 30.76498] },
+                { name: "Murcia", center: [37.98704, -1.13004] },
+                { name: "Mustafakemalpaşa", center: [40.03815, 28.40866] },
+                { name: "Mykolayiv", center: [46.97625, 31.99296] },
+                { name: "Málaga", center: [36.72016, -4.42034] },
+                { name: "Móstoles", center: [40.32234, -3.86496] },
+                { name: "Mönchengladbach", center: [51.18539, 6.44172] },
+                { name: "Mülheim", center: [51.43218, 6.87967] },
+                { name: "Münster", center: [51.96236, 7.62571] },
+                { name: "Namur", center: [50.4669, 4.86746] },
+                { name: "Nancy", center: [48.68439, 6.18496] },
+                { name: "Nantes", center: [47.21725, -1.55336] },
+                { name: "Naples", center: [40.85216, 14.26811] },
+                { name: "Nazilli", center: [37.91631, 28.32225] },
+                { name: "Neue Neustadt", center: [52.15, 11.63333] },
+                { name: "Neukölln", center: [52.47719, 13.43126] },
+                { name: "Neuss", center: [51.19807, 6.68504] },
+                { name: "Newcastle under Lyme", center: [53.0, -2.23333] },
+                { name: "Newcastle upon Tyne", center: [54.97328, -1.61396] },
+                { name: "Newport", center: [51.58774, -2.99835] },
+                { name: "Nice", center: [43.70313, 7.26608] },
+                { name: "Nijmegen", center: [51.8425, 5.85278] },
+                { name: "Nikopol", center: [47.56826, 34.39126] },
+                { name: "Nippes", center: [50.96545, 6.95314] },
+                { name: "Niš", center: [43.32472, 21.90333] },
+                { name: "Northampton", center: [52.25, -0.88333] },
+                { name: "Norwich", center: [52.62783, 1.29834] },
+                { name: "Nottingham", center: [52.9536, -1.15047] },
+                { name: "Nou Barris", center: [41.44163, 2.17727] },
+                { name: "Novara", center: [45.44694, 8.62118] },
+                { name: "Novi Sad", center: [45.25167, 19.83694] },
+                { name: "Nyíregyháza", center: [47.95539, 21.71671] },
+                { name: "Nîmes", center: [43.83665, 4.35788] },
+                { name: "Nürnberg", center: [49.45421, 11.07752] },
+                { name: "Oberhausen", center: [51.47805, 6.8625] },
+                { name: "Odense", center: [55.39594, 10.38831] },
+                { name: "Odesa", center: [46.48572, 30.74383] },
+                { name: "Offenbach", center: [50.10061, 8.76647] },
+                { name: "Oldenburg", center: [53.14118, 8.21467] },
+                { name: "Oldham", center: [53.54051, -2.1183] },
+                { name: "Olsztyn", center: [53.77995, 20.49416] },
+                { name: "Opole", center: [50.67211, 17.92533] },
+                { name: "Oradea", center: [47.0458, 21.91833] },
+                { name: "Ordu", center: [40.97782, 37.89047] },
+                { name: "Orihuela", center: [38.08483, -0.94401] },
+                { name: "Orléans", center: [47.90289, 1.90389] },
+                { name: "Oslo", center: [59.91273, 10.74609] },
+                { name: "Osmaniye", center: [37.07417, 36.24778] },
+                { name: "Osnabrück", center: [52.27264, 8.0498] },
+                { name: "Ostrava", center: [49.83465, 18.28204] },
+                { name: "Ottakring", center: [48.21667, 16.3] },
+                { name: "Oulu", center: [65.01236, 25.46816] },
+                { name: "Ourense", center: [42.33669, -7.86407] },
+                { name: "Oviedo", center: [43.36029, -5.84476] },
+                { name: "Oxford", center: [51.75222, -1.25596] },
+                { name: "Paderborn", center: [51.71905, 8.75439] },
+                { name: "Padova", center: [45.40797, 11.88586] },
+                { name: "Palermo", center: [38.1166, 13.3636] },
+                { name: "Palma", center: [39.56939, 2.65024] },
+                { name: "Pamplona", center: [42.81687, -1.64323] },
+                { name: "Paris", center: [48.85341, 2.3488] },
+                { name: "Paris 11e Arrondissement", center: [48.85834, 2.37952] },
+                { name: "Paris 12e Arrondissement", center: [48.83523, 2.43505] },
+                { name: "Paris 13e Arrondissement", center: [48.8262, 2.35986] },
+                { name: "Parla", center: [40.23604, -3.76752] },
+                { name: "Parma", center: [44.79935, 10.32618] },
+                { name: "Pavlohrad", center: [48.53214, 35.86878] },
+                { name: "Peristéri", center: [38.01539, 23.69187] },
+                { name: "Perpignan", center: [42.69764, 2.89541] },
+                { name: "Perugia", center: [43.1122, 12.38878] },
+                { name: "Pescara", center: [42.4584, 14.20283] },
+                { name: "Peterborough", center: [52.57364, -0.24777] },
+                { name: "Petržalka", center: [48.12331, 17.12866] },
+                { name: "Pforzheim", center: [48.88436, 8.69892] },
+                { name: "Piacenza", center: [45.05242, 9.69342] },
+                { name: "Piatra Neamţ", center: [46.91667, 26.33333] },
+                { name: "Pilsen", center: [49.74747, 13.37759] },
+                { name: "Piraeus", center: [37.94203, 23.64619] },
+                { name: "Pisa", center: [43.70853, 10.4036] },
+                { name: "Piteşti", center: [44.85, 24.86667] },
+                { name: "Pleven", center: [43.41667, 24.61667] },
+                { name: "Ploieşti", center: [44.95, 26.01667] },
+                { name: "Plovdiv", center: [42.15, 24.75] },
+                { name: "Plymouth", center: [50.37153, -4.14305] },
+                { name: "Podgorica", center: [42.44124, 19.26309] },
+                { name: "Poltava", center: [49.58925, 34.55367] },
+                { name: "Poole", center: [50.71429, -1.98458] },
+                { name: "Porto", center: [41.14961, -8.61099] },
+                { name: "Portsmouth", center: [50.79899, -1.09125] },
+                { name: "Porz am Rhein", center: [50.88637, 7.0583] },
+                { name: "Potsdam", center: [52.39886, 13.06566] },
+                { name: "Poznań", center: [52.40692, 16.92993] },
+                { name: "Praga Południe", center: [52.24424, 21.08545] },
+                { name: "Prague", center: [50.08804, 14.42076] },
+                { name: "Prato", center: [43.8805, 11.09699] },
+                { name: "Prenzlauer Berg", center: [52.53878, 13.42443] },
+                { name: "Preston", center: [53.76282, -2.70452] },
+                { name: "Puente de Vallecas", center: [40.39354, -3.662] },
+                { name: "Pátra", center: [38.24444, 21.73444] },
+                { name: "Pécs", center: [46.0725, 18.23083] },
+                { name: "Płock", center: [52.54682, 19.70638] },
+                { name: "Quarto Oggiaro", center: [45.51314, 9.14343] },
+                { name: "Queluz", center: [38.75657, -9.25451] },
+                { name: "Radom", center: [51.40253, 21.14714] },
+                { name: "Reading", center: [51.45625, -0.97113] },
+                { name: "Recklinghausen", center: [51.61379, 7.19738] },
+                { name: "Regensburg", center: [49.01513, 12.10161] },
+                { name: "Reggio Calabria", center: [38.11047, 15.66129] },
+                { name: "Reggio nell'Emilia", center: [44.69825, 10.63125] },
+                { name: "Reims", center: [49.26526, 4.02853] },
+                { name: "Remscheid", center: [51.17983, 7.1925] },
+                { name: "Rennes", center: [48.11198, -1.67429] },
+                { name: "Retiro", center: [40.41317, -3.68307] },
+                { name: "Reus", center: [41.15612, 1.10687] },
+                { name: "Reutlingen", center: [48.49144, 9.20427] },
+                { name: "Riga", center: [56.946, 24.10589] },
+                { name: "Rijeka", center: [45.32673, 14.44241] },
+                { name: "Rimini", center: [44.05755, 12.56528] },
+                { name: "Rivne", center: [50.62036, 26.23695] },
+                { name: "Rize", center: [41.02083, 40.52194] },
+                { name: "Rodenkirchen", center: [50.89328, 6.99481] },
+                { name: "Rome", center: [41.89193, 12.51133] },
+                { name: "Rostock", center: [54.0887, 12.14049] },
+                { name: "Rotherham", center: [53.43012, -1.35678] },
+                { name: "Rotterdam", center: [51.9225, 4.47917] },
+                { name: "Rouen", center: [49.44313, 1.09932] },
+                { name: "Ruda Śląska", center: [50.2584, 18.85632] },
+                { name: "Ruse", center: [43.84872, 25.9534] },
+                { name: "Rybnik", center: [50.09713, 18.54179] },
+                { name: "Rzeszów", center: [50.04132, 21.99901] },
+                { name: "Saarbrücken", center: [49.23262, 7.00982] },
+                { name: "Sabadell", center: [41.54329, 2.10942] },
+                { name: "Saint Peters", center: [51.36667, 1.41667] },
+                { name: "Saint-Quentin-en-Yvelines", center: [48.77186, 2.01891] },
+                { name: "Saint-Étienne", center: [45.43389, 4.39] },
+                { name: "Salamanca", center: [40.96882, -5.66388] },
+                { name: "Salamanca", center: [40.42972, -3.67975] },
+                { name: "Salerno", center: [40.67545, 14.79328] },
+                { name: "Salford", center: [53.48771, -2.29042] },
+                { name: "Saltivka", center: [50.02207, 36.34901] },
+                { name: "Salzburg", center: [47.79941, 13.04399] },
+                { name: "Salzgitter", center: [52.15705, 10.4154] },
+                { name: "Samandağ", center: [36.08012, 35.97603] },
+                { name: "Samsun", center: [41.27976, 36.3361] },
+                { name: "San Blas-Canillejas", center: [40.43893, -3.61537] },
+                { name: "Sancaktepe", center: [41.00244, 29.23187] },
+                { name: "Sant Andreu", center: [41.43541, 2.18982] },
+                { name: "Sant Martí", center: [41.41814, 2.19933] },
+                { name: "Santa Coloma de Gramenet", center: [41.45152, 2.2081] },
+                { name: "Santa Cruz de Tenerife", center: [28.46824, -16.25462] },
+                { name: "Santander", center: [43.46472, -3.80444] },
+                { name: "Sants-Montjuïc", center: [41.37263, 2.1546] },
+                { name: "Sarajevo", center: [43.84864, 18.35644] },
+                { name: "Sarrià-Sant Gervasi", center: [41.40104, 2.1394] },
+                { name: "Satu Mare", center: [47.79926, 22.86255] },
+                { name: "Schaerbeek", center: [50.86935, 4.37737] },
+                { name: "Schöneberg", center: [52.49801, 13.3443] },
+                { name: "Sector 1", center: [44.49239, 26.04831] },
+                { name: "Sector 2", center: [44.4528, 26.13321] },
+                { name: "Sector 3", center: [44.4234, 26.16874] },
+                { name: "Sector 4", center: [44.37571, 26.12085] },
+                { name: "Sector 5", center: [44.38808, 26.07144] },
+                { name: "Sector 6", center: [44.43579, 26.01649] },
+                { name: "Setúbal", center: [38.5244, -8.8882] },
+                { name: "Sevastopol", center: [44.60795, 33.52134] },
+                { name: "Sevilla", center: [37.38283, -5.97317] },
+                { name: "Sheffield", center: [53.38297, -1.4659] },
+                { name: "Sibiu", center: [45.8, 24.15] },
+                { name: "Siegen", center: [50.87481, 8.02431] },
+                { name: "Siirt", center: [37.9293, 41.94134] },
+                { name: "Simferopol", center: [44.95719, 34.11079] },
+                { name: "Simmering", center: [48.18333, 16.43333] },
+                { name: "Siracusa", center: [37.07542, 15.28664] },
+                { name: "Sivas", center: [39.74833, 37.01611] },
+                { name: "Siverek", center: [37.75503, 39.31667] },
+                { name: "Skopje", center: [41.99646, 21.43141] },
+                { name: "Slough", center: [51.50949, -0.59541] },
+                { name: "Sloviansk", center: [48.84974, 37.59739] },
+                { name: "Sofia", center: [42.69751, 23.32415] },
+                { name: "Solihull", center: [52.41426, -1.78094] },
+                { name: "Solingen", center: [51.17343, 7.0845] },
+                { name: "Sollentuna", center: [59.42804, 17.95093] },
+                { name: "Sosnowiec", center: [50.28682, 19.10385] },
+                { name: "South Dublin", center: [53.29026, -6.34151] },
+                { name: "Southampton", center: [50.90395, -1.40428] },
+                { name: "Southend-on-Sea", center: [51.53782, 0.71433] },
+                { name: "Split", center: [43.50891, 16.43915] },
+                { name: "St Helens", center: [53.45, -2.73333] },
+                { name: "Stara Darnytsya", center: [50.43333, 30.63333] },
+                { name: "Stara Zagora", center: [42.43278, 25.64194] },
+                { name: "Stavanger", center: [58.97005, 5.73332] },
+                { name: "Stockholm", center: [59.32938, 18.06871] },
+                { name: "Stockport", center: [53.40979, -2.15761] },
+                { name: "Stoke-on-Trent", center: [53.00415, -2.18538] },
+                { name: "Strasbourg", center: [48.58392, 7.74553] },
+                { name: "Stuttgart", center: [48.78232, 9.17702] },
+                { name: "Sultanbeyli", center: [40.96072, 29.27067] },
+                { name: "Sultangazi", center: [41.10652, 28.86847] },
+                { name: "Sumy", center: [50.91741, 34.79906] },
+                { name: "Sunderland", center: [54.90465, -1.38222] },
+                { name: "Sutton", center: [51.35, -0.2] },
+                { name: "Sutton Coldfield", center: [52.56667, -1.81667] },
+                { name: "Swansea", center: [51.62079, -3.94323] },
+                { name: "Swindon", center: [51.55797, -1.78116] },
+                { name: "Szczecin", center: [53.42894, 14.55302] },
+                { name: "Szeged", center: [46.253, 20.14824] },
+                { name: "Székesfehérvár", center: [47.18995, 18.41034] },
+                { name: "Södermalm", center: [59.31278, 18.07577] },
+                { name: "Tallinn", center: [59.43696, 24.75353] },
+                { name: "Tampere", center: [61.49911, 23.78712] },
+                { name: "Taranto", center: [40.46438, 17.24707] },
+                { name: "Targówek", center: [52.29185, 21.04845] },
+                { name: "Tarnów", center: [50.01381, 20.98698] },
+                { name: "Tarragona", center: [41.11905, 1.24544] },
+                { name: "Tarsus", center: [36.91766, 34.89277] },
+                { name: "Tekirdağ", center: [40.9781, 27.51101] },
+                { name: "Telde", center: [27.99243, -15.41915] },
+                { name: "Telford", center: [52.67659, -2.44926] },
+                { name: "Terni", center: [42.56335, 12.64329] },
+                { name: "Ternopil", center: [49.55404, 25.59067] },
+                { name: "Terrassa", center: [41.56667, 2.01667] },
+                { name: "Tetuán de las Victorias", center: [40.45975, -3.6975] },
+                { name: "The Hague", center: [52.07667, 4.29861] },
+                { name: "Thessaloníki", center: [40.64361, 22.93086] },
+                { name: "Tilburg", center: [51.55551, 5.0913] },
+                { name: "Timişoara", center: [45.75372, 21.22571] },
+                { name: "Tirana", center: [41.32744, 19.81866] },
+                { name: "Tiraspol", center: [46.84274, 29.62909] },
+                { name: "Tokat", center: [40.31389, 36.55444] },
+                { name: "Torrejón de Ardoz", center: [40.45535, -3.46973] },
+                { name: "Toruń", center: [53.01375, 18.59814] },
+                { name: "Tottenham", center: [51.60373, -0.06794] },
+                { name: "Toulon", center: [43.12442, 5.92836] },
+                { name: "Toulouse", center: [43.60426, 1.44367] },
+                { name: "Tours", center: [47.39484, 0.70398] },
+                { name: "Trabzon", center: [41.005, 39.72694] },
+                { name: "Trento", center: [46.06787, 11.12108] },
+                { name: "Trier", center: [49.75565, 6.63935] },
+                { name: "Trieste", center: [45.64953, 13.77678] },
+                { name: "Trondheim", center: [63.43049, 10.39506] },
+                { name: "Turgutlu", center: [38.49533, 27.6997] },
+                { name: "Turhal", center: [40.3875, 36.08111] },
+                { name: "Turin", center: [45.07049, 7.68682] },
+                { name: "Turku", center: [60.45148, 22.26869] },
+                { name: "Tuzla", center: [44.53842, 18.66709] },
+                { name: "Tychy", center: [50.13717, 18.96641] },
+                { name: "Târgu Mureş", center: [46.54245, 24.55747] },
+                { name: "Udine", center: [46.0693, 13.23715] },
+                { name: "Ulm", center: [48.39841, 9.99155] },
+                { name: "Uman", center: [48.7501, 30.21944] },
+                { name: "Umeå", center: [63.82842, 20.25972] },
+                { name: "Umraniye", center: [41.01643, 29.12476] },
+                { name: "Uppsala", center: [59.85882, 17.63889] },
+                { name: "Ursynów", center: [52.15051, 21.05041] },
+                { name: "Usera", center: [40.38866, -3.70035] },
+                { name: "Utrecht", center: [52.09083, 5.12222] },
+                { name: "Uzhhorod", center: [48.6242, 22.2947] },
+                { name: "Uşak", center: [38.67351, 29.4058] },
+                { name: "Valencia", center: [39.47391, -0.37966] },
+                { name: "Valladolid", center: [41.65518, -4.72372] },
+                { name: "Van", center: [38.49457, 43.38323] },
+                { name: "Vantaa", center: [60.29414, 25.04099] },
+                { name: "Varna", center: [43.21667, 27.91667] },
+                { name: "Venlo", center: [51.37, 6.16806] },
+                { name: "Verona", center: [45.43854, 10.9938] },
+                { name: "Vicenza", center: [45.54672, 11.5475] },
+                { name: "Vienna", center: [48.20849, 16.37208] },
+                { name: "Vigo", center: [42.23282, -8.72264] },
+                { name: "Villaverde", center: [40.35, -3.7] },
+                { name: "Villeurbanne", center: [45.76601, 4.8795] },
+                { name: "Vilnius", center: [54.68916, 25.2798] },
+                { name: "Vinnytsya", center: [49.2322, 28.46871] },
+                { name: "Viranşehir", center: [37.22349, 39.75519] },
+                { name: "Vlorë", center: [40.4686, 19.48318] },
+                { name: "Västerås", center: [59.61617, 16.55276] },
+                { name: "Wakefield", center: [53.68331, -1.49768] },
+                { name: "Walsall", center: [52.58528, -1.98396] },
+                { name: "Walthamstow", center: [51.59067, -0.02077] },
+                { name: "Wandsbek", center: [53.58334, 10.08305] },
+                { name: "Warrington", center: [53.39254, -2.58024] },
+                { name: "Warsaw", center: [52.22977, 21.01178] },
+                { name: "Watford", center: [51.65531, -0.39602] },
+                { name: "Wałbrzych", center: [50.77141, 16.28432] },
+                { name: "West Bromwich", center: [52.51868, -1.9945] },
+                { name: "Wiesbaden", center: [50.08258, 8.24932] },
+                { name: "Wigan", center: [53.54296, -2.63706] },
+                { name: "Wilmersdorf", center: [52.48333, 13.31667] },
+                { name: "Winterthur", center: [47.50564, 8.72413] },
+                { name: "Witten", center: [51.44362, 7.35258] },
+                { name: "Woking", center: [51.31903, -0.55893] },
+                { name: "Wola", center: [52.23477, 20.96004] },
+                { name: "Wolfsburg", center: [52.42452, 10.7815] },
+                { name: "Wolverhampton", center: [52.58547, -2.12296] },
+                { name: "Worcester", center: [52.18935, -2.22001] },
+                { name: "Wrocław", center: [51.1, 17.03333] },
+                { name: "Wuppertal", center: [51.25627, 7.14816] },
+                { name: "Würzburg", center: [49.79391, 9.95121] },
+                { name: "Włocławek", center: [52.64817, 19.0678] },
+                { name: "Yevpatoriya", center: [45.20091, 33.36655] },
+                { name: "York", center: [53.95763, -1.08271] },
+                { name: "Zaanstad", center: [52.45313, 4.81356] },
+                { name: "Zabrze", center: [50.32492, 18.78576] },
+                { name: "Zagreb", center: [45.81444, 15.97798] },
+                { name: "Zaporizhzhya", center: [47.85167, 35.11714] },
+                { name: "Zaragoza", center: [41.65606, -0.87734] },
+                { name: "Zemun", center: [44.8458, 20.40116] },
+                { name: "Zenica", center: [44.20169, 17.90397] },
+                { name: "Zeytinburnu", center: [40.99441, 28.90417] },
+                { name: "Zhytomyr", center: [50.26235, 28.67913] },
+                { name: "Zielona Góra", center: [51.93548, 15.50643] },
+                { name: "Zoetermeer", center: [52.0575, 4.49306] },
+                { name: "Zonguldak", center: [41.45139, 31.79305] },
+                { name: "Zugló", center: [47.51758, 19.10549] },
+                { name: "Zwolle", center: [52.5125, 6.09444] },
+                { name: "Zürich", center: [47.36667, 8.55] },
+                { name: "Århus", center: [56.15674, 10.21076] },
+                { name: "Çanakkale", center: [40.15552, 26.41271] },
+                { name: "Çankaya", center: [39.9179, 32.86268] },
+                { name: "Çorlu", center: [41.16069, 27.80093] },
+                { name: "Çorum", center: [40.54889, 34.95333] },
+                { name: "Örebro", center: [59.27412, 15.2066] },
+                { name: "Üsküdar", center: [41.02274, 29.01366] },
+                { name: "Čačak", center: [43.89139, 20.34972] },
+                { name: "İnegol", center: [40.07806, 29.51333] },
+                { name: "İskenderun", center: [36.58718, 36.17347] },
+                { name: "İzmir", center: [38.41273, 27.13838] },
+                { name: "İzmit", center: [40.76499, 29.92928] },
+                { name: "Łódź", center: [51.77058, 19.47395] },
+                { name: "Şanlıurfa", center: [37.16708, 38.79392] },
+                { name: "Şişli", center: [41.06046, 28.98717] }
+            ];
+            const randomCity = cities[Math.floor(Math.random() * cities.length)];
+            const bgMap = L.map('landingMap', {
+                center: randomCity.center,
+                zoom: 13,
+                zoomControl: false,
+                dragging: false,
+                touchZoom: false,
+                scrollWheelZoom: false,
+                doubleClickZoom: false,
+                boxZoom: false,
+                attributionControl: true
+            });
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                subdomains: 'abcd',
+                maxZoom: 20,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+            }).addTo(bgMap);
+            const messages = [
+                "Bienvenue sur",
+                "Welcome to",
+                "Willkommen bei",
+                "Bienvenido a",
+                "Bem-vindo a",
+                "Welkom bij",
+                "Mirësevini në",
+                "Benvinguts a",
+                "Dobrodošli u",
+                "Добре дошли в",
+                "Velkommen til",
+                "Tere tulemast",
+                "Tervetuloa",
+                "Καλώς ήρθατε στο",
+                "Üdvözöljük a",
+                "स्वागत है",
+                "Laipni lūdzam",
+                "Sveiki atvykę į",
+                "Wëllkomm op",
+                "Добредојдовте во",
+                "Bun venit la",
+                "Witaj w",
+                "Vítejte v",
+                "Vitajte v",
+                "Dobrodošli v",
+                "Välkommen till",
+                "Hoş geldiniz",
+                "Ласкаво просимо до",
+                "Добро пожаловать в",
+                "Сардэчна запрашаем у"
+            ];
+            let currentIndex = Math.floor(Math.random() * messages.length);
+            const cyclingText = document.getElementById('cyclingText');
+            cyclingText.textContent = messages[currentIndex];
+            setInterval(() => {
+                cyclingText.classList.remove('text-visible');
+                cyclingText.classList.add('text-hidden');
+                setTimeout(() => {
+                    let nextIndex;
+                    do {
+                        nextIndex = Math.floor(Math.random() * messages.length);
+                    } while (nextIndex === currentIndex);
+                    currentIndex = nextIndex;
+                    cyclingText.textContent = messages[currentIndex];
+                    cyclingText.classList.remove('text-hidden');
+                    cyclingText.classList.add('text-visible');
+                }, 400);
+            }, 3000);
+            const searchInput = document.getElementById('landingSearchInput');
+            const suggestionsDiv = document.getElementById('landingSuggestions');
+            const searchSpinner = document.getElementById('landingSearchSpinner');
+            const searchIcon = document.getElementById('landingSearchIcon');
+            let searchTimeout = null;
+            searchInput.addEventListener('input', function () {
+                const query = this.value.trim();
+                clearTimeout(searchTimeout);
+                if (query.length < 2) {
+                    suggestionsDiv.innerHTML = '';
+                    suggestionsDiv.classList.remove('visible');
+                    return;
+                }
+                searchTimeout = setTimeout(() => fetchSuggestions(query), 300);
+            });
+            document.addEventListener('click', function (e) {
+                if (!searchInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
+                    suggestionsDiv.classList.remove('visible');
+                }
+            });
+            searchInput.addEventListener('focus', function () {
+                if (suggestionsDiv.children.length > 0) suggestionsDiv.classList.add('visible');
+            });
+            async function fetchSuggestions(query) {
+                searchSpinner.style.display = 'inline-block';
+                searchIcon.style.display = 'none';
+                try {
+                    const response = await fetch(`/api/search_stops?query=${encodeURIComponent(query)}`);
+                    const data = await response.json();
+                    if (response.ok) renderSuggestions(data);
+                } catch (err) { console.error(err); }
+                finally {
+                    searchSpinner.style.display = 'none';
+                    searchIcon.style.display = '';
+                }
+            }
+            function renderSuggestions(suggestions) {
+                suggestionsDiv.innerHTML = '';
+                if (!suggestions.length) {
+                    suggestionsDiv.innerHTML = '<div style="padding:14px;text-align:center;color:#9aa0a6;">Aucun arrêt trouvé.</div>';
+                    suggestionsDiv.classList.add('visible');
+                    return;
+                }
+                suggestions.forEach(stop => {
+                    const item = document.createElement('div');
+                    item.className = 'suggestion-item';
+                    item.textContent = stop.stop_name;
+                    item.onclick = () => {
+                        saveRecentSearch(stop.stop_id, stop.stop_name);
+                        window.location.href = `/map?stop_id=${stop.stop_id}`;
+                    };
+                    suggestionsDiv.appendChild(item);
+                });
+                suggestionsDiv.classList.add('visible');
+            }
+            // localStorage Logic
+            function saveRecentSearch(id, name) {
+                let recents = JSON.parse(localStorage.getItem('linia_recents') || '[]');
+                recents = recents.filter(r => r.id !== id);
+                recents.unshift({ id, name, date: new Date().getTime() });
+                if (recents.length > 5) recents.pop();
+                localStorage.setItem('linia_recents', JSON.stringify(recents));
+            }
+            function loadRecents() {
+                const recentList = document.getElementById('recentSearchesList');
+                if (!recentList) return;
+                const recents = JSON.parse(localStorage.getItem('linia_recents') || '[]');
+                if (recents.length === 0) {
+                    recentList.innerHTML = '<p class="empty-recents">Vos recherches récentes apparaîtront ici.</p>';
+                    return;
+                }
+                recentList.innerHTML = recents.map(r => `
+                    <div class="recent-item" onclick="window.location.href='/map?stop_id=${r.id}'">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>${r.name}</span>
+                    </div>
+                `).join('');
+            }
+            loadRecents();
+        });
+    </script>
+</body>
+
+</html>

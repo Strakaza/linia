@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linia — Carte</title>
+    <meta name="description" content="Visualisez les lignes de bus sur la carte interactive Linia.">
+    <meta name="theme-color" content="#34a853">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
+    <script src="{{ url_for('static', filename='i18n.js') }}"></script>
+</head>
+<body>
+    <div class="map-page">
+        <div id="map"></div>
+        <a href="/" class="linia-nav-btn nav-btn-home">
+            <div class="icon-circle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </div>
+            <div class="btn-label" data-i18n="nav_home">Accueil</div>
+        </a>
+        <a href="/planner" class="linia-nav-btn nav-btn-planner">
+            <div class="icon-circle">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="6" cy="19" r="3"></circle>
+                    <path d="M9 19h8.5a3.5 3.5 0 1 0 0-7h-11a3.5 3.5 0 1 1 0-7H15"></path>
+                    <circle cx="18" cy="5" r="3"></circle>
+                </svg>
+            </div>
+            <div class="btn-label" data-i18n="nav_itinerary">Itinéraire</div>
+        </a>
+        <div class="trip-details-panel" id="tripDetailsPanel">
+            <div class="trip-details-header">
+                <div class="trip-details-title-container">
+                    <h3 id="tripPanelTitle"></h3>
+                    <span id="tripPanelSubtitle" class="trip-details-subtitle"></span>
+                </div>
+                <button class="trip-details-close" id="tripPanelClose" title="Fermer"
+                    data-i18n-title="btn_close">&times;</button>
+            </div>
+            <div class="trip-details-body" id="tripPanelBody">
+            </div>
+        </div>
+        <div class="map-search-bar-container">
+            <div class="map-search-wrapper">
+                <input type="text" class="map-search-bar" id="mapSearchInput"
+                    placeholder="Chercher une ville de départ..." data-i18n-placeholder="search_start"
+                    autocomplete="off">
+                <svg class="map-search-icon" id="mapSearchIcon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <div class="spinner map-search-spinner" id="mapSearchSpinner" style="display:none;"></div>
+            </div>
+            <div class="map-suggestions" id="mapSuggestions"></div>
+        </div>
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div>
+            <span id="loadingText">Chargement...</span>
+        </div>
+        <button class="reopen-panel-btn" id="reopenPanelBtn" style="display:none;" title="Afficher les lignes">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+        <div class="route-panel" id="routePanel">
+            <div class="route-panel-header">
+                <div>
+                    <h2 id="routePanelTitle">Chargement...</h2>
+                    <div class="operator-legend" id="operatorLegend" style="display:none;">
+                        <div class="legend-item"><span class="legend-color-box legend-flixbus"></span> Flixbus</div>
+                        <div class="legend-item"><span class="legend-color-box legend-blablacar"></span> BlaBlaCar</div>
+                    </div>
+                </div>
+                <button class="route-panel-close" id="routePanelClose">&times;</button>
+            </div>
+            <div class="route-controls">
+                <div class="filter-pills">
+                    <button class="filter-pill active" data-filter="all">Tout</button>
+                    <button class="filter-pill" data-filter="flixbus">Flixbus</button>
+                    <button class="filter-pill" data-filter="blablacar_bus">BlaBlaCar</button>
+                </div>
+                <div class="route-filter-search">
+                    <input type="text" id="routeLocalSearch" placeholder="🔍 Rechercher une ville...">
+                </div>
+            </div>
+            <div class="route-panel-body" id="routePanelBody">
+            </div>
+        </div>
+        <footer
+            style="position: absolute; bottom: 0; padding: 12px; font-size: 11px; pointer-events: none; z-index: 9000;">
+            <p style="margin-bottom: 4px;">"Страказа жывая"</p>
+            <div class="color-bar-signature" style="max-width: 150px;"></div>
+        </footer>
+        <nav class="bottom-nav">
+            <a href="/" class="bottom-nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Accueil</span>
+            </a>
+            <a href="/planner" class="bottom-nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="6" cy="19" r="3"></circle>
+                    <path d="M9 19h8.5a3.5 3.5 0 1 0 0-7h-11a3.5 3.5 0 1 1 0-7H15"></path>
+                    <circle cx="18" cy="5" r="3"></circle>
+                </svg>
+                <span>Itinéraire</span>
+            </a>
+            <a href="/about" class="bottom-nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span>Info</span>
+            </a>
+        </nav>
+    </div>
+    <div id="toastContainer" class="toast-container"></div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="{{ url_for('static', filename='map.js') }}"></script>
+</body>
+</html>

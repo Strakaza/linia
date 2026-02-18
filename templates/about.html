@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="about_title">Linia — À propos</title>
+    <meta name="description"
+        content="Informations techniques sur le fonctionnement de l'application Linia et l'utilisation des données GTFS.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
+    <script src="{{ url_for('static', filename='i18n.js') }}"></script>
+</head>
+
+<body>
+    <div class="about-page">
+        <nav class="about-nav">
+            <a href="/" class="nav-brand"><span class="highlight">Linia</span></a>
+            <div style="flex-grow: 1;"></div>
+            <a href="/" class="nav-link" data-i18n="return_home" style="margin-left: 0;">← Retour à l'accueil</a>
+        </nav>
+        <div class="about-content">
+            <h1 data-i18n="about_header">Fonctionnement de l'application</h1>
+            <p class="about-subtitle" data-i18n="about_intro">
+                Linia est un outil de visualisation de données de transport public pour les lignes de bus longue
+                distance.
+            </p>
+            <div class="about-section">
+                <h2 data-i18n="about_networks">Visualisation des réseaux</h2>
+                <p data-i18n="about_networks_desc">
+                    L'application agrège les données de deux opérateurs : Flixbus
+                    et BlaBlaCar Bus. La recherche permet d'afficher les lignes desservant un arrêt spécifique.
+                </p>
+            </div>
+            <div class="about-section">
+                <h2 data-i18n="about_planning">Planification par étapes</h2>
+                <p data-i18n="about_planning_desc">
+                    Le planificateur permet de construire un itinéraire séquentiel. Lors de l'ajout d'une ville,
+                    une liste de destinations directement connectées est générée pour permettre la sélection de l'étape
+                    suivante.
+                </p>
+            </div>
+            <div class="about-section">
+                <h2 data-i18n="about_export">Exportation des données</h2>
+                <p data-i18n="about_export_desc">
+                    Les itinéraires créés peuvent être exportés au format PDF. Ce document contient le rappel des étapes
+                    et une capture de la carte associée au trajet.
+                </p>
+            </div>
+            <div class="download-card">
+                <h3 data-i18n="data_sources">Sources de données (GTFS)</h3>
+                <p data-i18n="data_sources_desc">
+                    Les données sont issues des flux GTFS officiels disponibles sur transport.data.gouv.fr.
+                    Linia effectue une unification de ces flux pour permettre une consultation centralisée.
+                </p>
+                <a href="{{ url_for('download_unified_gtfs') }}" class="linia-btn-premium" download
+                    style="margin-top: 20px; width: 100%;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span data-i18n="download_gtfs">Télécharger le GTFS Unifié (.zip)</span>
+                </a>
+            </div>
+            <div class="about-section disclaimer-section"
+                style="margin-top: 40px; border-top: 1px solid var(--border-light); padding-top: 20px;">
+                <h2 data-i18n="disclaimer_title">Note d'information</h2>
+                <p data-i18n="disclaimer_text" style="font-size: 14px; opacity: 0.8; line-height: 1.6;"></p>
+            </div>
+        </div>
+        <footer class="app-footer">
+            <p data-i18n="footer_signature">"Страказа жывая"</p>
+            <div class="color-bar-signature"></div>
+        </footer>
+        <nav class="bottom-nav">
+            <a href="/" class="bottom-nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span data-i18n="nav_home">Accueil</span>
+            </a>
+            <a href="/planner" class="bottom-nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="6" cy="19" r="3"></circle>
+                    <path d="M9 19h8.5a3.5 3.5 0 1 0 0-7h-11a3.5 3.5 0 1 1 0-7H15"></path>
+                    <circle cx="18" cy="5" r="3"></circle>
+                </svg>
+                <span data-i18n="nav_itinerary">Itinéraire</span>
+            </a>
+            <a href="/about" class="bottom-nav-item active">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span data-i18n="nav_info">Info</span>
+            </a>
+        </nav>
+    </div>
+</body>
+
+</html>
