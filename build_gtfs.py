@@ -31,19 +31,6 @@ OUTPUT_DIR = "output_gtfs"
 UNIFIED_DIR = os.path.join(OUTPUT_DIR, "unified")
 MAPPING_DIR = os.path.join(OUTPUT_DIR, "mapping")
 
-DISTANCE_THRESHOLD_METERS = 300
-VALIDITY_MONTHS = 6 
-
-
-
-def haversine_distance(lat1, lon1, lat2, lon2):
-    R = 6371000
-    phi1, phi2 = radians(lat1), radians(lat2)
-    delta_phi = radians(lat2 - lat1)
-    delta_lambda = radians(lon2 - lon1)
-    a = sin(delta_phi/2)**2 + cos(phi1)*cos(phi2)*sin(delta_lambda/2)**2
-    c = 2 * atan2(sqrt(a), sqrt(1-a))
-    return R * c
 
 def clean_display_name(name):
     if not name or not isinstance(name, str):
@@ -138,59 +125,6 @@ def get_valid_services(calendar_df, calendar_dates_df, start_date, end_date):
 
     return valid_services
 
-def merge_stops(stops_flix, stops_bla, threshold_meters=300):
-    logger.info("Étape : Fusion géographique (300m)...")
-    
-    stops_flix['lat_num'] = pd.to_numeric(stops_flix['stop_lat'], errors='coerce')
-    stops_flix['lon_num'] = pd.to_numeric(stops_flix['stop_lon'], errors='coerce')
-    stops_bla['lat_num'] = pd.to_numeric(stops_bla['stop_lat'], errors='coerce')
-    stops_bla['lon_num'] = pd.to_numeric(stops_bla['stop_lon'], errors='coerce')
-
-    stops_flix = stops_flix.dropna(subset=['lat_num', 'lon_num'])
-    stops_bla = stops_bla.dropna(subset=['lat_num', 'lon_num'])
-
-    mapping_dict = {}
-    stops_to_add = []
-    count_merged = 0
-    
-    flix_lats = stops_flix['lat_num'].values
-    flix_lons = stops_flix['lon_num'].values
-    flix_ids = stops_flix['stop_id'].values
-
-    logger.info(f"Analyse de {len(stops_bla)} arrêts BlaBlaCar...")
-    
-    for idx, row in stops_bla.iterrows():
-        bla_id = row['stop_id']
-        bla_lat = row['lat_num']
-        bla_lon = row['lon_num']
-        
-        min_dist = float('inf')
-        best_id = None
-        
-        for i in range(len(flix_ids)):
-            dist = haversine_distance(bla_lat, bla_lon, flix_lats[i], flix_lons[i])
-            if dist < min_dist:
-                min_dist = dist
-                best_id = flix_ids[i]
-        
-        if min_dist <= threshold_meters:
-            mapping_dict[bla_id] = best_id
-            count_merged += 1
-        else:
-            stops_to_add.append(row)
-            mapping_dict[bla_id] = bla_id
-
-    logger.info(f"{count_merged} arrêts BlaBlaCar fusionnés géographiquement.")
-    
-    master_stops = stops_flix.copy()
-    if stops_to_add:
-        extra_stops = pd.DataFrame(stops_to_add)
-        final_stops = pd.concat([master_stops, extra_stops], ignore_index=True)
-    else:
-        final_stops = master_stops
-    
-    final_stops = final_stops.drop(columns=['lat_num', 'lon_num'], errors='ignore')
-    return final_stops, mapping_dict
 
 def aggregate_by_city_select_flixbus(stops_df):
     logger.info("Étape : Agrégation par ville (Sélection arrêt FlixBus réel)...")
@@ -249,11 +183,6 @@ def clean_stop_sequences(stop_times_df, stop_mapping):
     return cleaned_df
 
 def simplify_trips(trips_df, stop_times_df):
-    """
-    Simplification améliorée :
-    1. Supprime les doublons exacts.
-    2. Supprime les trajets 'retour' si le trajet 'aller' existe déjà.
-    """
     logger.info("Simplification des trajets (Suppression aller-retours)...")
     if stop_times_df.empty or trips_df.empty:
         return trips_df, stop_times_df
@@ -353,24 +282,13 @@ def main():
     if "flixbus" not in all_data or "blablacar" not in all_data:
         logger.error("Données manquantes. Arrêt.")
         return
+    unified_stops = pd.concat([all_data['flixbus']['stops'], all_data['blablacar']['stops']], ignore_index=True)
+    unified_stop_times = pd.concat([all_data['flixbus']['stop_times'], all_data['blablacar']['stop_times']], ignore_index=True)
 
-    
-    unified_stops, geo_mapping = merge_stops(
-        all_data['flixbus']['stops'], 
-        all_data['blablacar']['stops'],
-        DISTANCE_THRESHOLD_METERS
-    )
-    
-    bla_stop_times = all_data['blablacar']['stop_times'].copy()
-    bla_stop_times['stop_id'] = bla_stop_times['stop_id'].map(geo_mapping).fillna(bla_stop_times['stop_id'])
-    
-    
     city_stops, city_mapping = aggregate_by_city_select_flixbus(unified_stops)
-    
     
     unified_trips = pd.concat([all_data['flixbus']['trips'], all_data['blablacar']['trips']], ignore_index=True)
     unified_routes = pd.concat([all_data['flixbus']['routes'], all_data['blablacar']['routes']], ignore_index=True)
-    unified_stop_times = pd.concat([all_data['flixbus']['stop_times'], bla_stop_times], ignore_index=True)
     unified_shapes = pd.concat([all_data['flixbus']['shapes'], all_data['blablacar']['shapes']], ignore_index=True)
 
     

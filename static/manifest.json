@@ -3,7 +3,7 @@
     "name": "Linia - Explorez les lignes de bus",
     "icons": [
         {
-            "src": "https://cdn-icons-png.flaticon.com/512/3448/3448636.png",
+            "src": "logo.png",
             "type": "image/png",
             "sizes": "512x512"
         }
