@@ -1,33 +1,17 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ current_lang }}">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linia — Carte Interactive des Bus</title>
-    <meta name="description"
-        content="Explorez le réseau de bus Flixbus et BlaBlaCar sur une carte interactive. Trouvez tous les arrêts et les lignes disponibles.">
-    <link rel="canonical" href="https://liniabus.eu/map" />
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://liniabus.eu/map">
-    <meta property="og:title" content="Linia — Carte Interactive des Bus">
-    <meta property="og:description" content="Explorez le réseau de bus Flixbus et BlaBlaCar sur une carte interactive.">
-    <meta property="og:image" content="https://liniabus.eu/static/logo.png">
-
-    <meta name="theme-color" content="#34a853">
-    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    {% include 'seo_head.html' %}
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
-    <script src="{{ url_for('static', filename='i18n.js') }}"></script>
 </head>
 
 <body>
+    {% set lang_prefix = '' if current_lang == 'fr' else '/' ~ current_lang %}
     <div class="map-page">
         <div id="map"></div>
-        <a href="/" class="linia-nav-btn nav-btn-home">
+        <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="linia-nav-btn nav-btn-home">
             <div class="icon-circle">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -37,7 +21,8 @@
             </div>
             <div class="btn-label" data-i18n="nav_home">Accueil</div>
         </a>
-        <a href="/planner" class="linia-nav-btn nav-btn-planner">
+        <a href="{{ (lang_prefix ~ '/planner') if lang_prefix else '/planner' }}"
+            class="linia-nav-btn nav-btn-planner">
             <div class="icon-circle">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -110,13 +95,14 @@
         </div>
         <footer
             style="position: absolute; bottom: 0; padding: 12px; font-size: 11px; pointer-events: none; z-index: 9000;">
-            <p style="margin-bottom: 4px; pointer-events: auto;"><a href="/legal" data-i18n="nav_legal"
+            <p style="margin-bottom: 4px; pointer-events: auto;"><a
+                    href="{{ (lang_prefix ~ '/legal') if lang_prefix else '/legal' }}" data-i18n="nav_legal"
                     style="color: inherit; text-decoration: none; opacity: 0.6;">Mentions Légales</a></p>
             <p style="margin-bottom: 4px;">"Страказа жывая"</p>
             <div class="color-bar-signature" style="max-width: 150px;"></div>
         </footer>
         <nav class="bottom-nav">
-            <a href="/" class="bottom-nav-item">
+            <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="bottom-nav-item">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -124,7 +110,7 @@
                 </svg>
                 <span>Accueil</span>
             </a>
-            <a href="/planner" class="bottom-nav-item">
+            <a href="{{ (lang_prefix ~ '/planner') if lang_prefix else '/planner' }}" class="bottom-nav-item">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="6" cy="19" r="3"></circle>
@@ -133,7 +119,7 @@
                 </svg>
                 <span>Itinéraire</span>
             </a>
-            <a href="/about" class="bottom-nav-item">
+            <a href="{{ (lang_prefix ~ '/about') if lang_prefix else '/about' }}" class="bottom-nav-item">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>

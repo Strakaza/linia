@@ -1,23 +1,202 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    
     <url>
         <loc>https://liniabus.eu/</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://liniabus.eu/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://liniabus.eu/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://liniabus.eu/en/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://liniabus.eu/de/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://liniabus.eu/es/"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://liniabus.eu/pt/"/>
+        <xhtml:link rel="alternate" hreflang="nl" href="https://liniabus.eu/nl/"/>
+        <xhtml:link rel="alternate" hreflang="sq" href="https://liniabus.eu/sq/"/>
+        <xhtml:link rel="alternate" hreflang="ca" href="https://liniabus.eu/ca/"/>
+        <xhtml:link rel="alternate" hreflang="hr" href="https://liniabus.eu/hr/"/>
+        <xhtml:link rel="alternate" hreflang="bg" href="https://liniabus.eu/bg/"/>
+        <xhtml:link rel="alternate" hreflang="da" href="https://liniabus.eu/da/"/>
+        <xhtml:link rel="alternate" hreflang="et" href="https://liniabus.eu/et/"/>
+        <xhtml:link rel="alternate" hreflang="fi" href="https://liniabus.eu/fi/"/>
+        <xhtml:link rel="alternate" hreflang="el" href="https://liniabus.eu/el/"/>
+        <xhtml:link rel="alternate" hreflang="hu" href="https://liniabus.eu/hu/"/>
+        <xhtml:link rel="alternate" hreflang="hi" href="https://liniabus.eu/hi/"/>
+        <xhtml:link rel="alternate" hreflang="lv" href="https://liniabus.eu/lv/"/>
+        <xhtml:link rel="alternate" hreflang="lt" href="https://liniabus.eu/lt/"/>
+        <xhtml:link rel="alternate" hreflang="lb" href="https://liniabus.eu/lb/"/>
+        <xhtml:link rel="alternate" hreflang="mk" href="https://liniabus.eu/mk/"/>
+        <xhtml:link rel="alternate" hreflang="ro" href="https://liniabus.eu/ro/"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="https://liniabus.eu/pl/"/>
+        <xhtml:link rel="alternate" hreflang="cs" href="https://liniabus.eu/cs/"/>
+        <xhtml:link rel="alternate" hreflang="sk" href="https://liniabus.eu/sk/"/>
+        <xhtml:link rel="alternate" hreflang="sl" href="https://liniabus.eu/sl/"/>
+        <xhtml:link rel="alternate" hreflang="sv" href="https://liniabus.eu/sv/"/>
+        <xhtml:link rel="alternate" hreflang="tr" href="https://liniabus.eu/tr/"/>
+        <xhtml:link rel="alternate" hreflang="uk" href="https://liniabus.eu/uk/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://liniabus.eu/ru/"/>
+        <xhtml:link rel="alternate" hreflang="be" href="https://liniabus.eu/be/"/>
+        <lastmod>2025-01-15</lastmod>
+        <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
+    
     <url>
         <loc>https://liniabus.eu/map</loc>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://liniabus.eu/planner</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://liniabus.eu/map"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://liniabus.eu/map"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://liniabus.eu/en/map"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://liniabus.eu/de/map"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://liniabus.eu/es/map"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://liniabus.eu/pt/map"/>
+        <xhtml:link rel="alternate" hreflang="nl" href="https://liniabus.eu/nl/map"/>
+        <xhtml:link rel="alternate" hreflang="sq" href="https://liniabus.eu/sq/map"/>
+        <xhtml:link rel="alternate" hreflang="ca" href="https://liniabus.eu/ca/map"/>
+        <xhtml:link rel="alternate" hreflang="hr" href="https://liniabus.eu/hr/map"/>
+        <xhtml:link rel="alternate" hreflang="bg" href="https://liniabus.eu/bg/map"/>
+        <xhtml:link rel="alternate" hreflang="da" href="https://liniabus.eu/da/map"/>
+        <xhtml:link rel="alternate" hreflang="et" href="https://liniabus.eu/et/map"/>
+        <xhtml:link rel="alternate" hreflang="fi" href="https://liniabus.eu/fi/map"/>
+        <xhtml:link rel="alternate" hreflang="el" href="https://liniabus.eu/el/map"/>
+        <xhtml:link rel="alternate" hreflang="hu" href="https://liniabus.eu/hu/map"/>
+        <xhtml:link rel="alternate" hreflang="hi" href="https://liniabus.eu/hi/map"/>
+        <xhtml:link rel="alternate" hreflang="lv" href="https://liniabus.eu/lv/map"/>
+        <xhtml:link rel="alternate" hreflang="lt" href="https://liniabus.eu/lt/map"/>
+        <xhtml:link rel="alternate" hreflang="lb" href="https://liniabus.eu/lb/map"/>
+        <xhtml:link rel="alternate" hreflang="mk" href="https://liniabus.eu/mk/map"/>
+        <xhtml:link rel="alternate" hreflang="ro" href="https://liniabus.eu/ro/map"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="https://liniabus.eu/pl/map"/>
+        <xhtml:link rel="alternate" hreflang="cs" href="https://liniabus.eu/cs/map"/>
+        <xhtml:link rel="alternate" hreflang="sk" href="https://liniabus.eu/sk/map"/>
+        <xhtml:link rel="alternate" hreflang="sl" href="https://liniabus.eu/sl/map"/>
+        <xhtml:link rel="alternate" hreflang="sv" href="https://liniabus.eu/sv/map"/>
+        <xhtml:link rel="alternate" hreflang="tr" href="https://liniabus.eu/tr/map"/>
+        <xhtml:link rel="alternate" hreflang="uk" href="https://liniabus.eu/uk/map"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://liniabus.eu/ru/map"/>
+        <xhtml:link rel="alternate" hreflang="be" href="https://liniabus.eu/be/map"/>
+        <lastmod>2025-01-15</lastmod>
+        <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
+    
+    <url>
+        <loc>https://liniabus.eu/planner</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://liniabus.eu/planner"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://liniabus.eu/planner"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://liniabus.eu/en/planner"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://liniabus.eu/de/planner"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://liniabus.eu/es/planner"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://liniabus.eu/pt/planner"/>
+        <xhtml:link rel="alternate" hreflang="nl" href="https://liniabus.eu/nl/planner"/>
+        <xhtml:link rel="alternate" hreflang="sq" href="https://liniabus.eu/sq/planner"/>
+        <xhtml:link rel="alternate" hreflang="ca" href="https://liniabus.eu/ca/planner"/>
+        <xhtml:link rel="alternate" hreflang="hr" href="https://liniabus.eu/hr/planner"/>
+        <xhtml:link rel="alternate" hreflang="bg" href="https://liniabus.eu/bg/planner"/>
+        <xhtml:link rel="alternate" hreflang="da" href="https://liniabus.eu/da/planner"/>
+        <xhtml:link rel="alternate" hreflang="et" href="https://liniabus.eu/et/planner"/>
+        <xhtml:link rel="alternate" hreflang="fi" href="https://liniabus.eu/fi/planner"/>
+        <xhtml:link rel="alternate" hreflang="el" href="https://liniabus.eu/el/planner"/>
+        <xhtml:link rel="alternate" hreflang="hu" href="https://liniabus.eu/hu/planner"/>
+        <xhtml:link rel="alternate" hreflang="hi" href="https://liniabus.eu/hi/planner"/>
+        <xhtml:link rel="alternate" hreflang="lv" href="https://liniabus.eu/lv/planner"/>
+        <xhtml:link rel="alternate" hreflang="lt" href="https://liniabus.eu/lt/planner"/>
+        <xhtml:link rel="alternate" hreflang="lb" href="https://liniabus.eu/lb/planner"/>
+        <xhtml:link rel="alternate" hreflang="mk" href="https://liniabus.eu/mk/planner"/>
+        <xhtml:link rel="alternate" hreflang="ro" href="https://liniabus.eu/ro/planner"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="https://liniabus.eu/pl/planner"/>
+        <xhtml:link rel="alternate" hreflang="cs" href="https://liniabus.eu/cs/planner"/>
+        <xhtml:link rel="alternate" hreflang="sk" href="https://liniabus.eu/sk/planner"/>
+        <xhtml:link rel="alternate" hreflang="sl" href="https://liniabus.eu/sl/planner"/>
+        <xhtml:link rel="alternate" hreflang="sv" href="https://liniabus.eu/sv/planner"/>
+        <xhtml:link rel="alternate" hreflang="tr" href="https://liniabus.eu/tr/planner"/>
+        <xhtml:link rel="alternate" hreflang="uk" href="https://liniabus.eu/uk/planner"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://liniabus.eu/ru/planner"/>
+        <xhtml:link rel="alternate" hreflang="be" href="https://liniabus.eu/be/planner"/>
+        <lastmod>2025-01-15</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
     <url>
         <loc>https://liniabus.eu/about</loc>
-        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://liniabus.eu/about"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://liniabus.eu/about"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://liniabus.eu/en/about"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://liniabus.eu/de/about"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://liniabus.eu/es/about"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://liniabus.eu/pt/about"/>
+        <xhtml:link rel="alternate" hreflang="nl" href="https://liniabus.eu/nl/about"/>
+        <xhtml:link rel="alternate" hreflang="sq" href="https://liniabus.eu/sq/about"/>
+        <xhtml:link rel="alternate" hreflang="ca" href="https://liniabus.eu/ca/about"/>
+        <xhtml:link rel="alternate" hreflang="hr" href="https://liniabus.eu/hr/about"/>
+        <xhtml:link rel="alternate" hreflang="bg" href="https://liniabus.eu/bg/about"/>
+        <xhtml:link rel="alternate" hreflang="da" href="https://liniabus.eu/da/about"/>
+        <xhtml:link rel="alternate" hreflang="et" href="https://liniabus.eu/et/about"/>
+        <xhtml:link rel="alternate" hreflang="fi" href="https://liniabus.eu/fi/about"/>
+        <xhtml:link rel="alternate" hreflang="el" href="https://liniabus.eu/el/about"/>
+        <xhtml:link rel="alternate" hreflang="hu" href="https://liniabus.eu/hu/about"/>
+        <xhtml:link rel="alternate" hreflang="hi" href="https://liniabus.eu/hi/about"/>
+        <xhtml:link rel="alternate" hreflang="lv" href="https://liniabus.eu/lv/about"/>
+        <xhtml:link rel="alternate" hreflang="lt" href="https://liniabus.eu/lt/about"/>
+        <xhtml:link rel="alternate" hreflang="lb" href="https://liniabus.eu/lb/about"/>
+        <xhtml:link rel="alternate" hreflang="mk" href="https://liniabus.eu/mk/about"/>
+        <xhtml:link rel="alternate" hreflang="ro" href="https://liniabus.eu/ro/about"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="https://liniabus.eu/pl/about"/>
+        <xhtml:link rel="alternate" hreflang="cs" href="https://liniabus.eu/cs/about"/>
+        <xhtml:link rel="alternate" hreflang="sk" href="https://liniabus.eu/sk/about"/>
+        <xhtml:link rel="alternate" hreflang="sl" href="https://liniabus.eu/sl/about"/>
+        <xhtml:link rel="alternate" hreflang="sv" href="https://liniabus.eu/sv/about"/>
+        <xhtml:link rel="alternate" hreflang="tr" href="https://liniabus.eu/tr/about"/>
+        <xhtml:link rel="alternate" hreflang="uk" href="https://liniabus.eu/uk/about"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://liniabus.eu/ru/about"/>
+        <xhtml:link rel="alternate" hreflang="be" href="https://liniabus.eu/be/about"/>
+        <lastmod>2025-01-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
     </url>
+    
     <url>
         <loc>https://liniabus.eu/legal</loc>
-        <priority>0.1</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://liniabus.eu/legal"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://liniabus.eu/legal"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://liniabus.eu/en/legal"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://liniabus.eu/de/legal"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://liniabus.eu/es/legal"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://liniabus.eu/pt/legal"/>
+        <xhtml:link rel="alternate" hreflang="nl" href="https://liniabus.eu/nl/legal"/>
+        <xhtml:link rel="alternate" hreflang="sq" href="https://liniabus.eu/sq/legal"/>
+        <xhtml:link rel="alternate" hreflang="ca" href="https://liniabus.eu/ca/legal"/>
+        <xhtml:link rel="alternate" hreflang="hr" href="https://liniabus.eu/hr/legal"/>
+        <xhtml:link rel="alternate" hreflang="bg" href="https://liniabus.eu/bg/legal"/>
+        <xhtml:link rel="alternate" hreflang="da" href="https://liniabus.eu/da/legal"/>
+        <xhtml:link rel="alternate" hreflang="et" href="https://liniabus.eu/et/legal"/>
+        <xhtml:link rel="alternate" hreflang="fi" href="https://liniabus.eu/fi/legal"/>
+        <xhtml:link rel="alternate" hreflang="el" href="https://liniabus.eu/el/legal"/>
+        <xhtml:link rel="alternate" hreflang="hu" href="https://liniabus.eu/hu/legal"/>
+        <xhtml:link rel="alternate" hreflang="hi" href="https://liniabus.eu/hi/legal"/>
+        <xhtml:link rel="alternate" hreflang="lv" href="https://liniabus.eu/lv/legal"/>
+        <xhtml:link rel="alternate" hreflang="lt" href="https://liniabus.eu/lt/legal"/>
+        <xhtml:link rel="alternate" hreflang="lb" href="https://liniabus.eu/lb/legal"/>
+        <xhtml:link rel="alternate" hreflang="mk" href="https://liniabus.eu/mk/legal"/>
+        <xhtml:link rel="alternate" hreflang="ro" href="https://liniabus.eu/ro/legal"/>
+        <xhtml:link rel="alternate" hreflang="pl" href="https://liniabus.eu/pl/legal"/>
+        <xhtml:link rel="alternate" hreflang="cs" href="https://liniabus.eu/cs/legal"/>
+        <xhtml:link rel="alternate" hreflang="sk" href="https://liniabus.eu/sk/legal"/>
+        <xhtml:link rel="alternate" hreflang="sl" href="https://liniabus.eu/sl/legal"/>
+        <xhtml:link rel="alternate" hreflang="sv" href="https://liniabus.eu/sv/legal"/>
+        <xhtml:link rel="alternate" hreflang="tr" href="https://liniabus.eu/tr/legal"/>
+        <xhtml:link rel="alternate" hreflang="uk" href="https://liniabus.eu/uk/legal"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://liniabus.eu/ru/legal"/>
+        <xhtml:link rel="alternate" hreflang="be" href="https://liniabus.eu/be/legal"/>
+        <lastmod>2025-01-15</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
     </url>
+    
+    <url>
+        <loc>https://liniabus.eu/download/gtfs_unifie</loc>
+        <lastmod>2025-01-15</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    
 </urlset>

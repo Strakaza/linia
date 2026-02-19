@@ -1,9 +1,33 @@
 User-agent: *
 Allow: /
-
-# Disallow crawling of API endpoints and downloads
 Disallow: /api/
 Disallow: /download/
 
-# Sitemap
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 2
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
 Sitemap: https://liniabus.eu/sitemap.xml
+
+Host: https://liniabus.eu
+
+Request-rate: 1/1s

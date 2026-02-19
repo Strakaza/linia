@@ -1,31 +1,19 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ current_lang }}">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="about_title">Linia — À propos du projet</title>
-    <meta name="description"
-        content="Découvrez comment Linia unifie les données GTFS Flixbus et BlaBlaCar pour vous offrir la meilleure expérience de voyage.">
-    <link rel="canonical" href="https://liniabus.eu/about" />
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://liniabus.eu/about">
-    <meta property="og:title" content="Linia — À propos du projet">
-    <meta property="og:description"
-        content="Découvrez comment Linia unifie les données GTFS pour la planification de vos trajets.">
-    <meta property="og:image" content="https://liniabus.eu/static/logo.png">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
-    <script src="{{ url_for('static', filename='i18n.js') }}"></script>
+    {% include 'seo_head.html' %}
 </head>
 
 <body>
+    {% set lang_prefix = '' if current_lang == 'fr' else '/' ~ current_lang %}
     <div class="about-page">
         <nav class="about-nav">
-            <a href="/" class="nav-brand"><span class="highlight">Linia</span></a>
+            <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="nav-brand"><span
+                    class="highlight">Linia</span></a>
             <div style="flex-grow: 1;"></div>
-            <a href="/" class="nav-link" data-i18n="return_home" style="margin-left: 0;">← Retour à l'accueil</a>
+            <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="nav-link" data-i18n="return_home"
+                style="margin-left: 0;">← Retour à l'accueil</a>
         </nav>
         <div class="about-content">
             <h1 data-i18n="about_header">À propos de Linia : Votre comparateur de bus</h1>
@@ -55,6 +43,39 @@
                     et une capture de la carte associée au trajet.
                 </p>
             </div>
+            <div class="about-section">
+                <h2 data-i18n="faq_title">FAQ</h2>
+                <div style="display: grid; gap: 10px; margin-top: 10px;">
+                    <details class="faq-item"
+                        style="border: 1px solid var(--border-light); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03);">
+                        <summary style="cursor: pointer; font-weight: 700;" data-i18n="faq_free_q">Linia est-il gratuit ?</summary>
+                        <div style="margin-top: 8px; opacity: 0.85; line-height: 1.6;" data-i18n="faq_free_a">
+                            Oui, l'outil est entièrement gratuit et sans publicité.
+                        </div>
+                    </details>
+                    <details class="faq-item"
+                        style="border: 1px solid var(--border-light); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03);">
+                        <summary style="cursor: pointer; font-weight: 700;" data-i18n="faq_countries_q">Quels sont les pays couverts ?</summary>
+                        <div style="margin-top: 8px; opacity: 0.85; line-height: 1.6;" data-i18n="faq_countries_a">
+                            Linia couvre principalement l'Europe : France, Allemagne, Espagne, Italie, Benelux, et d'autres pays européens desservis par FlixBus et BlaBlaCar Bus.
+                        </div>
+                    </details>
+                    <details class="faq-item"
+                        style="border: 1px solid var(--border-light); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03);">
+                        <summary style="cursor: pointer; font-weight: 700;" data-i18n="faq_update_q">À quelle fréquence les données sont-elles mises à jour ?</summary>
+                        <div style="margin-top: 8px; opacity: 0.85; line-height: 1.6;" data-i18n="faq_update_a">
+                            Les données GTFS sont mises à jour le premier jour de chaque mois.
+                        </div>
+                    </details>
+                    <details class="faq-item"
+                        style="border: 1px solid var(--border-light); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03);">
+                        <summary style="cursor: pointer; font-weight: 700;" data-i18n="faq_report_q">Comment signaler une erreur ou proposer une amélioration ?</summary>
+                        <div style="margin-top: 8px; opacity: 0.85; line-height: 1.6;" data-i18n="faq_report_a">
+                            Vous pouvez ouvrir une issue sur le dépôt GitHub du projet ou contacter le développeur via contact@liniabus.eu
+                        </div>
+                    </details>
+                </div>
+            </div>
             <div class="download-card">
                 <h3 data-i18n="data_sources">Sources de données (GTFS)</h3>
                 <p data-i18n="data_sources_desc">
@@ -79,13 +100,14 @@
             </div>
         </div>
         <footer class="app-footer">
-            <p style="font-size: 11px; margin-bottom: 5px; pointer-events: auto;"><a href="/legal" data-i18n="nav_legal"
+            <p style="font-size: 11px; margin-bottom: 5px; pointer-events: auto;"><a
+                    href="{{ (lang_prefix ~ '/legal') if lang_prefix else '/legal' }}" data-i18n="nav_legal"
                     style="color: inherit; text-decoration: none; opacity: 0.6;">Mentions Légales</a></p>
             <p data-i18n="footer_signature">"Страказа жывая"</p>
             <div class="color-bar-signature"></div>
         </footer>
         <nav class="bottom-nav">
-            <a href="/" class="bottom-nav-item">
+            <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="bottom-nav-item">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -93,7 +115,7 @@
                 </svg>
                 <span data-i18n="nav_home">Accueil</span>
             </a>
-            <a href="/planner" class="bottom-nav-item">
+            <a href="{{ (lang_prefix ~ '/planner') if lang_prefix else '/planner' }}" class="bottom-nav-item">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="6" cy="19" r="3"></circle>
@@ -102,7 +124,7 @@
                 </svg>
                 <span data-i18n="nav_itinerary">Itinéraire</span>
             </a>
-            <a href="/about" class="bottom-nav-item active">
+            <a href="{{ (lang_prefix ~ '/about') if lang_prefix else '/about' }}" class="bottom-nav-item active">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>

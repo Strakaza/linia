@@ -1,5 +1,23 @@
 const i18n = {
-    currentLang: localStorage.getItem('linia_lang') || 'fr',
+    currentLang: (function () {
+        // Détermine la langue à partir de l’URL, puis fallback sur localStorage, puis fr
+        try {
+            const path = window.location.pathname || '/';
+            const segments = path.split('/').filter(Boolean);
+            const candidate = segments.length > 0 ? segments[0].toLowerCase() : null;
+            const supported = [
+                'fr', 'en', 'de', 'es', 'pt', 'nl', 'sq', 'ca', 'hr', 'bg', 'da', 'et', 'fi',
+                'el', 'hu', 'hi', 'lv', 'lt', 'lb', 'mk', 'ro', 'pl', 'cs', 'sk', 'sl', 'sv',
+                'tr', 'uk', 'ru', 'be'
+            ];
+            if (candidate && supported.includes(candidate)) {
+                return candidate;
+            }
+        } catch (e) {
+            console.warn('i18n: unable to infer lang from URL', e);
+        }
+        return localStorage.getItem('linia_lang') || 'fr';
+    })(),
     translations: {
         fr: {
             "welcome": "Bienvenue sur",
@@ -82,7 +100,16 @@ const i18n = {
             "legal_responsibility_title": "4. Responsabilité",
             "legal_responsibility_content": "L'éditeur fournit les informations de transport \"en l'état\". Il ne garantit pas l'exactitude des horaires ni la disponibilité continue du service et ne peut être tenu responsable des conséquences liées à l'utilisation des informations présentes sur le site.",
             "legal_privacy_title": "5. Données personnelles et Cookies",
-            "legal_privacy_content": "Linia ne collecte aucune donnée personnelle. Le stockage local (Local Storage) de votre navigateur est utilisé exclusivement pour mémoriser vos préférences (recherches récentes, langue) afin d'améliorer l'expérience utilisateur. Aucun cookie tiers ou traceur publicitaire n'est utilisé."
+            "legal_privacy_content": "Linia ne collecte aucune donnée personnelle. Le stockage local (Local Storage) de votre navigateur est utilisé exclusivement pour mémoriser vos préférences (recherches récentes, langue) afin d'améliorer l'expérience utilisateur. Aucun cookie tiers ou traceur publicitaire n'est utilisé.",
+            "faq_title": "FAQ",
+            "faq_free_q": "Linia est-il gratuit ?",
+            "faq_free_a": "Oui, l'outil est entièrement gratuit et sans publicité.",
+            "faq_countries_q": "Quels sont les pays couverts ?",
+            "faq_countries_a": "Linia couvre principalement l'Europe : France, Allemagne, Espagne, Italie, Benelux, et d'autres pays européens desservis par FlixBus et BlaBlaCar Bus.",
+            "faq_update_q": "À quelle fréquence les données sont-elles mises à jour ?",
+            "faq_update_a": "Les données GTFS sont mises à jour le premier jour de chaque mois.",
+            "faq_report_q": "Comment signaler une erreur ou proposer une amélioration ?",
+            "faq_report_a": "Vous pouvez ouvrir une issue sur le dépôt GitHub du projet ou contacter le développeur via contact@liniabus.eu"
         },
         en: {
             "welcome": "Welcome to",
@@ -165,7 +192,16 @@ const i18n = {
             "legal_responsibility_title": "4. Responsibility",
             "legal_responsibility_content": "The editor provides the transport information 'as is'. It does not guarantee the accuracy of schedules or the continuous availability of the service and cannot be held responsible for the consequences related to the use of the information present on the site.",
             "legal_privacy_title": "5. Personal Data and Cookies",
-            "legal_privacy_content": "Linia does not collect any personal data. Your browser's local storage is used exclusively to remember your preferences (recent searches, language) in order to improve the user experience. No third-party cookies or advertising trackers are used."
+            "legal_privacy_content": "Linia does not collect any personal data. Your browser's local storage is used exclusively to remember your preferences (recent searches, language) in order to improve the user experience. No third-party cookies or advertising trackers are used.",
+            "faq_title": "FAQ",
+            "faq_free_q": "Is Linia free?",
+            "faq_free_a": "Yes, the tool is completely free and ad-free.",
+            "faq_countries_q": "Which countries are covered?",
+            "faq_countries_a": "Linia mainly covers Europe: France, Germany, Spain, Italy, Benelux, and other European countries served by FlixBus and BlaBlaCar Bus.",
+            "faq_update_q": "How often is the data updated?",
+            "faq_update_a": "GTFS data is updated on the first day of each month.",
+            "faq_report_q": "How can I report an error or suggest an improvement?",
+            "faq_report_a": "You can open an issue on the project's GitHub repository or contact the developer via contact@liniabus.eu"
         },
         de: {
             "welcome": "Willkommen bei",
@@ -248,7 +284,16 @@ const i18n = {
             "legal_responsibility_title": "4. Verantwortung",
             "legal_responsibility_content": "Der Herausgeber stellt die Transportinformationen 'wie besehen' zur Verfügung. Er garantiert weder die Richtigkeit der Fahrpläne noch die ständige Verfügbarkeit des Dienstes und kann nicht für die Folgen verantwortlich gemacht werden, die sich aus der Nutzung der auf der Website vorhandenen Informationen ergeben.",
             "legal_privacy_title": "5. Personenbezogene Daten und Cookies",
-            "legal_privacy_content": "Linia sammelt keine personenbezogenen Daten. Der lokale Speicher Ihres Browsers wird ausschließlich dazu verwendet, Ihre Präferenzen (letzte Suchen, Sprache) zu speichern, um das Nutzererlebnis zu verbessern. Es werden keine Cookies von Drittanbietern oder Werbe-Tracker verwendet."
+            "legal_privacy_content": "Linia sammelt keine personenbezogenen Daten. Der lokale Speicher Ihres Browsers wird ausschließlich dazu verwendet, Ihre Präferenzen (letzte Suchen, Sprache) zu speichern, um das Nutzererlebnis zu verbessern. Es werden keine Cookies von Drittanbietern oder Werbe-Tracker verwendet.",
+            "faq_title": "FAQ",
+            "faq_free_q": "Ist Linia kostenlos?",
+            "faq_free_a": "Ja, das Tool ist völlig kostenlos und werbefrei.",
+            "faq_countries_q": "Welche Länder sind abgedeckt?",
+            "faq_countries_a": "Linia deckt hauptsächlich Europa ab: Frankreich, Deutschland, Spanien, Italien, Benelux und andere europäische Länder, die von FlixBus und BlaBlaCar Bus bedient werden.",
+            "faq_update_q": "Wie oft werden die Daten aktualisiert?",
+            "faq_update_a": "Die GTFS-Daten werden am ersten Tag jedes Monats aktualisiert.",
+            "faq_report_q": "Wie kann ich einen Fehler melden oder eine Verbesserung vorschlagen?",
+            "faq_report_a": "Sie können ein Issue im GitHub-Repository des Projekts eröffnen oder den Entwickler über contact@liniabus.eu kontaktieren."
         },
         es: {
             "welcome": "Bienvenido a",
@@ -331,7 +376,16 @@ const i18n = {
             "legal_responsibility_title": "4. Responsabilidad",
             "legal_responsibility_content": "El editor proporciona la información de transporte 'tal cual'. No garantiza la exactitud de los horarios ni la disponibilidad continua del servicio y no puede ser considerado responsable de las consecuencias relacionadas con el uso de la información presente en el sitio.",
             "legal_privacy_title": "5. Datos Personales y Cookies",
-            "legal_privacy_content": "Linia no recopila ningún dato personal. El almacenamiento local (Local Storage) de su navegador se utiliza exclusivamente para recordar sus preferencias (búsquedas recientes, idioma) con el fin de mejorar la experiencia del usuario. No se utilizan cookies de terceros ni rastreadores publicitarios."
+            "legal_privacy_content": "Linia no recopila ningún dato personal. El almacenamiento local (Local Storage) de su navegador se utiliza exclusivamente para recordar sus preferencias (búsquedas recientes, idioma) con el fin de mejorar la experiencia del usuario. No se utilizan cookies de terceros ni rastreadores publicitarios.",
+            "faq_title": "FAQ",
+            "faq_free_q": "¿Linia es gratuito?",
+            "faq_free_a": "Sí, la herramienta es completamente gratuita y sin publicidad.",
+            "faq_countries_q": "¿Qué países están cubiertos?",
+            "faq_countries_a": "Linia cubre principalmente Europa: Francia, Alemania, España, Italia, Benelux y otros países europeos servidos por FlixBus y BlaBlaCar Bus.",
+            "faq_update_q": "¿Con qué frecuencia se actualizan los datos?",
+            "faq_update_a": "Los datos GTFS se actualizan el primer día de cada mes.",
+            "faq_report_q": "¿Cómo puedo informar de un error o sugerir una mejora?",
+            "faq_report_a": "Puede abrir una issue en el repositorio de GitHub del proyecto o contactar con el desarrollador a través de contact@liniabus.eu"
         },
         pt: {
             "welcome": "Bem-vindo a",
@@ -414,7 +468,16 @@ const i18n = {
             "legal_responsibility_title": "4. Responsabilidade",
             "legal_responsibility_content": "O editor fornece as informações de transporte 'como estão'. Não garante a precisão dos horários nem a disponibilidade contínua do serviço e não pode ser responsabilizado pelas consequências relacionadas com o uso das informações presentes no site.",
             "legal_privacy_title": "5. Dados Pessoais e Cookies",
-            "legal_privacy_content": "Linia não recolhe quaisquer dados pessoais. O armazenamento local (Local Storage) do seu navegador é utilizado exclusivamente para memorizar as suas preferências (pesquisas recentes, idioma) a fim de melhorar a experiência do utilizador. Não são utilizados cookies de terceiros ou rastreadores publicitários."
+            "legal_privacy_content": "Linia não recolhe quaisquer dados pessoais. O armazenamento local (Local Storage) do seu navegador é utilizado exclusivamente para memorizar as suas preferências (pesquisas recentes, idioma) a fim de melhorar a experiência do utilizador. Não são utilizados cookies de terceiros ou rastreadores publicitários.",
+            "faq_title": "FAQ",
+            "faq_free_q": "O Linia é gratuito?",
+            "faq_free_a": "Sim, a ferramenta é totalmente gratuita e sem publicidade.",
+            "faq_countries_q": "Quais países são cobertos?",
+            "faq_countries_a": "O Linia cobre principalmente a Europa: França, Alemanha, Espanha, Itália, Benelux e outros países europeus servidos pela FlixBus e BlaBlaCar Bus.",
+            "faq_update_q": "Com que frequência os dados são atualizados?",
+            "faq_update_a": "Os dados GTFS são atualizados no primeiro dia de cada mês.",
+            "faq_report_q": "Como posso reportar um erro ou sugerir uma melhoria?",
+            "faq_report_a": "Pode abrir uma issue no repositório GitHub do projeto ou contactar o programador através de contact@liniabus.eu"
         },
         nl: {
             "welcome": "Welkom bij",
@@ -497,7 +560,16 @@ const i18n = {
             "legal_responsibility_title": "4. Verantwoordelijkheid",
             "legal_responsibility_content": "De beheerder verstrekt de transportinformatie 'zoals deze is'. Hij garandeert niet de juistheid van de dienstregelingen of de continue beschikbaarheid van de dienst en kan niet verantwoordelijk worden gehouden voor de gevolgen van het gebruik van de informatie op de site.",
             "legal_privacy_title": "5. Persoonsgegevens en Cookies",
-            "legal_privacy_content": "Linia verzamelt geen persoonlijke gegevens. De lokale opslag (Local Storage) van uw browser wordt uitsluitend gebruikt om uw voorkeuren (recente zoekopdrachten, taal) te onthouden om de gebruikerservaring te verbeteren. Er worden geen cookies van derden of advertentietrackers gebruikt."
+            "legal_privacy_content": "Linia verzamelt geen persoonlijke gegevens. De lokale opslag (Local Storage) van uw browser wordt uitsluitend gebruikt om uw voorkeuren (recente zoekopdrachten, taal) te onthouden om de gebruikerservaring te verbeteren. Er worden geen cookies van derden of advertentietrackers gebruikt.",
+            "faq_title": "FAQ",
+            "faq_free_q": "Is Linia gratis?",
+            "faq_free_a": "Ja, de tool is volledig gratis en reclamevrij.",
+            "faq_countries_q": "Welke landen worden gedekt?",
+            "faq_countries_a": "Linia dekt voornamelijk Europa: Frankrijk, Duitsland, Spanje, Italië, Benelux en andere Europese landen die door FlixBus en BlaBlaCar Bus worden bediend.",
+            "faq_update_q": "Hoe vaak worden de gegevens bijgewerkt?",
+            "faq_update_a": "De GTFS-gegevens worden op de eerste dag van elke maand bijgewerkt.",
+            "faq_report_q": "Hoe kan ik een fout melden of een verbetering voorstellen?",
+            "faq_report_a": "U kunt een issue openen in de GitHub-repository van het project of contact opnemen met de ontwikkelaar via contact@liniabus.eu"
         },
         sq: {
             "welcome": "Mirësevini në",
@@ -580,7 +652,16 @@ const i18n = {
             "legal_responsibility_title": "4. Përgjegjësia",
             "legal_responsibility_content": "Botuesi ofron informacionin e transportit 'siç është'. Ai nuk garanton saktësinë e orareve apo disponueshmërinë e vazhdueshme të shërbimit dhe nuk mund të mbahet përgjegjës për pasojat lidhur me përdorimin e informacionit në faqe.",
             "legal_privacy_title": "5. Të dhënat personale dhe Cookies",
-            "legal_privacy_content": "Linia nuk mbledh asnjë të dhënë personale. Ruajtja lokale e shfletuesit tuaj përdoret ekskluzivisht për të mbajtur mend preferencat tuaja (kërkimet e fundit, gjuha) në mënyrë që të përmirësohet përvoja e përdoruesit. Nuk përdoren cookie të palëve të treta apo gjurmues reklamash."
+            "legal_privacy_content": "Linia nuk mbledh asnjë të dhënë personale. Ruajtja lokale e shfletuesit tuaj përdoret ekskluzivisht për të mbajtur mend preferencat tuaja (kërkimet e fundit, gjuha) në mënyrë që të përmirësohet përvoja e përdoruesit. Nuk përdoren cookie të palëve të treta apo gjurmues reklamash.",
+            "faq_title": "FAQ",
+            "faq_free_q": "A është Linia falas?",
+            "faq_free_a": "Po, mjeti është plotësisht falas dhe pa reklama.",
+            "faq_countries_q": "Cilat vende janë të mbuluara?",
+            "faq_countries_a": "Linia mbulon kryesisht Evropën: Francë, Gjermani, Spanjë, Itali, Beneluks dhe vende të tjera evropiane të shërbyera nga FlixBus dhe BlaBlaCar Bus.",
+            "faq_update_q": "Sa shpesh përditësohen të dhënat?",
+            "faq_update_a": "Të dhënat GTFS përditësohen të ditën e parë të çdo muaji.",
+            "faq_report_q": "Si mund të raportoj një gabim ose të propozoj një përmirësim?",
+            "faq_report_a": "Mund të hapni një issue në depon e projektit në GitHub ose të kontaktoni zhvilluesin përmes contact@liniabus.eu"
         },
         ca: {
             "welcome": "Benvinguts a",
@@ -666,7 +747,16 @@ const i18n = {
             "legal_responsibility_title": "4. Responsabilitat",
             "legal_responsibility_content": "L'editor proporciona la informació de transport 'tal com és'. No garanteix l'exactitud dels horaris ni la disponibilitat contínua del servei i no pot ser responsable de les conseqüències relacionades amb l'ús de la informació present al lloc.",
             "legal_privacy_title": "5. Dades Personals i Cookies",
-            "legal_privacy_content": "Linia no recull cap dada personal. L'emmagatzematge local (Local Storage) del vostre navegador s'utilitza exclusivament per recordar les vostres preferències (cerques recents, idioma) per millorar l'experiència d'usuari. No s'utilitzen galetes de tercers ni rastrejadors publicitaris."
+            "legal_privacy_content": "Linia no recull cap dada personal. L'emmagatzematge local (Local Storage) del vostre navegador s'utilitza exclusivament per recordar les vostres preferències (cerques recents, idioma) per millorar l'experiència d'usuari. No s'utilitzen galetes de tercers ni rastrejadors publicitaris.",
+            "faq_title": "FAQ",
+            "faq_free_q": "És Linia gratuït?",
+            "faq_free_a": "Sí, l'eina és completament gratuïta i sense publicitat.",
+            "faq_countries_q": "Quins països estan coberts?",
+            "faq_countries_a": "Linia cobreix principalment Europa: França, Alemanya, Espanya, Itàlia, Benelux i altres països europeus servits per FlixBus i BlaBlaCar Bus.",
+            "faq_update_q": "Amb quina freqüència s'actualitzen les dades?",
+            "faq_update_a": "Les dades GTFS s'actualitzen el primer dia de cada mes.",
+            "faq_report_q": "Com puc informar d'un error o suggerir una millora?",
+            "faq_report_a": "Podeu obrir una issue al repositori GitHub del projecte o contactar amb el desenvolupador mitjançant contact@liniabus.eu"
         },
         hr: {
             "welcome": "Dobrodošli u",
@@ -752,7 +842,16 @@ const i18n = {
             "legal_responsibility_title": "4. Odgovornost",
             "legal_responsibility_content": "Urednik pruža informacije o prijevozu 'kakve jesu'. Ne jamči točnost redova vožnje niti kontinuiranu dostupnost usluge i ne može se smatrati odgovornim za posljedice povezane s korištenjem informacija na stranici.",
             "legal_privacy_title": "5. Osobni podaci i kolačići",
-            "legal_privacy_content": "Linia ne prikuplja nikakve osobne podatke. Lokalna pohrana vašeg preglednika koristi se isključivo za pamćenje vaših preferencija (nedavna pretraživanja, jezik) radi poboljšanja korisničkog iskustva. Ne koriste se kolačići trećih strana niti reklamni tragači."
+            "legal_privacy_content": "Linia ne prikuplja nikakve osobne podatke. Lokalna pohrana vašeg preglednika koristi se isključivo za pamćenje vaših preferencija (nedavna pretraživanja, jezik) radi poboljšanja korisničkog iskustva. Ne koriste se kolačići trećih strana niti reklamni tragači.",
+            "faq_title": "FAQ",
+            "faq_free_q": "Je li Linia besplatan?",
+            "faq_free_a": "Da, alat je potpuno besplatan i bez oglasa.",
+            "faq_countries_q": "Koje su zemlje pokrivene?",
+            "faq_countries_a": "Linia pokriva uglavnom Europu: Francusku, Njemačku, Španjolsku, Italiju, Beneluks i druge europske zemlje koje opslužuju FlixBus i BlaBlaCar Bus.",
+            "faq_update_q": "Koliko se često podaci ažuriraju?",
+            "faq_update_a": "GTFS podaci ažuriraju se prvog dana svakog mjeseca.",
+            "faq_report_q": "Kako mogu prijaviti pogrešku ili predložiti poboljšanje?",
+            "faq_report_a": "Možete otvoriti issue u GitHub repozitoriju projekta ili kontaktirati developera putem contact@liniabus.eu"
         },
         bg: {
             "welcome": "Добре дошли в",
@@ -835,7 +934,16 @@ const i18n = {
             "legal_responsibility_title": "4. Отговорност",
             "legal_responsibility_content": "Редакторът предоставя транспортната информация 'както е'. Той не гарантира точността на разписанията нито непрекъснатата наличност на услугата и не може да носи отговорност за последствия, свързани с използването на информацията на сайта.",
             "legal_privacy_title": "5. Лични данни и бисквитки",
-            "legal_privacy_content": "Linia не събира никакви лични данни. Локалното хранилище (Local Storage) на вашия браузър се използва единствено за запомняне на вашите предпочитания (скорошни търсения, език) с цел подобряване на потребителското изживяване. Не се използват бисквитки на трети страни или рекламни тракери."
+            "legal_privacy_content": "Linia не събира никакви лични данни. Локалното хранилище (Local Storage) на вашия браузър се използва единствено за запомняне на вашите предпочитания (скорошни търсения, език) с цел подобряване на потребителското изживяване. Не се използват бисквитки на трети страни или рекламни тракери.",
+            "faq_title": "FAQ",
+            "faq_free_q": "Безплатен ли е Linia?",
+            "faq_free_a": "Да, инструментът е напълно безплатен и без реклами.",
+            "faq_countries_q": "Кои държави са покрити?",
+            "faq_countries_a": "Linia покрива предимно Европа: Франция, Германия, Испания, Италия, Бенелюкс и други европейски държави, обслужвани от FlixBus и BlaBlaCar Bus.",
+            "faq_update_q": "Колко често се актуализират данните?",
+            "faq_update_a": "GTFS данните се актуализират на първия ден на всеки месец.",
+            "faq_report_q": "Как мога да докладвам грешка или да предложа подобрение?",
+            "faq_report_a": "Можете да отворите issue в GitHub хранилището на проекта или да се свържете с разработчика чрез contact@liniabus.eu"
         },
         da: {
             "welcome": "Velkommen til",
@@ -918,7 +1026,16 @@ const i18n = {
             "legal_responsibility_title": "4. Ansvar",
             "legal_responsibility_content": "Redaktøren leverer transportoplysningerne 'som de er'. Han garanterer hverken nøjagtigheden af tidsplanerne eller den kontinuerlige tilgængelighed af tjenesten og kan ikke holdes ansvarlig for konsekvenserne i forbindelse med brugen af oplysningerne på webstedet.",
             "legal_privacy_title": "5. Personlige Data og Cookies",
-            "legal_privacy_content": "Linia indsamler ingen personlige data. Din browsers lokale lager (Local Storage) bruges udelukkende til at huske dine præferencer (seneste søgninger, sprog) for at forbedre brugeroplevelsen. Der bruges ingen tredjepartscookies eller annoncesporere."
+            "legal_privacy_content": "Linia indsamler ingen personlige data. Din browsers lokale lager (Local Storage) bruges udelukkende til at huske dine præferencer (seneste søgninger, sprog) for at forbedre brugeroplevelsen. Der bruges ingen tredjepartscookies eller annoncesporere.",
+            "faq_title": "FAQ",
+            "faq_free_q": "Er Linia gratis?",
+            "faq_free_a": "Ja, værktøjet er helt gratis og reklamefrit.",
+            "faq_countries_q": "Hvilke lande er dækket?",
+            "faq_countries_a": "Linia dækker primært Europa: Frankrig, Tyskland, Spanien, Italien, Benelux og andre europæiske lande betjent af FlixBus og BlaBlaCar Bus.",
+            "faq_update_q": "Hvor ofte opdateres dataene?",
+            "faq_update_a": "GTFS-data opdateres den første dag i hver måned.",
+            "faq_report_q": "Hvordan kan jeg rapportere en fejl eller foreslå en forbedring?",
+            "faq_report_a": "Du kan åbne et issue i projektets GitHub-arkiv eller kontakte udvikleren via contact@liniabus.eu"
         },
         et: {
             "welcome": "Tere tulemast",
@@ -1001,7 +1118,16 @@ const i18n = {
             "legal_responsibility_title": "4. Vastutus",
             "legal_responsibility_content": "Toimetaja esitab transporditeabe 'nagu see on'. Ta ei garanteeri sõiduplaanide täpsust ega teenuse pidevat kättesaadavust ega vastuta saidil oleva teabe kasutamisega seotud tagajärgede eest.",
             "legal_privacy_title": "5. Isikuandmed ja küpsised",
-            "legal_privacy_content": "Linia ei kogu isikuandmeid. Teie brauseri kohalikku salvestusruumi kasutatakse ainult teie eelistuste (hiljutised otsingud, keel) meeldejätmiseks kasutajakogemuse parandamiseks. Kolmandate osapoolte küpsiseid ega reklaamijälgijaid ei kasutata."
+            "legal_privacy_content": "Linia ei kogu isikuandmeid. Teie brauseri kohalikku salvestusruumi kasutatakse ainult teie eelistuste (hiljutised otsingud, keel) meeldejätmiseks kasutajakogemuse parandamiseks. Kolmandate osapoolte küpsiseid ega reklaamijälgijaid ei kasutata.",
+            "faq_title": "KKK",
+            "faq_free_q": "Kas Linia on tasuta?",
+            "faq_free_a": "Jah, tööriist on täiesti tasuta ja reklaamivaba.",
+            "faq_countries_q": "Millised riigid on kaetud?",
+            "faq_countries_a": "Linia katab peamiselt Euroopat: Prantsusmaa, Saksamaa, Hispaania, Itaalia, Benelux ja teised Euroopa riigid, mida teenindavad FlixBus ja BlaBlaCar Bus.",
+            "faq_update_q": "Kui sageli andmeid uuendatakse?",
+            "faq_update_a": "GTFS andmeid uuendatakse igaku esimesel päeval.",
+            "faq_report_q": "Kuidas saan teatada veast või esitada parandusettepanekut?",
+            "faq_report_a": "Võite avada projekti GitHubi hoidlas issue või võtta arendajaga ühendust aadressil contact@liniabus.eu"
         },
         fi: {
             "welcome": "Tervetuloa",
@@ -1084,7 +1210,16 @@ const i18n = {
             "legal_responsibility_title": "4. Vastuu",
             "legal_responsibility_content": "Julkaisija tarjoaa liikennetiedot 'sellaisina kuin ne ovat'. Se ei takaa aikataulujen oikeellisuutta tai palvelun jatkuvaa saatavuutta eikä ole vastuussa sivustolla olevien tietojen käytöstä aiheutuvista seurauksista.",
             "legal_privacy_title": "5. Henkilötiedot ja evästeet",
-            "legal_privacy_content": "Linia ei kerää henkilötietoja. Selaimesi paikallista tallennustilaa käytetään yksinomaan mieltymystesi (viimeisimmät haut, kieli) muistamiseen käyttökokemuksen parantamiseksi. Kolmannen osapuolen evästeitä tai mainosseurantoja ei käytetä."
+            "legal_privacy_content": "Linia ei kerää henkilötietoja. Selaimesi paikallista tallennustilaa käytetään yksinomaan mieltymystesi (viimeisimmät haut, kieli) muistamiseen käyttökokemuksen parantamiseksi. Kolmannen osapuolen evästeitä tai mainosseurantoja ei käytetä.",
+            "faq_title": "UKK",
+            "faq_free_q": "Onko Linia ilmainen?",
+            "faq_free_a": "Kyllä, työkalu on täysin ilmainen ja mainokseton.",
+            "faq_countries_q": "Mitkä maat ovat kattavuuden piirissä?",
+            "faq_countries_a": "Linia kattaa pääasiassa Euroopan: Ranska, Saksa, Espanja, Italia, Benelux ja muut Euroopan maat, joita FlixBus ja BlaBlaCar Bus palvelevat.",
+            "faq_update_q": "Kuinka usein tietoja päivitetään?",
+            "faq_update_a": "GTFS-tiedot päivitetään kuukauden ensimmäisenä päivänä.",
+            "faq_report_q": "Miten voin ilmoittaa virheestä tai ehdottaa parannusta?",
+            "faq_report_a": "Voit avata issuuen projektin GitHub-tietovarastossa tai ottaa yhteyttä kehittäjään osoitteella contact@liniabus.eu"
         },
         el: {
             "welcome": "Καλώς ήρθατε στο",
@@ -1167,7 +1302,16 @@ const i18n = {
             "legal_responsibility_title": "4. Ευθύνη",
             "legal_responsibility_content": "Ο εκδότης παρέχει τις πληροφορίες μεταφοράς 'ως έχουν'. Δεν εγγυάται την ακρίβεια των δρομολογίων ή τη συνεχή διαθεσιμότητα της υπηρεσίας και δεν φέρει ευθύνη για τις συνέπειες που σχετίζονται με τη χρήση των πληροφοριών στον ιστότοπο.",
             "legal_privacy_title": "5. Προσωπικά Δεδομένα και Cookies",
-            "legal_privacy_content": "Το Linia δεν συλλέγει προσωπικά δεδομένα. Ο τοπικός αποθηκευτικός χώρος του προγράμματος περιήγησής σας χρησιμοποιείται αποκλειστικά για την απομνημόνευση των προτιμήσεών σας (πρόσφατες αναζητήσεις, γλώσσα) για τη βελτίωση της εμπειρίας χρήστη. Δεν χρησιμοποιούνται cookies τρίτων ή διαφημιστικοί ιχνηλάτες."
+            "legal_privacy_content": "Το Linia δεν συλλέγει προσωπικά δεδομένα. Ο τοπικός αποθηκευτικός χώρος του προγράμματος περιήγησής σας χρησιμοποιείται αποκλειστικά για την απομνημόνευση των προτιμήσεών σας (πρόσφατες αναζητήσεις, γλώσσα) για τη βελτίωση της εμπειρίας χρήστη. Δεν χρησιμοποιούνται cookies τρίτων ή διαφημιστικοί ιχνηλάτες.",
+            "faq_title": "ΣΥΧΝΕΣ ΕΡΩΤΗΣΕΙΣ",
+            "faq_free_q": "Είναι το Linia δωρεάν;",
+            "faq_free_a": "Ναι, το εργαλείο είναι εντελώς δωρεάν και χωρίς διαφημίσεις.",
+            "faq_countries_q": "Ποιες χώρες καλύπτονται;",
+            "faq_countries_a": "Το Linia καλύπτει κυρίως την Ευρώπη: Γαλλία, Γερμανία, Ισπανία, Ιταλία, Μπενελούξ και άλλες ευρωπαϊκές χώρες που εξυπηρετούνται από FlixBus και BlaBlaCar Bus.",
+            "faq_update_q": "Πόσο συχνά ενημερώνονται τα δεδομένα;",
+            "faq_update_a": "Τα δεδομένα GTFS ενημερώνονται την πρώτη ημέρα κάθε μήνα.",
+            "faq_report_q": "Πώς μπορώ να αναφέρω ένα σφάλμα ή να προτείνω μια βελτίωση;",
+            "faq_report_a": "Μπορείτε να ανοίξετε ένα issue στο GitHub repository του έργου ή να επικοινωνήσετε με τον προγραμματιστή μέσω contact@liniabus.eu"
         },
         hu: {
             "welcome": "Üdvözöljük a",
@@ -1250,7 +1394,16 @@ const i18n = {
             "legal_responsibility_title": "4. Felelősség",
             "legal_responsibility_content": "A szerkesztő a szállítási információkat 'olyan formában' nyújtja, ahogy vannak. Nem garantálja a menetrendek pontosságát vagy a szolgáltatás folyamatos rendelkezésre állását, és nem vonható felelősségre a webhelyen található információk használatából eredő következményekért.",
             "legal_privacy_title": "5. Személyes adatok és sütik",
-            "legal_privacy_content": "A Linia nem gyűjt személyes adatokat. A böngésző helyi tárolóját kizárólag az Ön preferenciáinak (legutóbbi keresések, nyelv) megjegyzésére használjuk a felhasználói élmény javítása érdekében. Harmadik féltől származó sütiket vagy hirdetéskövetőket nem használunk."
+            "legal_privacy_content": "A Linia nem gyűjt személyes adatokat. A böngésző helyi tárolóját kizárólag az Ön preferenciáinak (legutóbbi keresések, nyelv) megjegyzésére használjuk a felhasználói élmény javítása érdekében. Harmadik féltől származó sütiket vagy hirdetéskövetőket nem használunk.",
+            "faq_title": "GYIK",
+            "faq_free_q": "Ingyenes a Linia?",
+            "faq_free_a": "Igen, az eszköz teljesen ingyenes és reklámmentes.",
+            "faq_countries_q": "Mely országok vannak lefedve?",
+            "faq_countries_a": "A Linia főként Európát fedi le: Franciaország, Németország, Spanyolország, Olaszország, Benelux és más európai országok, amelyeket a FlixBus és a BlaBlaCar Bus kiszolgál.",
+            "faq_update_q": "Milyen gyakran frissítik az adatokat?",
+            "faq_update_a": "A GTFS adatokat minden hónap első napján frissítik.",
+            "faq_report_q": "Hogyan jelenthetek hibát vagy tehetek javaslatot?",
+            "faq_report_a": "Nyithat egy issue-t a projekt GitHub tárhelyén, vagy kapcsolatba léphet a fejlesztővel a contact@liniabus.eu címen"
         },
         hi: {
             "welcome": "स्वागत है",
@@ -1333,7 +1486,16 @@ const i18n = {
             "legal_responsibility_title": "4. जिम्मेदारी",
             "legal_responsibility_content": "संपादक परिवहन जानकारी 'यथास्थिति' प्रदान करता है। यह अनुसूचियों की सटीकता या सेवा की निरंतर उपलब्धता की गारंटी नहीं देता है और साइट पर मौजूद जानकारी के उपयोग से संबंधित परिणामों के लिए जिम्मेदार नहीं ठहराया जा सकता है।",
             "legal_privacy_title": "5. व्यक्तिगत डेटा और कुकीज़",
-            "legal_privacy_content": "Linia कोई व्यक्तिगत डेटा एकत्र नहीं करता है। आपके ब्राउज़र का स्थानीय संग्रहण विशेष रूप से आपकी प्राथमिकताओं (हाल की खोजें, भाषा) को याद रखने के लिए उपयोग किया जाता है ताकि उपयोगकर्ता अनुभव में सुधार हो सके। किसी तृतीय-पक्ष कुकीज़ या विज्ञापन ट्रैकर्स का उपयोग नहीं किया जाता है।"
+            "legal_privacy_content": "Linia कोई व्यक्तिगत डेटा एकत्र नहीं करता है। आपके ब्राउज़र का स्थानीय संग्रहण विशेष रूप से आपकी प्राथमिकताओं (हाल की खोजें, भाषा) को याद रखने के लिए उपयोग किया जाता है ताकि उपयोगकर्ता अनुभव में सुधार हो सके। किसी तृतीय-पक्ष कुकीज़ या विज्ञापन ट्रैकर्स का उपयोग नहीं किया जाता है।",
+            "faq_title": "FAQ",
+            "faq_free_q": "क्या Linia मुफ्त है?",
+            "faq_free_a": "हाँ, यह उपकरण पूरी तरह से मुफ्त और विज्ञापन-मुक्त है।",
+            "faq_countries_q": "कौन से देश शामिल हैं?",
+            "faq_countries_a": "Linia मुख्य रूप से यूरोप को कवर करता है: फ्रांस, जर्मनी, स्पेन, इटली, बेनेलक्स, और अन्य यूरोपीय देश जो FlixBus और BlaBlaCar Bus द्वारा सेवित हैं।",
+            "faq_update_q": "डेटा कितनी बार अपडेट किया जाता है?",
+            "faq_update_a": "GTFS डेटा हर महीने के पहले दिन अपडेट किया जाता है।",
+            "faq_report_q": "मैं त्रुटि की रिपोर्ट कैसे करूं या सुधार का सुझाव कैसे दूं?",
+            "faq_report_a": "आप प्रोजेक्ट के GitHub रिपॉजिटरी में एक issue खोल सकते हैं या contact@liniabus.eu पर डेवलपर से संपर्क कर सकते हैं।"
         },
         lv: {
             "welcome": "Laipni lūdzam",
@@ -1416,7 +1578,16 @@ const i18n = {
             "legal_responsibility_title": "4. Atbildība",
             "legal_responsibility_content": "Redaktors sniedz transporta informāciju 'tādu, kāda tā ir'. Viņš negarantē grafiku precizitāti vai pakalpojuma nepārtrauktu pieejamību un nevar tikt saukts pie atbildības par sekām, kas saistītas ar vietnē esošās informācijas izmantošanu.",
             "legal_privacy_title": "5. Personas dati un sīkfaili",
-            "legal_privacy_content": "Linia nevāc nekādus personas datus. Jūsu pārlūkprogrammas vietējā krātuve tiek izmantota tikai jūsu preferenču (pēdējie meklējumi, valoda) atcerēšanai, lai uzlabotu lietotāja pieredzi. Netiek izmantoti trešo pušu sīkfaili vai reklāmas izsekotāji."
+            "legal_privacy_content": "Linia nevāc nekādus personas datus. Jūsu pārlūkprogrammas vietējā krātuve tiek izmantota tikai jūsu preferenču (pēdējie meklējumi, valoda) atcerēšanai, lai uzlabotu lietotāja pieredzi. Netiek izmantoti trešo pušu sīkfaili vai reklāmas izsekotāji.",
+            "faq_title": "BUJ",
+            "faq_free_q": "Vai Linia ir bezmaksas?",
+            "faq_free_a": "Jā, rīks ir pilnīgi bezmaksas un bez reklāmām.",
+            "faq_countries_q": "Kuras valstis ir segtas?",
+            "faq_countries_a": "Linia galvenokārt sedz Eiropu: Francija, Vācija, Spānija, Itālija, Benilukss un citas Eiropas valstis, ko apkalpo FlixBus un BlaBlaCar Bus.",
+            "faq_update_q": "Cik bieži dati tiek atjaunināti?",
+            "faq_update_a": "GTFS dati tiek atjaunināti katra mēneša pirmajā dienā.",
+            "faq_report_q": "Kā es varu ziņot par kļūdu vai ierosināt uzlabojumu?",
+            "faq_report_a": "Jūs varat atvērt issue projekta GitHub repozitorijā vai sazināties ar izstrādātāju, izmantojot contact@liniabus.eu"
         },
         lt: {
             "welcome": "Sveiki atvykę į",
@@ -1499,7 +1670,16 @@ const i18n = {
             "legal_responsibility_title": "4. Atsakomybė",
             "legal_responsibility_content": "Leidėjas teikia transporto informaciją 'tokia, kokia ji yra'. Jis negarantuoja tvarkaraščių tikslumo ar nuolatinio paslaugos prieinamumo ir negali būti laikomas atsakingu už pasekmes, susijusias su svetainėje pateiktos informacijos naudojimu.",
             "legal_privacy_title": "5. Asmens duomenys ir slapukai",
-            "legal_privacy_content": "„Linia“ nerenka jokių asmens duomenų. Jūsų naršyklės vietinė saugykla naudojama tik jūsų pageidavimams (paskutinės paieškos, kalba) įsiminti, siekiant pagerinti naudotojo patirtį. Nenaudojami trečiųjų šalių slapukai ar reklamos stebėjimo priemonės."
+            "legal_privacy_content": "„Linia„ nerenka jokių asmens duomenų. Jūsų naršyklės vietinė saugykla naudojama tik jūsų pageidavimams (paskutinės paieškos, kalba) įsiminti, siekiant pagerinti naudotojo patirtį. Nenaudojami trečiųjų šalių slapukai ar reklamos stebėjimo priemonės.",
+            "faq_title": "DUK",
+            "faq_free_q": "Ar Linia yra nemokama?",
+            "faq_free_a": "Taip, įrankis visiškai nemokamas ir be reklamų.",
+            "faq_countries_q": "Kurios šalys yra aprėptos?",
+            "faq_countries_a": "Linia daugiausia aprėpia Europą: Prancūziją, Vokietiją, Ispaniją, Italiją, Beneliukso šalis ir kitas Europos šalis, aptarnaujamas FlixBus ir BlaBlaCar Bus.",
+            "faq_update_q": "Kaip dažnai atnaujinami duomenys?",
+            "faq_update_a": "GTFS duomenys atnaujinami kiekvieno mėnesio pirmąją dieną.",
+            "faq_report_q": "Kaip galiu pranešti apie klaidą arba pasiūlyti patobulinimą?",
+            "faq_report_a": "Galite atidaryti issue projekto GitHub saugykloje arba susisiekti su kūrėju el. paštu contact@liniabus.eu"
         },
         lb: {
             "welcome": "Wëllkomm op",
@@ -1582,7 +1762,16 @@ const i18n = {
             "legal_responsibility_title": "4. Verantwortung",
             "legal_responsibility_content": "Den Editeur stellt d'Transportinformatioun 'wéi se ass' zur Verfügung. Hie garantéiert net d'Genauegkeet vun den Zäitpläng oder déi kontinuéierlech Disponibilitéit vum Service a kann net verantwortlech gemaach ginn fir d'Konsequenzen am Zesummenhang mat der Notzung vun den Informatiounen um Site.",
             "legal_privacy_title": "5. Perséinlech Daten a Cookien",
-            "legal_privacy_content": "Linia sammelt keng perséinlech Daten. De lokale Späicher vun Ärem Browser gëtt nëmme benotzt fir Är Preferenzen (lescht Sichen, Sprooch) ze erënneren fir d'Benotzererfarung ze verbesseren. Keng Drëtt-Partei Cookien oder Reklamm-Tracker ginn benotzt."
+            "legal_privacy_content": "Linia sammelt keng perséinlech Daten. De lokale Späicher vun Ärem Browser gëtt nëmme benotzt fir Är Preferenzen (lescht Sichen, Sprooch) ze erënneren fir d'Benotzererfarung ze verbesseren. Keng Drëtt-Partei Cookien oder Reklamm-Tracker ginn benotzt.",
+            "faq_title": "FAQ",
+            "faq_free_q": "Ass Linia gratis?",
+            "faq_free_a": "Jo, d'Tool ass komplett gratis an ouni Reklammen.",
+            "faq_countries_q": "Wéi Länner sinn ofgedeckt?",
+            "faq_countries_a": "Linia deckt haaptsächlech Europa of: Frankräich, Däitschland, Spuenien, Italien, Benelux an aner europäesch Länner déi vu FlixBus a BlaBlaCar Bus bedéngt ginn.",
+            "faq_update_q": "Wéi dacks ginn d'Daten aktualiséiert?",
+            "faq_update_a": "GTFS-Daten ginn deen éischten Dag vun all Mount aktualiséiert.",
+            "faq_report_q": "Wéi kann ech e Feeler mellen oder eng Verbesserung virschloen?",
+            "faq_report_a": "Dir kann en Issue am GitHub-Repository vum Projet opmaachen oder den Entwéckler iwwer contact@liniabus.eu kontaktéieren."
         },
         mk: {
             "welcome": "Добредојдовте во",
@@ -1665,7 +1854,16 @@ const i18n = {
             "legal_responsibility_title": "4. Одговорност",
             "legal_responsibility_content": "Издавачот ги обезбедува информациите за транспорт 'такви какви што се'. Тој не гарантира точност на распоредот ниту континуирана достапност на услугата и не може да се смета за одговорен за последиците поврзани со користењето на информациите на страницата.",
             "legal_privacy_title": "5. Лични податоци и колачиња",
-            "legal_privacy_content": "Linia не собира никакви лични податоци. Локалното складирање на вашиот прелистувач се користи исклучиво за памтење на вашите преференции (неодамнешни пребарувања, јазик) со цел да се подобри корисничкото искуство. Не се користат колачиња од трети страни или рекламни тракери."
+            "legal_privacy_content": "Linia не собира никакви лични податоци. Локалното складирање на вашиот прелистувач се користи исклучиво за памтење на вашите преференции (неодамнешни пребарувања, јазик) со цел да се подобри корисничкото искуство. Не се користат колачиња од трети страни или рекламни тракери.",
+            "faq_title": "ЧПП",
+            "faq_free_q": "Дали Linia е бесплатна?",
+            "faq_free_a": "Да, алатката е целосно бесплатна и без реклами.",
+            "faq_countries_q": "Кои земји се покриени?",
+            "faq_countries_a": "Linia покрива главно Европа: Франција, Германија, Шпанија, Италија, Бенелукс и други европски земји опслужени од FlixBus и BlaBlaCar Bus.",
+            "faq_update_q": "Колку често се ажурираат податоците?",
+            "faq_update_a": "GTFS податоците се ажурираат на првиот ден од секој месец.",
+            "faq_report_q": "Како можам да пријавам грешка или да предложам подобрување?",
+            "faq_report_a": "Можете да отворите issue во GitHub складиштето на проектот или да го контактирате развивачот преку contact@liniabus.eu"
         },
         ro: {
             "welcome": "Bun venit la",
@@ -1748,7 +1946,16 @@ const i18n = {
             "legal_responsibility_title": "4. Responsabilitate",
             "legal_responsibility_content": "Editorul furnizează informațiile de transport 'ca atare'. Nu garantează exactitatea orarelor sau disponibilitatea continuă a serviciului și nu poate fi considerat responsabil pentru consecințele legate de utilizarea informațiilor prezente pe site.",
             "legal_privacy_title": "5. Date Personale și Cookie-uri",
-            "legal_privacy_content": "Linia nu colectează date personale. Stocarea locală a browserului dvs. este utilizată exclusiv pentru a memora preferințele dvs. (căutări recente, limbă) pentru a îmbunătăți experiența utilizatorului. Nu se utilizează cookie-uri terțe sau trackere publicitare."
+            "legal_privacy_content": "Linia nu colectează date personale. Stocarea locală a browserului dvs. este utilizată exclusiv pentru a memora preferințele dvs. (căutări recente, limbă) pentru a îmbunătăți experiența utilizatorului. Nu se utilizează cookie-uri terțe sau trackere publicitare.",
+            "faq_title": "Întrebări frecvente",
+            "faq_free_q": "Linia este gratuit?",
+            "faq_free_a": "Da, instrumentul este complet gratuit și fără reclame.",
+            "faq_countries_q": "Ce țări sunt acoperite?",
+            "faq_countries_a": "Linia acoperă în principal Europa: Franța, Germania, Spania, Italia, Benelux și alte țări europene deservite de FlixBus și BlaBlaCar Bus.",
+            "faq_update_q": "Cât de des sunt actualizate datele?",
+            "faq_update_a": "Datele GTFS sunt actualizate în prima zi a fiecărei luni.",
+            "faq_report_q": "Cum pot raporta o eroare sau sugera o îmbunătățire?",
+            "faq_report_a": "Puteți deschide un issue în depozitul GitHub al proiectului sau puteți contacta dezvoltatorul prin contact@liniabus.eu"
         },
         pl: {
             "welcome": "Witaj w",
@@ -1831,7 +2038,16 @@ const i18n = {
             "legal_responsibility_title": "4. Odpowiedzialność",
             "legal_responsibility_content": "Wydawca udostępnia informacje o transporcie 'takie, jakie są'. Nie gwarantuje dokładności rozkładów jazdy ani ciągłej dostępności usługi i nie ponosi odpowiedzialności za konsekwencje związane z wykorzystaniem informacji zamieszczonych na stronie.",
             "legal_privacy_title": "5. Dane osobowe i pliki cookie",
-            "legal_privacy_content": "Linia nie gromadzi żadnych danych osobowych. Lokalna pamięć przeglądarki jest wykorzystywana wyłącznie do zapamiętywania preferencji (ostatnie wyszukiwania, język) w celu poprawy komfortu użytkowania. Nie są używane pliki cookie stron trzecich ani trackery reklamowe."
+            "legal_privacy_content": "Linia nie gromadzi żadnych danych osobowych. Lokalna pamięć przeglądarki jest wykorzystywana wyłącznie do zapamiętywania preferencji (ostatnie wyszukiwania, język) w celu poprawy komfortu użytkowania. Nie są używane pliki cookie stron trzecich ani trackery reklamowe.",
+            "faq_title": "FAQ",
+            "faq_free_q": "Czy Linia jest bezpłatna?",
+            "faq_free_a": "Tak, narzędzie jest całkowicie bezpłatne i bez reklam.",
+            "faq_countries_q": "Które kraje są objęte?",
+            "faq_countries_a": "Linia obejmuje głównie Europę: Francję, Niemcy, Hiszpanię, Włochy, Beneluks i inne kraje europejskie obsługiwane przez FlixBus i BlaBlaCar Bus.",
+            "faq_update_q": "Jak często aktualizowane są dane?",
+            "faq_update_a": "Dane GTFS są aktualizowane pierwszego dnia każdego miesiąca.",
+            "faq_report_q": "Jak mogę zgłosić błąd lub zasugerować ulepszenie?",
+            "faq_report_a": "Możesz otworzyć issue w repozytorium GitHub projektu lub skontaktować się z deweloperem przez contact@liniabus.eu"
         },
         cs: {
             "welcome": "Vítejte v",
@@ -1914,7 +2130,16 @@ const i18n = {
             "legal_responsibility_title": "4. Odpovědnost",
             "legal_responsibility_content": "Vydavatel poskytuje dopravní informace 'tak, jak jsou'. Nezaručuje přesnost jízdních řádů ani nepřetržitou dostupnost služby a nelze jej činit odpovědným za důsledky související s používáním informací na webu.",
             "legal_privacy_title": "5. Osobní údaje a cookies",
-            "legal_privacy_content": "Linia neshromažďuje žádné osobní údaje. Místní úložiště vašeho prohlížeče se používá výhradně k zapamatování vašich preferencí (nedávná vyhledávání, jazyk) za účelem zlepšení uživatelského zážitku. Nepoužívají se cookies třetích stran ani reklamní trackery."
+            "legal_privacy_content": "Linia neshromažďuje žádné osobní údaje. Místní úložiště vašeho prohlížeče se používá výhradně k zapamatování vašich preferencí (nedávná vyhledávání, jazyk) za účelem zlepšení uživatelského zážitku. Nepoužívají se cookies třetích stran ani reklamní trackery.",
+            "faq_title": "FAQ",
+            "faq_free_q": "Je Linia zdarma?",
+            "faq_free_a": "Ano, nástroj je zcela zdarma a bez reklam.",
+            "faq_countries_q": "Které země jsou pokryty?",
+            "faq_countries_a": "Linia pokrývá především Evropu: Francii, Německo, Španělsko, Itálii, Benelux a další evropské země obsluhované společnostmi FlixBus a BlaBlaCar Bus.",
+            "faq_update_q": "Jak často jsou data aktualizována?",
+            "faq_update_a": "Data GTFS jsou aktualizována první den každého měsíce.",
+            "faq_report_q": "Jak mohu nahlásit chybu nebo navrhnout vylepšení?",
+            "faq_report_a": "Můžete otevřít issue v repozitáři GitHub projektu nebo kontaktovat vývojáře prostřednictvím contact@liniabus.eu"
         },
         sk: {
             "welcome": "Vitajte v",
@@ -1997,7 +2222,16 @@ const i18n = {
             "legal_responsibility_title": "4. Zodpovednosť",
             "legal_responsibility_content": "Vydavateľ poskytuje dopravné informácie 'tak, ako sú'. Nezaručuje presnosť cestovných poriadkov ani nepretržitú dostupnosť služby a nemožno ho brať na zodpovednosť za dôsledky súvisiace s používaním informácií na stránke.",
             "legal_privacy_title": "5. Osobné údaje a cookies",
-            "legal_privacy_content": "Linia nezhromažďuje žiadne osobné údaje. Lokálne úložisko vášho prehliadača sa používa výlučne na zapamätanie vašich preferencií (nedávne vyhľadávania, jazyk) s cieľom zlepšiť používateľský zážitok. Nepoužívajú sa cookies tretích strán ani reklamné trackery."
+            "legal_privacy_content": "Linia nezhromažďuje žiadne osobné údaje. Lokálne úložisko vášho prehliadača sa používa výlučne na zapamätanie vašich preferencií (nedávne vyhľadávania, jazyk) s cieľom zlepšiť používateľský zážitok. Nepoužívajú sa cookies tretích strán ani reklamné trackery.",
+            "faq_title": "FAQ",
+            "faq_free_q": "Je Linia bezplatná?",
+            "faq_free_a": "Áno, nástroj je úplne bezplatný a bez reklám.",
+            "faq_countries_q": "Ktoré krajiny sú pokryté?",
+            "faq_countries_a": "Linia pokrýva hlavne Európu: Francúzsko, Nemecko, Španielsko, Taliansko, Benelux a ďalšie európske krajiny obsluhované spoločnosťami FlixBus a BlaBlaCar Bus.",
+            "faq_update_q": "Ako často sú údaje aktualizované?",
+            "faq_update_a": "Údaje GTFS sú aktualizované prvý deň každého mesiaca.",
+            "faq_report_q": "Ako môžem nahlásiť chybu alebo navrhnúť vylepšenie?",
+            "faq_report_a": "Môžete otvoriť issue v GitHub repozitári projektu alebo kontaktovať vývojára prostredníctvom contact@liniabus.eu"
         },
         sl: {
             "welcome": "Dobrodošli v",
@@ -2080,7 +2314,16 @@ const i18n = {
             "legal_responsibility_title": "4. Odgovornost",
             "legal_responsibility_content": "Urednik ponuja informacije o prevozu 'takšne, kot so'. Ne zagotavlja točnosti voznih redov ali neprekinjene razpoložljivosti storitve in ga ni mogoče šteti za odgovornega za posledice, povezane z uporabo informacij na spletnem mestu.",
             "legal_privacy_title": "5. Osebni podatki in piškotki",
-            "legal_privacy_content": "Linia ne zbira osebnih podatkov. Lokalna shramba vašega brskalnika se uporablja izključno za pomnjenje vaših nastavitev (nedavna iskanja, jezik) za izboljšanje uporabniške izkušnje. Ne uporabljajo se piškotki tretjih oseb ali sledilci oglasov."
+            "legal_privacy_content": "Linia ne zbira osebnih podatkov. Lokalna shramba vašega brskalnika se uporablja izključno za pomnjenje vaših nastavitev (nedavna iskanja, jezik) za izboljšanje uporabniške izkušnje. Ne uporabljajo se piškotki tretjih oseb ali sledilci oglasov.",
+            "faq_title": "FAQ",
+            "faq_free_q": "Je Linia brezplačna?",
+            "faq_free_a": "Da, orodje je popolnoma brezplačno in brez oglasov.",
+            "faq_countries_q": "Katere države so pokrite?",
+            "faq_countries_a": "Linia pokriva predvsem Evropo: Francijo, Nemčijo, Španijo, Italijo, Beneluks in druge evropske države, ki jih oskrbujejo FlixBus in BlaBlaCar Bus.",
+            "faq_update_q": "Kako pogosto se podatki posodabljajo?",
+            "faq_update_a": "Podatki GTFS se posodabljajo prvi dan vsakega meseca.",
+            "faq_report_q": "Kako lahko prijavim napako ali predlagam izboljšavo?",
+            "faq_report_a": "Lahko odprete issue v repozitoriju GitHub projekta ali stopite v stik z razvijalcem prek contact@liniabus.eu"
         },
         sv: {
             "welcome": "Välkommen till",
@@ -2163,7 +2406,16 @@ const i18n = {
             "legal_responsibility_title": "4. Ansvar",
             "legal_responsibility_content": "Redaktören tillhandahåller transportinformationen 'i befintligt skick'. Han garanterar inte tidtabellernas noggrannhet eller tjänstens kontinuerliga tillgänglighet och kan inte hållas ansvarig för konsekvenserna av att använda informationen på webbplatsen.",
             "legal_privacy_title": "5. Personuppgifter och cookies",
-            "legal_privacy_content": "Linia samlar inte in några personuppgifter. Din webbläsares lokala lagring används uteslutande för att komma ihåg dina preferenser (senaste sökningar, språk) för att förbättra användarupplevelsen. Inga tredjepartscookies eller annonsspårare används."
+            "legal_privacy_content": "Linia samlar inte in några personuppgifter. Din webbläsares lokala lagring används uteslutande för att komma ihåg dina preferenser (senaste sökningar, språk) för att förbättra användarupplevelsen. Inga tredjepartscookies eller annonsspårare används.",
+            "faq_title": "FAQ",
+            "faq_free_q": "Är Linia gratis?",
+            "faq_free_a": "Ja, verktyget är helt gratis och reklamfritt.",
+            "faq_countries_q": "Vilka länder täcks?",
+            "faq_countries_a": "Linia täcker främst Europa: Frankrike, Tyskland, Spanien, Italien, Benelux och andra europeiska länder som betjänas av FlixBus och BlaBlaCar Bus.",
+            "faq_update_q": "Hur ofta uppdateras data?",
+            "faq_update_a": "GTFS-data uppdateras den första dagen i varje månad.",
+            "faq_report_q": "Hur kan jag rapportera ett fel eller föreslå en förbättring?",
+            "faq_report_a": "Du kan öppna ett issue i projektets GitHub-arkiv eller kontakta utvecklaren via contact@liniabus.eu"
         },
         tr: {
             "welcome": "Hoş geldiniz",
@@ -2246,7 +2498,16 @@ const i18n = {
             "legal_responsibility_title": "4. Sorumluluk",
             "legal_responsibility_content": "Editör, ulaşım bilgilerini 'olduğu gibi' sağlar. Tarifelerin doğruluğunu veya hizmetin sürekli kullanılabilirliğini garanti etmez ve sitedeki bilgilerin kullanımıyla ilgili sonuçlardan sorumlu tutulamaz.",
             "legal_privacy_title": "5. Kişisel Veriler ve Çerezler",
-            "legal_privacy_content": "Linia hiçbir kişisel veri toplamaz. Tarayıcınızın yerel depolama alanı, yalnızca tercihlerinizi (son aramalar, dil) hatırlamak için kullanıcı deneyimini iyileştirmek amacıyla kullanılır. Üçüncü taraf çerezleri veya reklam izleyicileri kullanılmaz."
+            "legal_privacy_content": "Linia hiçbir kişisel veri toplamaz. Tarayıcınızın yerel depolama alanı, yalnızca tercihlerinizi (son aramalar, dil) hatırlamak için kullanıcı deneyimini iyileştirmek amacıyla kullanılır. Üçüncü taraf çerezleri veya reklam izleyicileri kullanılmaz.",
+            "faq_title": "SSS",
+            "faq_free_q": "Linia ücretsiz mi?",
+            "faq_free_a": "Evet, araç tamamen ücretsiz ve reklamsızdır.",
+            "faq_countries_q": "Hangi ülkeler kapsanıyor?",
+            "faq_countries_a": "Linia ağırlıklı olarak Avrupa'yı kapsar: Fransa, Almanya, İspanya, İtalya, Benelüks ve FlixBus ile BlaBlaCar Bus tarafından hizmet verilen diğer Avrupa ülkeleri.",
+            "faq_update_q": "Veriler ne sıklıkla güncellenir?",
+            "faq_update_a": "GTFS verileri her ayın ilk günü güncellenir.",
+            "faq_report_q": "Hata nasıl bildirilir veya iyileştirme önerilir?",
+            "faq_report_a": "Projenin GitHub deposunda bir issue açabilir veya contact@liniabus.eu aracılığıyla geliştiriciyle iletişime geçebilirsiniz."
         },
         uk: {
             "welcome": "Ласкаво просимо до",
@@ -2329,7 +2590,16 @@ const i18n = {
             "legal_responsibility_title": "4. Відповідальність",
             "legal_responsibility_content": "Редактор надає транспортну інформацію 'як є'. Він не гарантує точності розкладів або безперервної доступності послуги і не може нести відповідальність за наслідки, пов'язані з використанням інформації на сайті.",
             "legal_privacy_title": "5. Персональні дані та файли cookie",
-            "legal_privacy_content": "Linia не збирає жодних персональних даних. Локальне сховище вашого браузера використовується виключно для запам'ятовування ваших уподобань (останні пошукові запити, мова) з метою покращення взаємодії з користувачем. Сторонні файли cookie або рекламні трекери не використовуються."
+            "legal_privacy_content": "Linia не збирає жодних персональних даних. Локальне сховище вашого браузера використовується виключно для запам'ятовування ваших уподобань (останні пошукові запити, мова) з метою покращення взаємодії з користувачем. Сторонні файли cookie або рекламні трекери не використовуються.",
+            "faq_title": "ЧПП",
+            "faq_free_q": "Linia безкоштовна?",
+            "faq_free_a": "Так, інструмент повністю безкоштовний і без реклами.",
+            "faq_countries_q": "Які країни охоплюються?",
+            "faq_countries_a": "Linia охоплює переважно Європу: Францію, Німеччину, Іспанію, Італію, Бенелюкс та інші європейські країни, що обслуговуються FlixBus та BlaBlaCar Bus.",
+            "faq_update_q": "Як часто оновлюються дані?",
+            "faq_update_a": "Дані GTFS оновлюються першого дня кожного місяця.",
+            "faq_report_q": "Як я можу повідомити про помилку або запропонувати покращення?",
+            "faq_report_a": "Ви можете відкрити issue у репозиторії GitHub проекту або зв'язатися з розробником через contact@liniabus.eu"
         },
         ru: {
             "welcome": "Добро пожаловать в",
@@ -2412,7 +2682,16 @@ const i18n = {
             "legal_responsibility_title": "4. Ответственность",
             "legal_responsibility_content": "Редактор предоставляет информацию о транспорте 'как есть'. Он не гарантирует точность расписаний или постоянную доступность сервиса и не может нести ответственность за последствия, связанные с использованием информации на сайте.",
             "legal_privacy_title": "5. Персональные данные и куки",
-            "legal_privacy_content": "Linia не собирает никаких персональных данных. Локальное хранилище вашего браузера используется исключительно для запоминания ваших предпочтений (недавние поиски, язык) с целью улучшения пользовательского опыта. Никакие сторонние куки или рекламные трекеры не используются."
+            "legal_privacy_content": "Linia не собирает никаких персональных данных. Локальное хранилище вашего браузера используется исключительно для запоминания ваших предпочтений (недавние поиски, язык) с целью улучшения пользовательского опыта. Никакие сторонние куки или рекламные трекеры не используются.",
+            "faq_title": "ЧЗВ",
+            "faq_free_q": "Linia бесплатна?",
+            "faq_free_a": "Да, инструмент полностью бесплатен и без рекламы.",
+            "faq_countries_q": "Какие страны охвачены?",
+            "faq_countries_a": "Linia охватывает в основном Европу: Францию, Германию, Испанию, Италию, Бенилюкс и другие европейские страны, обслуживаемые FlixBus и BlaBlaCar Bus.",
+            "faq_update_q": "Как часто обновляются данные?",
+            "faq_update_a": "Данные GTFS обновляются первого числа каждого месяца.",
+            "faq_report_q": "Как сообщить об ошибке или предложить улучшение?",
+            "faq_report_a": "Вы можете открыть issue в репозитории GitHub проекта или связаться с разработчиком через contact@liniabus.eu"
         },
         be: {
             "welcome": "Сардэчна запрашаем у",
@@ -2495,7 +2774,16 @@ const i18n = {
             "legal_responsibility_title": "4. Адказнасць",
             "legal_responsibility_content": "Рэдактар прадастаўляе транспартную інфармацыю 'як ёсць'. Ён не гарантуе дакладнасці раскладаў або бесперапыннай даступнасці паслугі і не можа несці адказнасць за наступствы, звязаныя з выкарыстаннем інфармацыі на сайце.",
             "legal_privacy_title": "5. Персанальныя даныя і кукі",
-            "legal_privacy_content": "Linia не збірае ніякіх персанальных даных. Лакальнае сховішча вашага браўзэра выкарыстоўваецца выключна для запамінання вашых пераваг (нядаўнія пошукі, мова) з мэтай паляпшэння карыстальніцкага досведу. Не выкарыстоўваюцца староннія кукі або рэкламныя трэкеры."
+            "legal_privacy_content": "Linia не збірае ніякіх персанальных даных. Лакальнае сховішча вашага браўзэра выкарыстоўваецца выключна для запамінання вашых пераваг (нядаўнія пошукі, мова) з мэтай паляпшэння карыстальніцкага досведу. Не выкарыстоўваюцца староннія кукі або рэкламныя трэкеры.",
+            "faq_title": "ЧПП",
+            "faq_free_q": "Linia бясплатная?",
+            "faq_free_a": "Так, інструмент цалкам бясплатны і без рэкламы.",
+            "faq_countries_q": "Якія краіны ахоплены?",
+            "faq_countries_a": "Linia ахоплівае галоўным чынам Еўропу: Францыю, Германію, Іспанію, Італію, Бенелюкс і іншыя еўрапейскія краіны, што абслугоўваюцца FlixBus і BlaBlaCar Bus.",
+            "faq_update_q": "Як часта абнаўляюцца даныя?",
+            "faq_update_a": "Даныя GTFS абнаўляюцца першага дня кожнага месяца.",
+            "faq_report_q": "Як паведаміць пра памылку або прапанаваць паляпшэнне?",
+            "faq_report_a": "Вы можаце адкрыць issue ў рэпазітарыі GitHub праекта або звязацца з распрацоўнікам праз contact@liniabus.eu"
         }
     },
     t(key, params = {}) {
@@ -2524,14 +2812,37 @@ const i18n = {
         return text;
     },
     setLang(lang) {
-        if (this.translations[lang]) {
+        if (!this.translations[lang]) {
+            console.error('Linia i18n: Unknown language', lang);
+            lang = 'fr';
+        }
+        // Redirige vers l’URL préfixée par la langue (sauf fr qui reste à la racine)
+        const path = window.location.pathname || '/';
+        const segments = path.split('/').filter(Boolean);
+        const supported = [
+            'fr', 'en', 'de', 'es', 'pt', 'nl', 'sq', 'ca', 'hr', 'bg', 'da', 'et', 'fi',
+            'el', 'hu', 'hi', 'lv', 'lt', 'lb', 'mk', 'ro', 'pl', 'cs', 'sk', 'sl', 'sv',
+            'tr', 'uk', 'ru', 'be'
+        ];
+        let slugParts = segments;
+        if (segments.length > 0 && supported.includes(segments[0])) {
+            slugParts = segments.slice(1);
+        }
+        const slug = slugParts.join('/');
+        let newPath;
+        if (lang === 'fr') {
+            newPath = slug ? `/${slug}` : '/';
+        } else {
+            newPath = slug ? `/${lang}/${slug}` : `/${lang}/`;
+        }
+        localStorage.setItem('linia_lang', lang);
+        if (newPath !== path) {
+            window.location.pathname = newPath;
+        } else {
+            // Fallback: on applique quand même la traduction sur place
             this.currentLang = lang;
-            localStorage.setItem('linia_lang', lang);
             this.translatePage();
             document.dispatchEvent(new CustomEvent('linia-lang-changed', { detail: lang }));
-        } else {
-            console.error('Linia i18n: Unknown language', lang);
-            this.setLang('fr');
         }
     },
     translatePage() {

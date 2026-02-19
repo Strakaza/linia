@@ -1,38 +1,14 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ current_lang }}">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linia — Explorez les lignes de bus</title>
-    <meta name="description"
-        content="Planifiez votre voyage en bus avec Linia. Visualisez les lignes Flixbus et BlaBlaCar sur une carte interactive et créez votre itinéraire personnalisé.">
-    <link rel="canonical" href="https://liniabus.eu/" />
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://liniabus.eu/">
-    <meta property="og:title" content="Linia — Explorer les lignes de bus">
-    <meta property="og:description"
-        content="Visualisez les réseaux Flixbus et BlaBlaCar sur une carte interactive et planifiez vos trajets facilement.">
-    <meta property="og:image" content="https://liniabus.eu/static/logo.png">
-
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://liniabus.eu/">
-    <meta property="twitter:title" content="Linia — Explorer les lignes de bus">
-    <meta property="twitter:description"
-        content="Visualisez les réseaux Flixbus et BlaBlaCar sur une carte interactive et planifiez vos trajets facilement.">
-    <meta property="twitter:image" content="https://liniabus.eu/static/logo.png">
-
-    <meta name="theme-color" content="#34a853">
-    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    {% include 'seo_head.html' %}
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
-    <script src="{{ url_for('static', filename='i18n.js') }}"></script>
 </head>
 
 <body>
+    {% set lang_prefix = '' if current_lang == 'fr' else '/' ~ current_lang %}
     <div class="landing-page">
         <div id="landingMap" class="landing-map-bg"></div>
         <div class="landing-map-overlay"></div>
@@ -69,7 +45,8 @@
                 <div class="landing-suggestions" id="landingSuggestions"></div>
             </div>
             <div class="landing-actions">
-                <a href="/planner" class="planner-launch-btn landing-action-btn linia-btn-premium">
+                <a href="{{ (lang_prefix ~ '/planner') if lang_prefix else '/planner' }}"
+                    class="planner-launch-btn landing-action-btn linia-btn-premium">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="10" r="3"></circle>
@@ -77,7 +54,8 @@
                     </svg>
                     <span data-i18n="btn_planner">Créer un itinéraire</span>
                 </a>
-                <a href="/about" class="how-it-works-btn landing-action-btn linia-btn-premium">
+                <a href="{{ (lang_prefix ~ '/about') if lang_prefix else '/about' }}"
+                    class="how-it-works-btn landing-action-btn linia-btn-premium">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
@@ -95,7 +73,7 @@
                 </div>
             </div>
             <nav class="bottom-nav">
-                <a href="/" class="bottom-nav-item active">
+                <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="bottom-nav-item active">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -103,7 +81,7 @@
                     </svg>
                     <span data-i18n="nav_home">Accueil</span>
                 </a>
-                <a href="/planner" class="bottom-nav-item">
+                <a href="{{ (lang_prefix ~ '/planner') if lang_prefix else '/planner' }}" class="bottom-nav-item">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="6" cy="19" r="3"></circle>
@@ -112,7 +90,7 @@
                     </svg>
                     <span data-i18n="nav_itinerary">Itinéraire</span>
                 </a>
-                <a href="/about" class="bottom-nav-item">
+                <a href="{{ (lang_prefix ~ '/about') if lang_prefix else '/about' }}" class="bottom-nav-item">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
@@ -130,7 +108,8 @@
             style="max-width: 600px; margin: 0 auto 12px; font-size: 11px; opacity: 0.6; pointer-events: auto;">
             <p data-i18n="disclaimer_text"></p>
         </div>
-        <p style="font-size: 10px; margin-bottom: 8px; pointer-events: auto;"><a href="/legal" data-i18n="nav_legal"
+        <p style="font-size: 10px; margin-bottom: 8px; pointer-events: auto;"><a
+                href="{{ (lang_prefix ~ '/legal') if lang_prefix else '/legal' }}" data-i18n="nav_legal"
                 style="color: inherit; text-decoration: none; opacity: 0.5;">Mentions Légales</a></p>
         <p data-i18n="footer_signature">"Страказа жывая"</p>
         <div class="color-bar-signature"></div>

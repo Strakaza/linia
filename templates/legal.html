@@ -1,15 +1,8 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ current_lang }}">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linia — Mentions Légales</title>
-    <meta name="description" content="Informations légales concernant l'application Linia.">
-    <link rel="canonical" href="https://liniabus.eu/legal" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
-    <script src="{{ url_for('static', filename='i18n.js') }}"></script>
+    {% include 'seo_head.html' %}
     <style>
         .legal-content h2 {
             margin-top: 30px;
@@ -26,11 +19,14 @@
 </head>
 
 <body>
+    {% set lang_prefix = '' if current_lang == 'fr' else '/' ~ current_lang %}
     <div class="about-page">
         <nav class="about-nav">
-            <a href="/" class="nav-brand"><span class="highlight">Linia</span></a>
+            <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="nav-brand"><span
+                    class="highlight">Linia</span></a>
             <div style="flex-grow: 1;"></div>
-            <a href="/" class="nav-link" data-i18n="return_home" style="margin-left: 0;">← Retour à l'accueil</a>
+            <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="nav-link" data-i18n="return_home"
+                style="margin-left: 0;">← Retour à l'accueil</a>
         </nav>
         <div class="about-content legal-content">
             <h1 data-i18n="legal_title">Mentions Légales</h1>
@@ -82,14 +78,15 @@
         </div>
 
         <footer class="app-footer">
-            <p style="font-size: 11px; margin-bottom: 5px; pointer-events: auto;"><a href="/legal" data-i18n="nav_legal"
+            <p style="font-size: 11px; margin-bottom: 5px; pointer-events: auto;"><a
+                    href="{{ (lang_prefix ~ '/legal') if lang_prefix else '/legal' }}" data-i18n="nav_legal"
                     style="color: inherit; text-decoration: none; opacity: 0.6;">Mentions Légales</a></p>
             <p data-i18n="footer_signature">"Страказа жывая"</p>
             <div class="color-bar-signature"></div>
         </footer>
 
         <nav class="bottom-nav">
-            <a href="/" class="bottom-nav-item">
+            <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="bottom-nav-item">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -97,7 +94,7 @@
                 </svg>
                 <span data-i18n="nav_home">Accueil</span>
             </a>
-            <a href="/planner" class="bottom-nav-item">
+            <a href="{{ (lang_prefix ~ '/planner') if lang_prefix else '/planner' }}" class="bottom-nav-item">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="6" cy="19" r="3"></circle>
@@ -106,7 +103,7 @@
                 </svg>
                 <span data-i18n="nav_itinerary">Itinéraire</span>
             </a>
-            <a href="/about" class="bottom-nav-item">
+            <a href="{{ (lang_prefix ~ '/about') if lang_prefix else '/about' }}" class="bottom-nav-item">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
