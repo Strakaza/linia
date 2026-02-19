@@ -222,6 +222,11 @@ def planner_page():
     app.logger.debug(f"Requête pour la page planificateur depuis {request.remote_addr}")
     return render_template('planner.html')
 
+@app.route('/legal')
+def legal_page():
+    app.logger.debug(f"Requête pour les mentions légales depuis {request.remote_addr}")
+    return render_template('legal.html')
+
 @app.route('/download/gtfs_unifie')
 def download_unified_gtfs():
     try:
@@ -236,6 +241,11 @@ def download_unified_gtfs():
         app.logger.error(f"Erreur lors du téléchargement du fichier GTFS par {request.remote_addr}: {e}")
         app.logger.error(traceback.format_exc())
         return jsonify({"error": "Erreur interne du serveur lors du téléchargement."}), 500
+
+@app.route('/robots.txt')
+@app.route('/sitemap.xml')
+def static_from_root():
+    return send_from_directory(app.static_folder, request.path[1:])
 
 @app.route('/api/search_stops', methods=['GET'])
 def api_search_stops():

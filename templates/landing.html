@@ -6,7 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linia — Explorez les lignes de bus</title>
     <meta name="description"
-        content="Linia vous permet de visualiser les lignes de bus Flixbus et BlaBlaCar sur une carte interactive.">
+        content="Planifiez votre voyage en bus avec Linia. Visualisez les lignes Flixbus et BlaBlaCar sur une carte interactive et créez votre itinéraire personnalisé.">
+    <link rel="canonical" href="https://linia.onrender.com/" />
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://linia.onrender.com/">
+    <meta property="og:title" content="Linia — Explorer les lignes de bus">
+    <meta property="og:description"
+        content="Visualisez les réseaux Flixbus et BlaBlaCar sur une carte interactive et planifiez vos trajets facilement.">
+    <meta property="og:image" content="https://linia.onrender.com/static/logo.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://linia.onrender.com/">
+    <meta property="twitter:title" content="Linia — Explorer les lignes de bus">
+    <meta property="twitter:description"
+        content="Visualisez les réseaux Flixbus et BlaBlaCar sur une carte interactive et planifiez vos trajets facilement.">
+    <meta property="twitter:image" content="https://linia.onrender.com/static/logo.png">
+
     <meta name="theme-color" content="#34a853">
     <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -114,6 +130,8 @@
             style="max-width: 600px; margin: 0 auto 12px; font-size: 11px; opacity: 0.6; pointer-events: auto;">
             <p data-i18n="disclaimer_text"></p>
         </div>
+        <p style="font-size: 10px; margin-bottom: 8px; pointer-events: auto;"><a href="/legal" data-i18n="nav_legal"
+                style="color: inherit; text-decoration: none; opacity: 0.5;">Mentions Légales</a></p>
         <p data-i18n="footer_signature">"Страказа жывая"</p>
         <div class="color-bar-signature"></div>
     </footer>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linia — Mentions Légales</title>
+    <meta name="description" content="Informations légales concernant l'application Linia.">
+    <link rel="canonical" href="https://linia.onrender.com/legal" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+    <script src="{{ url_for('static', filename='i18n.js') }}"></script>
+    <style>
+        .legal-content h2 {
+            margin-top: 30px;
+            color: var(--primary-green);
+            font-size: 1.2rem;
+        }
+
+        .legal-content p {
+            line-height: 1.6;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="about-page">
+        <nav class="about-nav">
+            <a href="/" class="nav-brand"><span class="highlight">Linia</span></a>
+            <div style="flex-grow: 1;"></div>
+            <a href="/" class="nav-link" data-i18n="return_home" style="margin-left: 0;">← Retour à l'accueil</a>
+        </nav>
+        <div class="about-content legal-content">
+            <h1 data-i18n="legal_title">Mentions Légales</h1>
+
+            <section class="about-section">
+                <h2 data-i18n="legal_editor_title">1. Éditeur du site</h2>
+                <p data-i18n="legal_editor_content">
+                    Conformément aux dispositions de l'article 6-III-2 de la loi n° 2004-575 du 21 juin 2004 pour la
+                    confiance dans l'économie numérique (LCEN),
+                    l'éditeur de ce site a choisi de rester anonyme. Les informations d'identification personnelle ont
+                    été transmises à l'hébergeur.
+                </p>
+                <p data-i18n="legal_editor_sub">Ce site est édité à titre non professionnel.</p>
+            </section>
+
+            <section class="about-section">
+                <h2 data-i18n="legal_hosting_title">2. Hébergement</h2>
+                <p data-i18n="legal_hosting_intro">Le site Linia est hébergé par :</p>
+                <p>
+                    <strong>Render</strong><br>
+                    Render Services, Inc.<br>
+                    520 High St, Palo Alto, CA 94301, États-Unis<br>
+                    <span data-i18n="legal_hosting_site">Site web :</span> <a href="https://render.com" target="_blank"
+                        rel="noopener" style="color: var(--primary-green);">render.com</a>
+                </p>
+            </section>
+
+            <section class="about-section">
+                <h2 data-i18n="legal_intellectual_title">3. Propriété intellectuelle</h2>
+                <p data-i18n="legal_intellectual_content">
+                    L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et
+                    la propriété intellectuelle.
+                    Tous les droits de reproduction sont réservés. Les données de transport (GTFS) sont issues de
+                    sources ouvertes (transport.data.gouv.fr)
+                    et sont soumises à leurs propres licences (Open Database License - ODbL).
+                </p>
+            </section>
+
+            <section class="about-section">
+                <h2 data-i18n="legal_privacy_title">4. Données personnelles</h2>
+                <p data-i18n="legal_privacy_content">
+                    L'application Linia ne collecte aucune donnée personnelle sur ses utilisateurs.
+                    Aucun compte n'est requis pour utiliser le service.
+                </p>
+            </section>
+
+            <section class="about-section">
+                <h2 data-i18n="legal_cookies_title">5. Cookies</h2>
+                <p data-i18n="legal_cookies_content">
+                    Ce site n'utilise aucun cookie tiers à des fins publicitaires ou de traçage.
+                    Le stockage local de votre navigateur est utilisé uniquement pour vos préférences (recherches
+                    récentes, langue).
+                </p>
+            </section>
+        </div>
+
+        <footer class="app-footer">
+            <p style="font-size: 11px; margin-bottom: 5px; pointer-events: auto;"><a href="/legal" data-i18n="nav_legal"
+                    style="color: inherit; text-decoration: none; opacity: 0.6;">Mentions Légales</a></p>
+            <p data-i18n="footer_signature">"Страказа жывая"</p>
+            <div class="color-bar-signature"></div>
+        </footer>
+
+        <nav class="bottom-nav">
+            <a href="/" class="bottom-nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span data-i18n="nav_home">Accueil</span>
+            </a>
+            <a href="/planner" class="bottom-nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="6" cy="19" r="3"></circle>
+                    <path d="M9 19h8.5a3.5 3.5 0 1 0 0-7h-11a3.5 3.5 0 1 1 0-7H15"></path>
+                    <circle cx="18" cy="5" r="3"></circle>
+                </svg>
+                <span data-i18n="nav_itinerary">Itinéraire</span>
+            </a>
+            <a href="/about" class="bottom-nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span data-i18n="nav_info">Info</span>
+            </a>
+        </nav>
+    </div>
+</body>
+
+</html>

@@ -4,8 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linia — Créateur d'Itinéraire</title>
-    <meta name="description" content="Créez votre itinéraire de bus étape par étape avec Linia.">
+    <title>Linia — Créateur d'Itinéraire Bus</title>
+    <meta name="description"
+        content="Planifiez votre trajet étape par étape. Sélectionnez vos villes et découvrez les connexions directes Flixbus et BlaBlaCar.">
+    <link rel="canonical" href="https://linia.onrender.com/planner" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://linia.onrender.com/planner">
+    <meta property="og:title" content="Linia — Créateur d'Itinéraire Bus">
+    <meta property="og:description"
+        content="Planifiez votre trajet étape par étape avec les connexions Flixbus et BlaBlaCar.">
+    <meta property="og:image" content="https://linia.onrender.com/static/logo.png">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
@@ -148,6 +156,8 @@
         </div>
         <footer class="app-footer"
             style="position: absolute; bottom: 0; padding: 12px; font-size: 11px; pointer-events: none; z-index: 10000;">
+            <p style="margin-bottom: 4px; pointer-events: auto;"><a href="/legal" data-i18n="nav_legal"
+                    style="color: inherit; text-decoration: none; opacity: 0.6;">Mentions Légales</a></p>
             <p style="margin-bottom: 4px;" data-i18n="footer_signature">"Страказа жывая"</p>
             <div class="color-bar-signature" style="max-width: 150px;"></div>
         </footer>

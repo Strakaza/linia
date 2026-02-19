@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Disallow crawling of API endpoints and downloads
+Disallow: /api/
+Disallow: /download/
+
+# Sitemap
+Sitemap: https://linia.onrender.com/sitemap.xml
