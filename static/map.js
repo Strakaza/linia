@@ -288,12 +288,10 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) return;
             let lineColor = tripData.operator === 'flixbus' ? '#73d700' : '#0070d2';
             let latlngs = [];
-            if (tripData.operator === 'blablacar_bus' || !tripData.shape_points || tripData.shape_points.length === 0) {
-                if (tripData.stops && tripData.stops.length >= 2) {
-                    const geometry = await getRoadGeometry(tripData.stops);
-                    if (geometry && geometry.coordinates) {
-                        latlngs = geometry.coordinates.map(c => [c[1], c[0]]);
-                    }
+            if (tripData.stops && tripData.stops.length >= 2) {
+                const geometry = await getRoadGeometry(tripData.stops);
+                if (geometry && geometry.coordinates) {
+                    latlngs = geometry.coordinates.map(c => [c[1], c[0]]);
                 }
             }
             if (latlngs.length === 0 && tripData.shape_points && tripData.shape_points.length > 0) {
@@ -346,7 +344,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
                             <span class="timeline-city-name">${stop.stop_name}</span>
-                            ${stop.arrival_time ? `<span class="timeline-time">${stop.arrival_time.slice(0, 5)}</span>` : ''}
                         </div>
                      </li>`;
         });
@@ -433,13 +430,11 @@ document.addEventListener('DOMContentLoaded', function () {
             if (currentStopMarker) {
                 routeMarkersBounds.extend(currentStopMarker.getLatLng());
             }
-            if (tripData.operator === 'blablacar_bus' || !tripData.shape_points || tripData.shape_points.length === 0) {
-                if (tripData.stops && tripData.stops.length >= 2) {
-                    showLoading('Calcul de l\'itinéraire par la route...');
-                    const geometry = await getRoadGeometry(tripData.stops);
-                    if (geometry && geometry.coordinates) {
-                        latlngs = geometry.coordinates.map(c => [c[1], c[0]]);
-                    }
+            if (tripData.stops && tripData.stops.length >= 2) {
+                showLoading('Calcul de l\'itinéraire par la route...');
+                const geometry = await getRoadGeometry(tripData.stops);
+                if (geometry && geometry.coordinates) {
+                    latlngs = geometry.coordinates.map(c => [c[1], c[0]]);
                 }
             }
             if (latlngs.length === 0 && tripData.shape_points && tripData.shape_points.length > 0) {
