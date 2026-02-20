@@ -1,140 +1,109 @@
 <!DOCTYPE html>
 <html lang="{{ current_lang }}">
-
 <head>
     {% include 'seo_head.html' %}
 </head>
-
 <body>
-    {% set lang_prefix = '' if current_lang == 'fr' else '/' ~ current_lang %}
     <div class="about-page">
         <nav class="about-nav">
-            <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="nav-brand"><span
-                    class="highlight">Linia</span></a>
+            <a class="nav-brand" href="{{ url_for_page('home') }}"><span class="highlight">Linia</span></a>
             <div style="flex-grow: 1;"></div>
-            <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="nav-link" data-i18n="return_home"
-                style="margin-left: 0;">← Retour à l'accueil</a>
+            <a class="nav-link" href="{{ url_for_page('home') }}" style="margin-left: 0;">{{ t('return_home') }}</a>
         </nav>
+        
         <div class="about-content">
-            <h1 data-i18n="about_header">À propos de Linia : Votre comparateur de bus</h1>
-            <p class="about-subtitle" data-i18n="about_intro">
-                Linia est un outil de visualisation de données de transport public pour les lignes de bus longue
-                distance.
-            </p>
+            <h1>{{ t('about_header') }}</h1>
+            <p class="about-subtitle">{{ t('about_intro') }}</p>
+            
             <div class="about-section">
-                <h2 data-i18n="about_networks">Visualisation des réseaux</h2>
-                <p data-i18n="about_networks_desc">
-                    L'application agrège les données de deux opérateurs : Flixbus
-                    et BlaBlaCar Bus. La recherche permet d'afficher les lignes desservant un arrêt spécifique.
-                </p>
+                <h2>{{ t('about_networks') }}</h2>
+                <p>{{ t('about_networks_desc') }}</p>
             </div>
+            
             <div class="about-section">
-                <h2 data-i18n="about_planning">Planification par étapes</h2>
-                <p data-i18n="about_planning_desc">
-                    Le planificateur permet de construire un itinéraire séquentiel. Lors de l'ajout d'une ville,
-                    une liste de destinations directement connectées est générée pour permettre la sélection de l'étape
-                    suivante.
-                </p>
+                <h2>{{ t('about_planning') }}</h2>
+                <p>{{ t('about_planning_desc') }}</p>
             </div>
+            
             <div class="about-section">
-                <h2 data-i18n="about_export">Exportation des données</h2>
-                <p data-i18n="about_export_desc">
-                    Les itinéraires créés peuvent être exportés au format PDF. Ce document contient le rappel des étapes
-                    et une capture de la carte associée au trajet.
-                </p>
+                <h2>{{ t('about_export') }}</h2>
+                <p>{{ t('about_export_desc') }}</p>
             </div>
+            
             <div class="about-section">
-                <h2 data-i18n="faq_title">FAQ</h2>
+                <h2>{{ t('faq_title') }}</h2>
                 <div style="display: grid; gap: 10px; margin-top: 10px;">
-                    <details class="faq-item"
-                        style="border: 1px solid var(--border-light); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03);">
-                        <summary style="cursor: pointer; font-weight: 700;" data-i18n="faq_free_q">Linia est-il gratuit ?</summary>
-                        <div style="margin-top: 8px; opacity: 0.85; line-height: 1.6;" data-i18n="faq_free_a">
-                            Oui, l'outil est entièrement gratuit et sans publicité.
-                        </div>
+                    <details class="faq-item" style="border: 1px solid var(--border-light); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03);">
+                        <summary style="cursor: pointer; font-weight: 700;">{{ t('faq_free_q') }}</summary>
+                        <div style="margin-top: 8px; opacity: 0.85; line-height: 1.6;">{{ t('faq_free_a') }}</div>
                     </details>
-                    <details class="faq-item"
-                        style="border: 1px solid var(--border-light); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03);">
-                        <summary style="cursor: pointer; font-weight: 700;" data-i18n="faq_countries_q">Quels sont les pays couverts ?</summary>
-                        <div style="margin-top: 8px; opacity: 0.85; line-height: 1.6;" data-i18n="faq_countries_a">
-                            Linia couvre principalement l'Europe : France, Allemagne, Espagne, Italie, Benelux, et d'autres pays européens desservis par FlixBus et BlaBlaCar Bus.
-                        </div>
+                    <details class="faq-item" style="border: 1px solid var(--border-light); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03);">
+                        <summary style="cursor: pointer; font-weight: 700;">{{ t('faq_countries_q') }}</summary>
+                        <div style="margin-top: 8px; opacity: 0.85; line-height: 1.6;">{{ t('faq_countries_a') }}</div>
                     </details>
-                    <details class="faq-item"
-                        style="border: 1px solid var(--border-light); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03);">
-                        <summary style="cursor: pointer; font-weight: 700;" data-i18n="faq_update_q">À quelle fréquence les données sont-elles mises à jour ?</summary>
-                        <div style="margin-top: 8px; opacity: 0.85; line-height: 1.6;" data-i18n="faq_update_a">
-                            Les données GTFS sont mises à jour le premier jour de chaque mois.
-                        </div>
+                    <details class="faq-item" style="border: 1px solid var(--border-light); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03);">
+                        <summary style="cursor: pointer; font-weight: 700;">{{ t('faq_update_q') }}</summary>
+                        <div style="margin-top: 8px; opacity: 0.85; line-height: 1.6;">{{ t('faq_update_a') }}</div>
                     </details>
-                    <details class="faq-item"
-                        style="border: 1px solid var(--border-light); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03);">
-                        <summary style="cursor: pointer; font-weight: 700;" data-i18n="faq_report_q">Comment signaler une erreur ou proposer une amélioration ?</summary>
-                        <div style="margin-top: 8px; opacity: 0.85; line-height: 1.6;" data-i18n="faq_report_a">
-                            Vous pouvez ouvrir une issue sur le dépôt GitHub du projet ou contacter le développeur via contact@liniabus.eu
-                        </div>
+                    <details class="faq-item" style="border: 1px solid var(--border-light); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03);">
+                        <summary style="cursor: pointer; font-weight: 700;">{{ t('faq_report_q') }}</summary>
+                        <div style="margin-top: 8px; opacity: 0.85; line-height: 1.6;">{{ t('faq_report_a') }}</div>
                     </details>
                 </div>
             </div>
+            
             <div class="download-card">
-                <h3 data-i18n="data_sources">Sources de données (GTFS)</h3>
-                <p data-i18n="data_sources_desc">
-                    Les données sont issues des flux GTFS officiels disponibles sur transport.data.gouv.fr.
-                    Linia effectue une unification de ces flux pour permettre une consultation centralisée.
-                </p>
-                <a href="{{ url_for('download_unified_gtfs') }}" class="linia-btn-premium" download
-                    style="margin-top: 20px; width: 100%;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
+                <h3>{{ t('data_sources') }}</h3>
+                <p>{{ t('data_sources_desc') }}</p>
+                <a class="linia-btn-premium" download="" href="{{ url_for('download_unified_gtfs') }}" style="margin-top: 20px; width: 100%;">
+                    <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                        <line x1="12" x2="12" y1="15" y2="3"></line>
                     </svg>
-                    <span data-i18n="download_gtfs">Télécharger le GTFS Unifié (.zip)</span>
+                    <span>{{ t('download_gtfs') }}</span>
                 </a>
             </div>
-            <div class="about-section disclaimer-section"
-                style="margin-top: 40px; border-top: 1px solid var(--border-light); padding-top: 20px;">
-                <h2 data-i18n="disclaimer_title">Note d'information</h2>
-                <p data-i18n="disclaimer_text" style="font-size: 14px; opacity: 0.8; line-height: 1.6;"></p>
+            
+            <div class="about-section disclaimer-section" style="margin-top: 40px; border-top: 1px solid var(--border-light); padding-top: 20px;">
+                <h2>{{ t('disclaimer_title') }}</h2>
+                <p style="font-size: 14px; opacity: 0.8; line-height: 1.6;">{{ t('disclaimer_text') }}</p>
             </div>
         </div>
+
         <footer class="app-footer">
-            <p style="font-size: 11px; margin-bottom: 5px; pointer-events: auto;"><a
-                    href="{{ (lang_prefix ~ '/legal') if lang_prefix else '/legal' }}" data-i18n="nav_legal"
-                    style="color: inherit; text-decoration: none; opacity: 0.6;">Mentions Légales</a></p>
-            <p data-i18n="footer_signature">"Страказа жывая"</p>
+            <p style="font-size: 11px; margin-bottom: 5px; pointer-events: auto;">
+                <a href="{{ url_for_page('legal') }}" style="color: inherit; text-decoration: none; opacity: 0.6;">{{ t('nav_legal') }}</a>
+            </p>
+            <p>{{ t('footer_signature') }}</p>
             <div class="color-bar-signature"></div>
         </footer>
+
         <nav class="bottom-nav">
-            <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="bottom-nav-item">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+            <a class="bottom-nav-item" href="{{ url_for_page('home') }}">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                 </svg>
-                <span data-i18n="nav_home">Accueil</span>
+                <span>{{ t('nav_home') }}</span>
             </a>
-            <a href="{{ (lang_prefix ~ '/planner') if lang_prefix else '/planner' }}" class="bottom-nav-item">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+            <a class="bottom-nav-item" href="{{ url_for_page('planner') }}">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
                     <circle cx="6" cy="19" r="3"></circle>
                     <path d="M9 19h8.5a3.5 3.5 0 1 0 0-7h-11a3.5 3.5 0 1 1 0-7H15"></path>
                     <circle cx="18" cy="5" r="3"></circle>
                 </svg>
-                <span data-i18n="nav_itinerary">Itinéraire</span>
+                <span>{{ t('nav_itinerary') }}</span>
             </a>
-            <a href="{{ (lang_prefix ~ '/about') if lang_prefix else '/about' }}" class="bottom-nav-item active">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+            <a class="bottom-nav-item active" href="{{ url_for_page('about') }}">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
                     <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    <line x1="12" x2="12" y1="16" y2="12"></line>
+                    <line x1="12" x2="12.01" y1="8" y2="8"></line>
                 </svg>
-                <span data-i18n="nav_info">Info</span>
+                <span>{{ t('nav_info') }}</span>
             </a>
         </nav>
     </div>
 </body>
-
 </html>

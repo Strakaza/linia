@@ -1,6 +1,5 @@
 const i18n = {
     currentLang: (function () {
-        // Détermine la langue à partir de l’URL, puis fallback sur localStorage, puis fr
         try {
             const path = window.location.pathname || '/';
             const segments = path.split('/').filter(Boolean);
@@ -16,7 +15,28 @@ const i18n = {
         } catch (e) {
             console.warn('i18n: unable to infer lang from URL', e);
         }
-        return localStorage.getItem('linia_lang') || 'fr';
+
+        const storedLang = localStorage.getItem('linia_lang');
+        if (storedLang) return storedLang;
+
+        try {
+            const browserLang = navigator.language || navigator.userLanguage;
+            if (browserLang) {
+                const shortLang = browserLang.substring(0, 2).toLowerCase();
+                const supported = [
+                    'fr', 'en', 'de', 'es', 'pt', 'nl', 'sq', 'ca', 'hr', 'bg', 'da', 'et', 'fi',
+                    'el', 'hu', 'hi', 'lv', 'lt', 'lb', 'mk', 'ro', 'pl', 'cs', 'sk', 'sl', 'sv',
+                    'tr', 'uk', 'ru', 'be'
+                ];
+                if (supported.includes(shortLang)) {
+                    return shortLang;
+                }
+            }
+        } catch (e) {
+            console.warn('i18n: unable to infer lang from Browser', e);
+        }
+
+        return 'fr';
     })(),
     translations: {
         fr: {
@@ -51,6 +71,9 @@ const i18n = {
             "btn_save": "Sauvegarder",
             "btn_pdf": "Générer le PDF",
             "search_start": "Rechercher une ville de départ...",
+            "search_city": "Rechercher une ville...",
+            "search_city": "Rechercher une ville...",
+            "search_city": "Rechercher une ville...",
             "search_step": "Ajouter une étape...",
             "connected_cities": "Villes connectées",
             "from": "Depuis",
@@ -143,6 +166,9 @@ const i18n = {
             "btn_save": "Save",
             "btn_pdf": "Generate PDF",
             "search_start": "Search for a departure city...",
+            "search_city": "Search for a city...",
+            "search_city": "Search for a city...",
+            "search_city": "Search for a city...",
             "search_step": "Add a step...",
             "connected_cities": "Connected cities",
             "from": "From",
@@ -235,6 +261,9 @@ const i18n = {
             "btn_save": "Speichern",
             "btn_pdf": "PDF erstellen",
             "search_start": "Startstadt suchen...",
+            "search_city": "Stadt suchen...",
+            "search_city": "Stadt suchen...",
+            "search_city": "Stadt suchen...",
             "search_step": "Schritt hinzufügen...",
             "connected_cities": "Verbundene Städte",
             "from": "Von",
@@ -327,6 +356,9 @@ const i18n = {
             "btn_save": "Guardar",
             "btn_pdf": "Generar PDF",
             "search_start": "Buscar ciudad de salida...",
+            "search_city": "Buscar una ciudad...",
+            "search_city": "Buscar una ciudad...",
+            "search_city": "Buscar una ciudad...",
             "search_step": "Añadir un paso...",
             "connected_cities": "Ciudades conectadas",
             "from": "Desde",
@@ -419,6 +451,9 @@ const i18n = {
             "btn_save": "Salvar",
             "btn_pdf": "Gerar PDF",
             "search_start": "Pesquisar cidade de partida...",
+            "search_city": "Pesquisar uma cidade...",
+            "search_city": "Pesquisar uma cidade...",
+            "search_city": "Pesquisar uma cidade...",
             "search_step": "Adicionar um passo...",
             "connected_cities": "Cidades conectadas",
             "from": "De",
@@ -511,6 +546,9 @@ const i18n = {
             "btn_save": "Opslaan",
             "btn_pdf": "PDF genereren",
             "search_start": "Zoek een vertrekstad...",
+            "search_city": "Zoek een stad...",
+            "search_city": "Zoek een stad...",
+            "search_city": "Zoek een stad...",
             "search_step": "Voeg een stap toe...",
             "connected_cities": "Verbonden steden",
             "from": "Van",
@@ -603,6 +641,9 @@ const i18n = {
             "btn_save": "Ruaj",
             "btn_pdf": "Gjenero PDF",
             "search_start": "Kërko një qytet nisjeje...",
+            "search_city": "Kërko një qytet...",
+            "search_city": "Kërko një qytet...",
+            "search_city": "Kërko një qytet...",
             "search_step": "Shto një hap...",
             "connected_cities": "Qytete të lidhura",
             "from": "Nga",
@@ -695,6 +736,9 @@ const i18n = {
             "btn_save": "Desar",
             "btn_pdf": "Generar PDF",
             "search_start": "Cerca una ciutat de sortida...",
+            "search_city": "Cerca una ciutat...",
+            "search_city": "Cerca una ciutat...",
+            "search_city": "Cerca una ciutat...",
             "search_step": "Afegeix un pas...",
             "connected_cities": "Ciutats connectades",
             "from": "Des de",
@@ -790,6 +834,9 @@ const i18n = {
             "btn_save": "Spremi",
             "btn_pdf": "Generiraj PDF",
             "search_start": "Pretraži grad polaska...",
+            "search_city": "Pretraži grad...",
+            "search_city": "Pretraži grad...",
+            "search_city": "Pretraži grad...",
             "search_step": "Dodaj korak...",
             "connected_cities": "Povezani gradovi",
             "from": "Od",
@@ -885,6 +932,9 @@ const i18n = {
             "btn_save": "Запази",
             "btn_pdf": "Генерирай PDF",
             "search_start": "Търсене на начален град...",
+            "search_city": "Търсене на град...",
+            "search_city": "Търсене на град...",
+            "search_city": "Търсене на град...",
             "search_step": "Добави стъпка...",
             "connected_cities": "Свързани градове",
             "from": "От",
@@ -977,6 +1027,9 @@ const i18n = {
             "btn_save": "Gem",
             "btn_pdf": "Generer PDF",
             "search_start": "Søg efter en afgangsby...",
+            "search_city": "Søg efter en by...",
+            "search_city": "Søg efter en by...",
+            "search_city": "Søg efter en by...",
             "search_step": "Tilføj et trin...",
             "connected_cities": "Forbundne byer",
             "from": "Fra",
@@ -1069,6 +1122,9 @@ const i18n = {
             "btn_save": "Salvesta",
             "btn_pdf": "Loo PDF",
             "search_start": "Otsi lähtelinna...",
+            "search_city": "Otsi linna...",
+            "search_city": "Otsi linna...",
+            "search_city": "Otsi linna...",
             "search_step": "Lisa samm...",
             "connected_cities": "Ühendatud linnad",
             "from": "Alates",
@@ -1161,6 +1217,9 @@ const i18n = {
             "btn_save": "Tallenna",
             "btn_pdf": "Luo PDF",
             "search_start": "Hae lähtökaupunkia...",
+            "search_city": "Etsi kaupunkia...",
+            "search_city": "Etsi kaupunkia...",
+            "search_city": "Etsi kaupunkia...",
             "search_step": "Lisää vaihe...",
             "connected_cities": "Yhdistetyt kaupungit",
             "from": "Mistä",
@@ -1253,6 +1312,9 @@ const i18n = {
             "btn_save": "Αποθήκευση",
             "btn_pdf": "Δημιουργία PDF",
             "search_start": "Αναζήτηση πόλης αναχώρησης...",
+            "search_city": "Αναζήτηση πόλης...",
+            "search_city": "Αναζήτηση πόλης...",
+            "search_city": "Αναζήτηση πόλης...",
             "search_step": "Προσθήκη βήματος...",
             "connected_cities": "Συνδεδεμένες πόλεις",
             "from": "Από",
@@ -1345,6 +1407,9 @@ const i18n = {
             "btn_save": "Mentés",
             "btn_pdf": "PDF generálása",
             "search_start": "Indulási város keresése...",
+            "search_city": "Város keresése...",
+            "search_city": "Város keresése...",
+            "search_city": "Város keresése...",
             "search_step": "Lépés hozzáadása...",
             "connected_cities": "Kapcsolódó városok",
             "from": "Innen",
@@ -1437,6 +1502,9 @@ const i18n = {
             "btn_save": "सहेजें",
             "btn_pdf": "PDF बनाएँ",
             "search_start": "प्रस्थान शहर खोजें...",
+            "search_city": "शहर खोजें...",
+            "search_city": "शहर खोजें...",
+            "search_city": "शहर खोजें...",
             "search_step": "एक चरण जोड़ें...",
             "connected_cities": "जुड़े हुए शहर",
             "from": "से",
@@ -1529,6 +1597,9 @@ const i18n = {
             "btn_save": "Saglabāt",
             "btn_pdf": "Ģenerēt PDF",
             "search_start": "Meklēt izlidošanas pilsētu...",
+            "search_city": "Meklēt pilsētu...",
+            "search_city": "Meklēt pilsētu...",
+            "search_city": "Meklēt pilsētu...",
             "search_step": "Pievienot soli...",
             "connected_cities": "Savienotās pilsētas",
             "from": "No",
@@ -1621,6 +1692,9 @@ const i18n = {
             "btn_save": "Išsaugoti",
             "btn_pdf": "Generuoti PDF",
             "search_start": "Ieškoti išvykimo miesto...",
+            "search_city": "Ieškoti miesto...",
+            "search_city": "Ieškoti miesto...",
+            "search_city": "Ieškoti miesto...",
             "search_step": "Pridėti žingsnį...",
             "connected_cities": "Sujungti miestai",
             "from": "Nuo",
@@ -1713,6 +1787,9 @@ const i18n = {
             "btn_save": "Späicheren",
             "btn_pdf": "PDF generéieren",
             "search_start": "Startstad sichen...",
+            "search_city": "Sich no enger Stad...",
+            "search_city": "Sich no enger Stad...",
+            "search_city": "Sich no enger Stad...",
             "search_step": "Schrëtt derbäisetzen...",
             "connected_cities": "Verbonne Stied",
             "from": "Vun",
@@ -1805,6 +1882,9 @@ const i18n = {
             "btn_save": "Зачувај",
             "btn_pdf": "Генерирај PDF",
             "search_start": "Пребарај град на поаѓање...",
+            "search_city": "Пребарај град...",
+            "search_city": "Пребарај град...",
+            "search_city": "Пребарај град...",
             "search_step": "Додади чекор...",
             "connected_cities": "Поврзани градови",
             "from": "Од",
@@ -1897,6 +1977,9 @@ const i18n = {
             "btn_save": "Salvează",
             "btn_pdf": "Generează PDF",
             "search_start": "Căutați un oraș de plecare...",
+            "search_city": "Căutați un oraș...",
+            "search_city": "Căutați un oraș...",
+            "search_city": "Căutați un oraș...",
             "search_step": "Adăugați un pas...",
             "connected_cities": "Orașe conectate",
             "from": "De la",
@@ -1989,6 +2072,9 @@ const i18n = {
             "btn_save": "Zapisz",
             "btn_pdf": "Generuj PDF",
             "search_start": "Szukaj miasta początkowego...",
+            "search_city": "Szukaj miasta...",
+            "search_city": "Szukaj miasta...",
+            "search_city": "Szukaj miasta...",
             "search_step": "Dodaj krok...",
             "connected_cities": "Połączone miasta",
             "from": "Z",
@@ -2081,6 +2167,9 @@ const i18n = {
             "btn_save": "Uložit",
             "btn_pdf": "Generovat PDF",
             "search_start": "Hledat město odjezdu...",
+            "search_city": "Hledat město...",
+            "search_city": "Hledat město...",
+            "search_city": "Hledat město...",
             "search_step": "Přidat krok...",
             "connected_cities": "Propojená města",
             "from": "Z",
@@ -2173,6 +2262,9 @@ const i18n = {
             "btn_save": "Uložiť",
             "btn_pdf": "Generovať PDF",
             "search_start": "Hľadať mesto odchodu...",
+            "search_city": "Hľadať mesto...",
+            "search_city": "Hľadať mesto...",
+            "search_city": "Hľadať mesto...",
             "search_step": "Pridať krok...",
             "connected_cities": "Prepojené mestá",
             "from": "Z",
@@ -2265,6 +2357,9 @@ const i18n = {
             "btn_save": "Shrani",
             "btn_pdf": "Ustvari PDF",
             "search_start": "Išči izhodiščno mesto...",
+            "search_city": "Iskanje mesta...",
+            "search_city": "Iskanje mesta...",
+            "search_city": "Iskanje mesta...",
             "search_step": "Dodaj korak...",
             "connected_cities": "Povezana mesta",
             "from": "Od",
@@ -2357,6 +2452,9 @@ const i18n = {
             "btn_save": "Spara",
             "btn_pdf": "Generera PDF",
             "search_start": "Sök efter en avgångsstad...",
+            "search_city": "Sök efter en stad...",
+            "search_city": "Sök efter en stad...",
+            "search_city": "Sök efter en stad...",
             "search_step": "Lägg till ett steg...",
             "connected_cities": "Anslutna städer",
             "from": "Från",
@@ -2449,6 +2547,9 @@ const i18n = {
             "btn_save": "Kaydet",
             "btn_pdf": "PDF oluştur",
             "search_start": "Kalkış şehri ara...",
+            "search_city": "Bir şehir ara...",
+            "search_city": "Bir şehir ara...",
+            "search_city": "Bir şehir ara...",
             "search_step": "Bir adım ekle...",
             "connected_cities": "Bağlantılı şehirler",
             "from": "Nereden",
@@ -2541,6 +2642,9 @@ const i18n = {
             "btn_save": "Зберегти",
             "btn_pdf": "Згенерувати PDF",
             "search_start": "Пошук міста відправлення...",
+            "search_city": "Пошук міста...",
+            "search_city": "Пошук міста...",
+            "search_city": "Пошук міста...",
             "search_step": "Додати крок...",
             "connected_cities": "З'єднані міста",
             "from": "Звідки",
@@ -2633,6 +2737,9 @@ const i18n = {
             "btn_save": "Сохранить",
             "btn_pdf": "Сгенерировать PDF",
             "search_start": "Поиск города отправления...",
+            "search_city": "Поиск города...",
+            "search_city": "Поиск города...",
+            "search_city": "Поиск города...",
             "search_step": "Добавить шаг...",
             "connected_cities": "Связанные города",
             "from": "Откуда",
@@ -2725,6 +2832,9 @@ const i18n = {
             "btn_save": "Захаваць",
             "btn_pdf": "Згенераваць PDF",
             "search_start": "Пошук горада адпраўлення...",
+            "search_city": "Пошук горада...",
+            "search_city": "Пошук горада...",
+            "search_city": "Пошук горада...",
             "search_step": "Дадаць крок...",
             "connected_cities": "Звязаныя гарады",
             "from": "Адкуль",
@@ -2816,7 +2926,6 @@ const i18n = {
             console.error('Linia i18n: Unknown language', lang);
             lang = 'fr';
         }
-        // Redirige vers l’URL préfixée par la langue (sauf fr qui reste à la racine)
         const path = window.location.pathname || '/';
         const segments = path.split('/').filter(Boolean);
         const supported = [
@@ -2839,7 +2948,6 @@ const i18n = {
         if (newPath !== path) {
             window.location.pathname = newPath;
         } else {
-            // Fallback: on applique quand même la traduction sur place
             this.currentLang = lang;
             this.translatePage();
             document.dispatchEvent(new CustomEvent('linia-lang-changed', { detail: lang }));

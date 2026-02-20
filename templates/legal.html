@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="{{ current_lang }}">
-
 <head>
     {% include 'seo_head.html' %}
     <style>
@@ -17,103 +16,76 @@
         }
     </style>
 </head>
-
 <body>
-    {% set lang_prefix = '' if current_lang == 'fr' else '/' ~ current_lang %}
     <div class="about-page">
         <nav class="about-nav">
-            <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="nav-brand"><span
-                    class="highlight">Linia</span></a>
+            <a class="nav-brand" href="{{ url_for_page('home') }}"><span class="highlight">Linia</span></a>
             <div style="flex-grow: 1;"></div>
-            <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="nav-link" data-i18n="return_home"
-                style="margin-left: 0;">← Retour à l'accueil</a>
+            <a class="nav-link" href="{{ url_for_page('home') }}" style="margin-left: 0;">{{ t('return_home') }}</a>
         </nav>
+        
         <div class="about-content legal-content">
-            <h1 data-i18n="legal_title">Mentions Légales</h1>
-
+            <h1>{{ t('legal_title') }}</h1>
+            
             <section class="about-section">
-                <h2 data-i18n="legal_editor_title">1. Éditeur du site</h2>
-                <p data-i18n="legal_editor_content">
-                    Le site Linia est édité à titre non professionnel. Conformément à l'article 6-III-2 de la loi n°
-                    2004-575 du 21 juin 2004 (LCEN), l'éditeur a choisi de rester anonyme. Les coordonnées de l'éditeur
-                    ont été transmises à l'hébergeur.
-                </p>
+                <h2>{{ t('legal_editor_title') }}</h2>
+                <p>{{ t('legal_editor_content') }}</p>
             </section>
-
+            
             <section class="about-section">
-                <h2 data-i18n="legal_hosting_title">2. Hébergement</h2>
-                <p data-i18n="legal_hosting_content">
-                    Le site est hébergé par Render Services, Inc., 520 High St, Palo Alto, CA 94301, États-Unis
-                    (render.com).
-                </p>
+                <h2>{{ t('legal_hosting_title') }}</h2>
+                <p>{{ t('legal_hosting_content') }}</p>
             </section>
-
+            
             <section class="about-section">
-                <h2 data-i18n="legal_intellectual_title">3. Propriété intellectuelle et Sources</h2>
-                <p data-i18n="legal_intellectual_content">
-                    Le contenu propre au site (code, design) est protégé par le droit d'auteur. Les données de transport
-                    affichées proviennent de sources ouvertes (via transport.data.gouv.fr). Elles sont régies par la
-                    licence Open Database License (ODbL). L'utilisateur est tenu de respecter les termes de cette
-                    licence pour toute réutilisation de ces données.
-                </p>
+                <h2>{{ t('legal_intellectual_title') }}</h2>
+                <p>{{ t('legal_intellectual_content') }}</p>
             </section>
-
+            
             <section class="about-section">
-                <h2 data-i18n="legal_responsibility_title">4. Responsabilité</h2>
-                <p data-i18n="legal_responsibility_content">
-                    L'éditeur fournit les informations de transport "en l'état". Il ne garantit pas l'exactitude des
-                    horaires ni la disponibilité continue du service et ne peut être tenu responsable des conséquences
-                    liées à l'utilisation des informations présentes sur le site.
-                </p>
+                <h2>{{ t('legal_responsibility_title') }}</h2>
+                <p>{{ t('legal_responsibility_content') }}</p>
             </section>
-
+            
             <section class="about-section">
-                <h2 data-i18n="legal_privacy_title">5. Données personnelles et Cookies</h2>
-                <p data-i18n="legal_privacy_content">
-                    Linia ne collecte aucune donnée personnelle. Le stockage local (Local Storage) de votre navigateur
-                    est utilisé exclusivement pour mémoriser vos préférences (recherches récentes, langue) afin
-                    d'améliorer l'expérience utilisateur. Aucun cookie tiers ou traceur publicitaire n'est utilisé.
-                </p>
+                <h2>{{ t('legal_privacy_title') }}</h2>
+                <p>{{ t('legal_privacy_content') }}</p>
             </section>
         </div>
-
+        
         <footer class="app-footer">
-            <p style="font-size: 11px; margin-bottom: 5px; pointer-events: auto;"><a
-                    href="{{ (lang_prefix ~ '/legal') if lang_prefix else '/legal' }}" data-i18n="nav_legal"
-                    style="color: inherit; text-decoration: none; opacity: 0.6;">Mentions Légales</a></p>
-            <p data-i18n="footer_signature">"Страказа жывая"</p>
+            <p style="font-size: 11px; margin-bottom: 5px; pointer-events: auto;">
+                <a href="{{ url_for_page('legal') }}" style="color: inherit; text-decoration: none; opacity: 0.6;">{{ t('nav_legal') }}</a>
+            </p>
+            <p>{{ t('footer_signature') }}</p>
             <div class="color-bar-signature"></div>
         </footer>
-
+        
         <nav class="bottom-nav">
-            <a href="{{ (lang_prefix ~ '/') if lang_prefix else '/' }}" class="bottom-nav-item">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+            <a class="bottom-nav-item" href="{{ url_for_page('home') }}">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                 </svg>
-                <span data-i18n="nav_home">Accueil</span>
+                <span>{{ t('nav_home') }}</span>
             </a>
-            <a href="{{ (lang_prefix ~ '/planner') if lang_prefix else '/planner' }}" class="bottom-nav-item">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+            <a class="bottom-nav-item" href="{{ url_for_page('planner') }}">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
                     <circle cx="6" cy="19" r="3"></circle>
                     <path d="M9 19h8.5a3.5 3.5 0 1 0 0-7h-11a3.5 3.5 0 1 1 0-7H15"></path>
                     <circle cx="18" cy="5" r="3"></circle>
                 </svg>
-                <span data-i18n="nav_itinerary">Itinéraire</span>
+                <span>{{ t('nav_itinerary') }}</span>
             </a>
-            <a href="{{ (lang_prefix ~ '/about') if lang_prefix else '/about' }}" class="bottom-nav-item">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+            <a class="bottom-nav-item" href="{{ url_for_page('about') }}">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
                     <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    <line x1="12" x2="12" y1="16" y2="12"></line>
+                    <line x1="12" x2="12.01" y1="8" y2="8"></line>
                 </svg>
-                <span data-i18n="nav_info">Info</span>
+                <span>{{ t('nav_info') }}</span>
             </a>
         </nav>
     </div>
 </body>
-
 </html>

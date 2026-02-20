@@ -1,33 +1,20 @@
 User-agent: *
-Allow: /
 Disallow: /api/
 Disallow: /download/
 
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 1
-
-User-agent: Bingbot
-Allow: /
-Crawl-delay: 1
-
-User-agent: DuckDuckBot
-Allow: /
-
 User-agent: Yandex
-Allow: /
+Disallow: /api/
+Disallow: /download/
 Crawl-delay: 2
 
 User-agent: Baiduspider
-Allow: /
+Disallow: /api/
+Disallow: /download/
 Crawl-delay: 2
 
-User-agent: Slurp
-Allow: /
+User-agent: bingbot
+Disallow: /api/
+Disallow: /download/
 Crawl-delay: 1
 
 Sitemap: https://liniabus.eu/sitemap.xml
-
-Host: https://liniabus.eu
-
-Request-rate: 1/1s

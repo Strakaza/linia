@@ -159,7 +159,7 @@ a:hover {
 
 .landing-content {
     position: relative;
-    z-index: 2;
+    z-index: 20;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1751,7 +1751,6 @@ a:hover {
     background-color: var(--flix-green-accent);
 }
 
-/* --- Premium Leaflet Popups (Glassmorphism) --- */
 .leaflet-popup-content-wrapper {
     background: rgba(255, 255, 255, 0.85) !important;
     backdrop-filter: blur(12px) saturate(180%) !important;
@@ -2370,7 +2369,6 @@ footer p {
     }
 }
 
-/* Planner Suggestion Markers */
 .planner-suggestion-marker {
     width: 12px;
     height: 12px;
@@ -2403,7 +2401,6 @@ footer p {
     stroke: url(#mixedGradient) !important;
 }
 
-/* --- Sidebar Disclaimer Styling --- */
 .planner-disclaimer {
     margin: 16px;
     padding: 16px;

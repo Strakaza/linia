@@ -478,8 +478,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     const initialParams = new URLSearchParams(window.location.search);
-    const stopIdParam = initialParams.get('stop_id');
-    const stopNameParam = initialParams.get('stop_name');
+    const stopIdParam = initialParams.get('stop_id') || window.PRELOADED_STOP_ID;
+    const stopNameParam = initialParams.get('stop_name') || window.PRELOADED_STOP_NAME;
     if (stopIdParam) {
         if (stopNameParam) searchInput.value = stopNameParam;
         handleStopSelect(stopIdParam, stopNameParam || '');

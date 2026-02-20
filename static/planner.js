@@ -423,9 +423,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 const startStop = itinerary[i];
                 const endStop = itinerary[i + 1];
 
-                // Use destination stop to determine the leg provider
                 const ops = endStop.operators || [];
-                let lineColor = '#73d700'; // Default Flix green
+                let lineColor = '#73d700';
                 let polylineClass = '';
                 const hasFlix = ops.includes('flixbus');
                 const hasBla = ops.includes('blablacar_bus');
@@ -433,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (hasFlix && hasBla) {
                     polylineClass = 'planner-mixed-polyline';
                 } else if (hasBla) {
-                    lineColor = '#0070d2'; // BlaBla blue
+                    lineColor = '#0070d2';
                 }
 
                 const geometry = await getRoadGeometry([startStop, endStop]);

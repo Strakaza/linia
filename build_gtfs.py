@@ -31,6 +31,16 @@ OUTPUT_DIR = "output_gtfs"
 UNIFIED_DIR = os.path.join(OUTPUT_DIR, "unified")
 MAPPING_DIR = os.path.join(OUTPUT_DIR, "mapping")
 
+MAJOR_CITIES = [
+    "Berlin", "Paris", "Londres", "London", "Rome", "Madrid", "Barcelona", "Barcelone", 
+    "Munich", "München", "Milan", "Milano", "Amsterdam", "Vienna", "Wien", "Prague", "Praha", 
+    "Warsaw", "Warszawa", "Brussels", "Bruxelles", "Budapest", "Lyon", "Marseille", 
+    "Toulouse", "Bordeaux", "Lille", "Strasbourg", "Frankfurt", "Francfort", "Hamburg", "Hambourg", 
+    "Cologne", "Köln", "Naples", "Napoli", "Turin", "Torino", "Lisbon", "Lisboa", "Porto",
+    "Stockholm", "Copenhagen", "Copenhague", "Oslo", "Helsinki", "Zurich", "Zürich", "Geneva", "Genève",
+    "Nantes", "Rennes", "Montpellier", "Nice", "Bremen", "Hannover", "Stuttgart", "Leipzig", "Dresden",
+    "Krakow", "Kraków", "Sevilla", "Seville", "Valencia", "Valence", "Zaragoza", "Malaga"
+]
 
 def clean_display_name(name):
     if not name or not isinstance(name, str):
@@ -51,15 +61,32 @@ def clean_display_name(name):
 def get_city_name(stop_name):
     if not stop_name or not isinstance(stop_name, str):
         return "Unknown"
-    separators = [" - ", " (", ", ", " – ", " — "]
+    
     cleaned_name = stop_name.strip()
+
+    separators = [" - ", " (", ", ", " – ", " — ", " | "]
     for sep in separators:
         if sep in cleaned_name:
-            city_part = cleaned_name.split(sep)[0].strip()
-            return city_part
+            cleaned_name = cleaned_name.split(sep)[0].strip()
+
+    lower_name = cleaned_name.lower()
+    for city in MAJOR_CITIES:
+        lower_city = city.lower()
+        if lower_name.startswith(lower_city + " ") or lower_name.startswith(lower_city + "-"):
+            return city
+        if lower_name == lower_city:
+            return city
+
+    suffixes_to_remove = [
+        " central bus station", " central station", " bus station", 
+        " airport", " aéroport", " aeroport", " hbf", " zob", " p+r",
+        " gare routière", " gare", " sud", " nord", " est", " ouest"
+    ]
+    for suffix in suffixes_to_remove:
+        if cleaned_name.lower().endswith(suffix):
+            cleaned_name = cleaned_name[:len(cleaned_name)-len(suffix)].strip()
+            
     return cleaned_name
-
-
 
 def download_and_extract(url, operator_key):
     logger.info(f"Téléchargement de {operator_key}...")
