@@ -52,5 +52,8 @@
 {% endif %}
 
 {# Script i18n global #}
+<script>
+    window.CURRENT_LANG = {{ current_lang | tojson }};
+    window.TRANSLATIONS = {{ t_dict | tojson }};
+</script>
 <script src="{{ url_for('static', filename='i18n.js') }}" defer></script>
-
