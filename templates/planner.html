@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{ current_lang }}">
+
 <head>
     {% include 'seo_head.html' %}
-    <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/>
+    <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet" />
 </head>
+
 <body>
     <div class="planner-page">
         <svg style="width:0;height:0;position:absolute;">
@@ -14,48 +17,51 @@
                 </linearGradient>
             </defs>
         </svg>
-        
+
         <div id="plannerMap"></div>
-        
-        <a class="linia-nav-btn nav-btn-home" href="{{ url_for_page('home') }}">
-            <div class="icon-circle">
-                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-            </div>
-            <div class="btn-label">{{ t('nav_home') }}</div>
+
+        <a class="expanding-nav-btn nav-btn-home" href="{{ url_for_page('home') }}" data-label="{{ t('nav_home') }}">
+            <svg class="svgIcon" fill="none" height="24" stroke="currentColor" stroke-linecap="round"
+                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
         </a>
-        
+
         <div class="planner-sidebar" id="plannerSidebar">
             <div class="planner-sidebar-header">
                 <h2>{{ t('itinerary_title') }}</h2>
                 <div class="planner-sidebar-actions">
                     <button class="planner-btn planner-btn-ghost" disabled="" id="undoBtn" title="{{ t('btn_undo') }}">
-                        <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16">
+                        <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16">
                             <polyline points="1 4 1 10 7 10"></polyline>
                             <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
                         </svg>
                     </button>
-                    <button class="planner-btn planner-btn-ghost" disabled="" id="resetBtn" title="{{ t('btn_reset') }}">
-                        <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16">
+                    <button class="planner-btn planner-btn-ghost" disabled="" id="resetBtn"
+                        title="{{ t('btn_reset') }}">
+                        <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16">
                             <polyline points="3 6 5 6 21 6"></polyline>
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                            </path>
                         </svg>
                     </button>
                 </div>
             </div>
-            
+
             <div class="planner-sidebar-body" id="plannerTimeline">
                 <div class="planner-empty-state">
-                    <svg fill="none" height="48" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" style="opacity:0.3; margin-bottom:12px;" viewBox="0 0 24 24" width="48">
+                    <svg fill="none" height="48" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="1" style="opacity:0.3; margin-bottom:12px;" viewBox="0 0 24 24" width="48">
                         <circle cx="12" cy="10" r="3"></circle>
                         <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"></path>
                     </svg>
                     <p>{{ t('planner_empty') }}</p>
                 </div>
             </div>
-            
+
             <div class="planner-disclaimer">
                 <div class="disclaimer-header">
                     <svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16">
@@ -67,9 +73,9 @@
                 </div>
                 <p>{{ t('disclaimer_text') }}</p>
             </div>
-            
+
             <div class="planner-sidebar-footer" id="plannerFooter">
-                <input accept=".json" id="loadItineraryInput" style="display: none;" type="file"/>
+                <input accept=".json" id="loadItineraryInput" style="display: none;" type="file" />
                 <button class="planner-footer-btn" id="loadBtn" title="{{ t('btn_load') }}">
                     <svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -88,7 +94,8 @@
                 </button>
                 <div class="planner-footer-divider"></div>
                 <button class="linia-btn-premium" id="generatePdfBtn" style="width: 100%;">
-                    <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16">
+                    <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" width="16">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                         <polyline points="14 2 14 8 20 8"></polyline>
                         <line x1="16" x2="8" y1="13" y2="13"></line>
@@ -98,11 +105,13 @@
                 </button>
             </div>
         </div>
-        
+
         <div class="planner-search-container" id="plannerSearchContainer">
             <div class="planner-search-wrapper">
-                <input autocomplete="off" class="planner-search-bar" id="plannerSearchInput" placeholder="{{ t('search_start') }}" type="text"/>
-                <svg class="planner-search-icon" fill="none" height="18" id="plannerSearchIcon" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18">
+                <input autocomplete="off" class="planner-search-bar" id="plannerSearchInput"
+                    placeholder="{{ t('search_start') }}" type="text" />
+                <svg class="planner-search-icon" fill="none" height="18" id="plannerSearchIcon" stroke="currentColor"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
                 </svg>
@@ -110,7 +119,7 @@
             </div>
             <div class="planner-suggestions" id="plannerSuggestions"></div>
         </div>
-        
+
         <div class="planner-connected-panel" id="connectedPanel">
             <div class="planner-connected-header">
                 <div>
@@ -120,35 +129,29 @@
                 <button class="planner-connected-close" id="connectedClose" title="{{ t('btn_close') }}">×</button>
             </div>
             <div class="planner-connected-search">
-                <input id="connectedSearchInput" placeholder="{{ t('filter_cities') }}" type="text"/>
+                <input id="connectedSearchInput" placeholder="{{ t('filter_cities') }}" type="text" />
             </div>
             <div class="planner-connected-body" id="connectedBody">
             </div>
         </div>
-        
+
         <div class="loading-overlay" id="loadingOverlay">
             <div class="spinner"></div>
             <span id="loadingText">{{ t('loading') }}</span>
         </div>
-        
-        <footer class="app-footer" style="position: absolute; bottom: 0; padding: 12px; font-size: 11px; pointer-events: none; z-index: 10000;">
-            <p style="margin-bottom: 4px; pointer-events: auto;">
-                <a href="{{ url_for_page('legal') }}" style="color: inherit; text-decoration: none; opacity: 0.6;">{{ t('nav_legal') }}</a>
-            </p>
-            <p style="margin-bottom: 4px;">{{ t('footer_signature') }}</p>
-            <div class="color-bar-signature" style="max-width: 150px;"></div>
-        </footer>
-        
+
         <nav class="bottom-nav">
             <a class="bottom-nav-item" href="{{ url_for_page('home') }}">
-                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" viewBox="0 0 24 24" width="24">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                 </svg>
                 <span>{{ t('nav_home') }}</span>
             </a>
             <a class="bottom-nav-item active" href="{{ url_for_page('planner') }}">
-                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" viewBox="0 0 24 24" width="24">
                     <circle cx="6" cy="19" r="3"></circle>
                     <path d="M9 19h8.5a3.5 3.5 0 1 0 0-7h-11a3.5 3.5 0 1 1 0-7H15"></path>
                     <circle cx="18" cy="5" r="3"></circle>
@@ -156,7 +159,8 @@
                 <span>{{ t('nav_itinerary') }}</span>
             </a>
             <a class="bottom-nav-item" href="{{ url_for_page('about') }}">
-                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" viewBox="0 0 24 24" width="24">
                     <circle cx="12" cy="12" r="10"></circle>
                     <line x1="12" x2="12" y1="16" y2="12"></line>
                     <line x1="12" x2="12.01" y1="8" y2="8"></line>
@@ -165,13 +169,15 @@
             </a>
         </nav>
     </div>
-    
+
     <div class="toast-container" id="toastContainer"></div>
-    
+
     <script>window.L_DISABLE_3D = true;</script>
-    <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="{{ url_for('static', filename='planner.js') }}"></script>
 </body>
+
 </html>

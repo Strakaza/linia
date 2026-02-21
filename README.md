@@ -1,68 +1,101 @@
 # Linia
 
-Linia est une application web de visualisation et de planification de trajets de bus longue distance. Elle agrège et unifie les données de transport (GTFS) de plusieurs opérateurs pour offrir une vue consolidée du réseau de transport interurbain.
+Linia est une application web de visualisation et de planification de trajets de bus longue distance. Elle agrège les données de transport (GTFS) de plusieurs opérateurs pour offrir une vue consolidée du réseau de transport interurbain européen.
 
-## Aperçu Fonctionnel
+L'application permet d'explorer les lignes sur une carte interactive, de rechercher des itinéraires et de télécharger le jeu de données unifié généré par le pipeline de traitement.
 
-L'application permet aux utilisateurs de :
-- Explorer interactivement les lignes de bus sur une carte dynamique.
-- Rechercher des arrêts et des villes spécifiques.
-- Visualiser les connexions directes entre les villes.
-- Planifier des itinéraires en consultant les horaires et les parcours détaillés.
-- Télécharger le jeu de données GTFS unifié généré par l'application.
+---
+
+## Fonctionnalités
+
+*   **Visualisation Cartographique** : Affichage des lignes de bus et des arrêts sur une carte interactive (Leaflet).
+*   **Recherche et Planification** : Recherche d'arrêts par nom (gestion des synonymes) et visualisation des connexions directes entre villes.
+*   **Agrégation Multi-opérateurs** : Fusion des réseaux FlixBus et BlaBlaCar Bus en un seul graphe cohérent.
+*   **Unification des Arrêts** : Regroupement des arrêts physiques par ville (*Master Stops*) pour simplifier la lecture du réseau.
+*   **Multilingue** : Interface traduite en plusieurs langues avec gestion des slugs SEO localisés.
+*   **Export de Données** : Téléchargement d'une archive GTFS unifiée au format ZIP.
+
+---
 
 ## Architecture Technique
 
-### 1. Pipeline de Données (Collecte et Unification)
-Le cœur de l'application repose sur un processus de traitement de données situé dans `build_gtfs.py`.
-- **Sources** : Récupération automatisée des flux GTFS statiques depuis data.gouv.fr (FlixBus et BlaBlaCar Bus).
-- **Filtrage Temporel** : Sélection des services valides sur une fenêtre temporelle spécifique pour garantir la pertinence des données.
-- **Unification par Ville** : Pour garantir la clarté du réseau, l'application regroupe tous les arrêts physiques d'une même ville sous un point unique ("Master Stop"). Ce processus unifie les réseaux FlixBus et BlaBlaCar à l'échelle urbaine, facilitant la recherche et la visualisation.
-- **Simplification Topologique** : Élimination des redondances et filtrage des trajets aller-retour pour ne conserver qu'une structure de réseau propre et lisible.
+### Stack Technique
+*   **Backend** : Python, Flask.
+*   **Base de Données** : SQLite (stockage et requête des données GTFS).
+*   **Frontend** : HTML5, CSS3, JavaScript (Vanilla), Leaflet.
+*   **Traitement de Données** : Pandas, NumPy.
 
-### 2. Backend (Serveur et API)
-Le serveur, implémenté avec Flask, assure la logique métier et la distribution des données :
-- **Traitement Pandas** : Chargement et manipulation en mémoire des fichiers GTFS pour des réponses API rapides.
-- **Points d'accès API** : Fourniture de données structurées (JSON) pour la recherche d'arrêts, les détails des voyages (shapes) et les matrices de connexion entre villes.
-- **Gestion de la Localisation** : Support multilingue intégré côté serveur et client.
+### Pipeline de Données (`build_gtfs.py`)
+Le script `build_gtfs.py` assure la collecte, le nettoyage et l'unification des données :
 
-### 3. Frontend (Interface Utilisateur)
-L'interface est conçue pour être performante et respectueuse des standards modernes :
-- **Visualisation Cartographique** : Utilisation de Leaflet pour le rendu fluide des tracés géographiques avec les fonds de carte CartoDB.
-- **Expérience Utilisateur** : Design responsive avec une esthétique épurée, sans dépendances lourdes (Vanilla JavaScript et CSS).
-- **Internationalisation (i18n)** : Système de traduction dynamique gérant plusieurs langues.
+1.  **Téléchargement** : Récupération des flux GTFS depuis `data.gouv.fr`.
+3.  **Agrégation par Ville** : Les arrêts physiques sont regroupés sous un identifiant de ville unique pour éviter la redondance.
+4.  **Simplification** : Suppression des trajets aller-retour redondants pour alléger le modèle de données.
+5.  **Génération** : Création des fichiers GTFS unifiés (CSV), de la base de données SQLite et de l'archive ZIP de téléchargement.
 
-## Structure du Projet
+### Serveur et Routes (`app.py`)
+L'application repose sur Flask pour servir l'interface et une API REST :
 
-- `app.py` : Point d'entrée de l'application Flask et définition des routes API.
-- `build_gtfs.py` : Script de traitement et d'unification des fichiers GTFS.
-- `static/` : Ressources statiques (CSS, JavaScript, manifest PWA).
-- `templates/` : Gabarits HTML (Accueil, Carte, Planificateur, À propos).
-- `output_gtfs/` : Répertoire de stockage des données GTFS brutes et unifiées.
+*   **Routes SEO** : Génération de pages dynamiques pour les villes principales (`/bus/paris`, `/bus/berlin`) avec balisage Schema.org, sitemaps et balises `hreflang`.
+*   **API** : Endpoints pour la recherche d'arrêts (`/api/search_stops`), les détails des trajets (`/api/trip_details`) et les connexions (`/api/connected_stops`).
 
-## Installation et Déploiement
+---
+
+## Installation et Lancement
 
 ### Prérequis
-- Python 3.9+
-- Pip (gestionnaire de paquets Python)
-- Docker (optionnel, pour l'exécution en conteneur)
+*   Python 3.9+
+*   Pip
 
-### Procédure d'installation
-1. Installer les dépendances :
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. Générer les données unifiées (GTFS) :
-   ```bash
-   python build_gtfs.py
-   ```
-3. Lancer le serveur de développement :
-   ```bash
-   python app.py
-   ```
+### Installation Locale
+
+1.  **Cloner le dépôt** :
+    ```bash
+    git clone https://github.com/votre-utilisateur/linia.git
+    cd linia
+    ```
+
+2.  **Installer les dépendances** :
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3.  **Générer les données** (Nécessite un accès internet pour télécharger les GTFS) :
+    ```bash
+    python build_gtfs.py
+    ```
+
+4.  **Lancer l'application** :
+    ```bash
+    python app.py
+    ```
+    L'application est accessible par défaut à l'adresse `http://0.0.0.0:5000`.
 
 ### Déploiement Docker
-Un `Dockerfile` est fourni pour faciliter le déploiement. L'image expose le port 5000 et exécute automatiquement le chargement des données au démarrage.
 
-## Note
-Les données de transport utilisées proviennent de sources ouvertes via data.gouv.fr. L'application est destinée à un usage de visualisation technique et de démonstration de traitement de données géospatiales.
+L'application peut être conteneurisée via le `Dockerfile` fourni.
+
+```bash
+docker build -t linia-app .
+docker run -p 5000:5000 linia-app
+```
+
+---
+
+## Configuration
+
+La configuration principale se trouve dans `config_data.py` :
+
+*   `TOP_HUBS` : Liste des villes majeures avec leurs identifiants et slugs traduits.
+*   `SUPPORTED_LANGS` : Liste des langues supportées.
+*   `SEARCH_SYNONYMS` : Dictionnaire pour normaliser les noms de villes lors de la recherche (ex: "Köln" -> "Cologne").
+
+---
+
+## Sources des Données
+
+Les données de transport proviennent de sources ouvertes :
+
+*   **FlixBus** : Via data.gouv.fr
+*   **BlaBlaCar Bus** : Via data.gouv.fr
+```

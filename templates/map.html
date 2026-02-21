@@ -12,27 +12,22 @@
     <div class="map-page">
         <div id="map"></div>
 
-        <a class="linia-nav-btn nav-btn-home" href="{{ url_for_page('home') }}">
-            <div class="icon-circle">
-                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="2" viewBox="0 0 24 24" width="24">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-            </div>
-            <div class="btn-label">{{ t('nav_home') }}</div>
+        <a class="expanding-nav-btn nav-btn-home" href="{{ url_for_page('home') }}" data-label="{{ t('nav_home') }}">
+            <svg class="svgIcon" fill="none" height="24" stroke="currentColor" stroke-linecap="round"
+                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
         </a>
 
-        <a class="linia-nav-btn nav-btn-planner" href="{{ url_for_page('planner') }}">
-            <div class="icon-circle">
-                <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="2.5" viewBox="0 0 24 24" width="22">
-                    <circle cx="6" cy="19" r="3"></circle>
-                    <path d="M9 19h8.5a3.5 3.5 0 1 0 0-7h-11a3.5 3.5 0 1 1 0-7H15"></path>
-                    <circle cx="18" cy="5" r="3"></circle>
-                </svg>
-            </div>
-            <div class="btn-label">{{ t('nav_itinerary') }}</div>
+        <a class="expanding-nav-btn nav-btn-planner" href="{{ url_for_page('planner') }}"
+            data-label="{{ t('nav_itinerary') }}">
+            <svg class="svgIcon" fill="none" height="22" stroke="currentColor" stroke-linecap="round"
+                stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="22">
+                <circle cx="6" cy="19" r="3"></circle>
+                <path d="M9 19h8.5a3.5 3.5 0 1 0 0-7h-11a3.5 3.5 0 1 1 0-7H15"></path>
+                <circle cx="18" cy="5" r="3"></circle>
+            </svg>
         </a>
 
         <div class="trip-details-panel" id="tripDetailsPanel">
@@ -111,18 +106,7 @@
             </ul>
         </div>
         {% endif %}
-        <footer
-            style="position: absolute; bottom: 0; padding: 12px; font-size: 11px; pointer-events: none; z-index: 9000;">
-            <p style="margin-bottom: 4px; pointer-events: auto;">
-                <a href="{{ url_for_page('legal') }}" style="color: inherit; text-decoration: none; opacity: 0.6;">
-                    {{ t('nav_legal') }}
-                </a>
-            </p>
-            <p style="margin-bottom: 4px;">{{ t('footer_signature') }}</p>
-            <div class="color-bar-signature" style="max-width: 150px;"></div>
-        </footer>
-
-        <nav class="bottom-nav">
+        <footer <nav class="bottom-nav">
             <a class="bottom-nav-item" href="{{ url_for_page('home') }}">
                 <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                     stroke-width="2" viewBox="0 0 24 24" width="24">
@@ -149,7 +133,7 @@
                 </svg>
                 <span>{{ t('nav_info') }}</span>
             </a>
-        </nav>
+            </nav>
     </div>
 
     <div class="toast-container" id="toastContainer"></div>

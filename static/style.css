@@ -6,6 +6,7 @@
     --flix-green-hover: #5cb800;
     --blablacar-blue: #00aff5;
     --blablacar-blue-accent: #0070d2;
+    --blablacar-blue-hover: #0056a3;
     --text-primary: #1a1a1b;
     --text-secondary: #5f6368;
     --text-muted: #9aa0a6;
@@ -13,13 +14,17 @@
     --bg-light: #f8f9fa;
     --bg-hover: #f1f3f4;
     --border-light: #e8eaed;
+    --border-color: #e8eaed;
     --blue-accent: #1a73e8;
+    --green-accent: #34a853;
+    --green-hover: #2d8e47;
     --shadow-sm: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
     --shadow-md: 0 1px 3px 0 rgba(60, 64, 67, .30), 0 4px 8px 3px rgba(60, 64, 67, .15);
     --shadow-lg: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 20px;
+    --radius-full: 9999px;
     --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
 }
 
@@ -472,6 +477,238 @@ a:hover {
     max-width: 440px;
 }
 
+/* --- FOOTER & DISCLAIMER CARD --- */
+
+.linia-footer {
+    position: relative;
+    padding: 2.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5em;
+    z-index: 99999;
+    width: 100%;
+}
+
+.landing-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+}
+
+/* --- INFO BUTTON TOOLTIP --- */
+
+/* --- INFO BUTTON TOOLTIP REFINED --- */
+
+.linia-info-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2em;
+    z-index: 9999;
+    /* Higher than landing-actions */
+}
+
+.linia-info-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 1;
+    animation: info-pulse 3s infinite ease-in-out;
+}
+
+@keyframes info-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(115, 215, 0, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(115, 215, 0, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(115, 215, 0, 0);
+    }
+}
+
+.linia-info-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(115, 215, 0, 0.2), rgba(0, 112, 210, 0.2));
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.linia-info-btn:hover {
+    transform: translateY(-2px) scale(1.1);
+    background: rgba(255, 255, 255, 0.45);
+    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.linia-info-btn:hover::before {
+    opacity: 1;
+}
+
+.linia-info-btn svg {
+    color: var(--flix-green-accent);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.linia-info-btn:hover svg {
+    transform: scale(1.15) rotate(15deg);
+}
+
+.linia-info-tooltip {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    width: 320px;
+    padding: 1.5em;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 1.2em;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: auto;
+    /* Required for clicking link */
+    z-index: 10000;
+    text-align: left;
+}
+
+/* Hover Bridge: Pseudo-element to bridge gap between button and tooltip */
+.linia-info-tooltip::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 25px;
+    /* Bridges the distance */
+    background: transparent;
+}
+
+.linia-info-wrapper:hover .linia-info-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Tooltip content styles same as before */
+.tooltip-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.tooltip-header svg {
+    color: var(--flix-green-accent);
+    flex-shrink: 0;
+}
+
+.tooltip-header h3 {
+    font-size: 13px;
+    font-weight: 800;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-primary);
+}
+
+.linia-info-tooltip p {
+    font-size: 11.5px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0 0 15px 0;
+    font-weight: 500;
+}
+
+.tooltip-footer {
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.tooltip-legal-link {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blablacar-blue-accent);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tooltip-legal-link:hover {
+    color: var(--flix-green-accent);
+    transform: translateX(3px);
+}
+
+/* Tooltip Arrow */
+.linia-info-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: rgba(255, 255, 255, 0.85);
+}
+
+@media (max-width: 768px) {
+    .linia-info-tooltip {
+        width: 280px;
+        left: 50%;
+    }
+}
+
+.footer-signature-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    pointer-events: auto;
+}
+
+.signature-link {
+    font-size: 12px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 600;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.signature-link:hover {
+    opacity: 1;
+}
+
 .map-search-wrapper {
     position: relative;
     display: flex;
@@ -481,15 +718,16 @@ a:hover {
 .map-search-bar {
     width: 100%;
     padding: 12px 48px 12px 40px;
-    border: none;
-    border-radius: var(--radius-full);
+    border: 2px solid var(--flix-green-accent);
+    border-radius: 0.5em;
     font-size: 15px;
     font-family: var(--font-main);
     color: var(--text-primary);
     background: var(--bg-white);
     box-shadow: var(--shadow-md);
     outline: none;
-    transition: box-shadow 0.2s ease;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    animation: search-glow-dynamic 5s ease-in-out infinite;
 }
 
 .map-search-bar::placeholder {
@@ -518,38 +756,62 @@ a:hover {
     display: block;
 }
 
-.linia-nav-btn {
-    position: fixed;
-    z-index: 1000;
-    width: 56px;
-    height: 56px;
-    display: block;
-    overflow: hidden;
-    text-align: center;
-    cursor: pointer;
-    text-decoration: none !important;
-}
-
-.linia-nav-btn .icon-circle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Expanding Navigation Buttons */
+.expanding-nav-btn {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: var(--bg-white);
-    color: var(--text-secondary);
+    background-color: var(--bg-white);
+    border: 1px solid var(--border-light);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-shadow: var(--shadow-md);
-    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: absolute;
-    top: 0;
-    left: 4px;
-    transform-origin: top;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    position: fixed;
+    z-index: 1000;
+    text-decoration: none !important;
 }
 
-.linia-nav-btn:hover .icon-circle {
-    transform: scale(0.62) translateY(2px);
-    box-shadow: var(--shadow-sm);
+.expanding-nav-btn .svgIcon {
+    width: 20px;
+    height: 20px;
+    transition: all 0.3s ease;
+    color: var(--text-secondary);
+}
+
+.expanding-nav-btn:hover {
+    width: 140px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, var(--blablacar-blue-accent), var(--flix-green-accent));
+    border-color: transparent;
+    box-shadow: var(--shadow-lg);
+}
+
+.expanding-nav-btn:hover .svgIcon {
+    transform: translateY(-150%);
+    opacity: 0;
+}
+
+.expanding-nav-btn::before {
+    position: absolute;
+    bottom: -20px;
+    content: attr(data-label);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    opacity: 0;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.expanding-nav-btn:hover::before {
+    opacity: 1;
+    bottom: 50%;
+    transform: translateY(50%);
 }
 
 .nav-btn-home {
@@ -557,40 +819,17 @@ a:hover {
     right: 20px;
 }
 
-.nav-btn-home:hover .icon-circle {
-    color: var(--blue-accent);
-}
-
 .nav-btn-planner {
     top: 82px;
     right: 20px;
 }
 
-.nav-btn-planner .icon-circle {
+.nav-btn-planner.is-active {
     background: var(--flix-green-accent);
+}
+
+.nav-btn-planner.is-active .svgIcon {
     color: white;
-}
-
-.nav-btn-planner:hover .icon-circle {
-    background: var(--flix-green-hover);
-}
-
-.linia-nav-btn .btn-label {
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text-primary);
-    white-space: nowrap;
-    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
-    opacity: 0;
-}
-
-.linia-nav-btn:hover .btn-label {
-    bottom: 4px;
-    opacity: 1;
 }
 
 .route-panel {
@@ -725,11 +964,7 @@ a:hover {
     transform: rotate(90deg);
 }
 
-.lang-menu.show {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    pointer-events: all;
-}
+
 
 .trip-details-body {
     flex: 1;
@@ -1226,7 +1461,7 @@ a:hover {
 
 .planner-sidebar {
     position: fixed;
-    top: 110px;
+    top: 80px;
     left: 10px;
     width: 340px;
     max-height: calc(100vh - 120px);
@@ -1396,8 +1631,8 @@ a:hover {
 .planner-search-bar {
     width: 100%;
     padding: 12px 48px 12px 40px;
-    border: none;
-    border-radius: var(--radius-full);
+    border: 2px solid var(--flix-green-accent);
+    border-radius: 0.5em;
     font-size: 15px;
     font-family: var(--font-main);
     color: var(--text-primary);
@@ -1406,6 +1641,7 @@ a:hover {
     box-shadow: var(--shadow-md);
     outline: none;
     transition: all 0.3s ease;
+    animation: search-glow-dynamic 5s ease-in-out infinite;
 }
 
 .planner-search-bar:focus {
@@ -2227,33 +2463,7 @@ footer p {
     pointer-events: all;
 }
 
-.lang-switcher-btn {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 20 !important;
-    padding: 8px;
-    pointer-events: auto !important;
-}
 
-.lang-switcher-btn * {
-    transition: none !important;
-    animation: none !important;
-    pointer-events: none;
-}
-
-.lang-switcher-btn:hover {
-    color: var(--text-primary) !important;
-    transform: translateY(-50%) scale(1.1) !important;
-}
 
 .lang-menu {
     position: fixed;
@@ -2403,37 +2613,40 @@ footer p {
 
 .planner-disclaimer {
     margin: 16px;
-    padding: 16px;
-    background-color: #f8faff;
-    border: 1px solid #eef2ff;
+    padding: 1.2em;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: var(--radius-md);
     display: flex;
     flex-direction: column;
     gap: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .disclaimer-header {
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: var(--blue-accent);
+    gap: 6px;
+    color: var(--text-primary);
+    opacity: 0.9;
 }
 
 .disclaimer-header svg {
     flex-shrink: 0;
-    color: var(--blue-accent);
-    opacity: 0.8;
+    color: var(--flix-green-accent);
 }
 
 .disclaimer-header strong {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .planner-disclaimer p {
-    font-size: 11.5px;
+    font-size: 11px;
     line-height: 1.5;
     color: var(--text-secondary);
     margin: 0;

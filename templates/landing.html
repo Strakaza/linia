@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="{{ current_lang }}">
+
 <head>
     {% include 'seo_head.html' %}
-    <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/>
+    <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet" />
 </head>
+
 <body>
     <div class="landing-page">
         <div class="landing-map-bg" id="landingMap"></div>
         <div class="landing-map-overlay"></div>
-        
+
         <div class="landing-content">
             <div class="landing-text-block">
                 <div class="welcome-line">
@@ -16,20 +19,26 @@
                 </div>
                 <h1 class="brand-name"><span class="highlight">Linia</span></h1>
             </div>
-            
+
             <div class="landing-search-container">
                 <div class="landing-search-wrapper">
                     <button class="lang-switcher-btn" id="langSwitcher" title="Changer la langue">
-                        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20">
+                        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20">
                             <circle cx="12" cy="12" r="10"></circle>
                             <line x1="2" x2="22" y1="12" y2="12"></line>
-                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
                         </svg>
                     </button>
-                    
-                    <input autocomplete="off" class="landing-search-bar" id="landingSearchInput" placeholder="{{ t('search_placeholder') }}" type="text"/>
-                    
-                    <svg class="landing-search-icon" fill="none" height="20" id="landingSearchIcon" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20">
+
+                    <input autocomplete="off" class="landing-search-bar" id="landingSearchInput"
+                        placeholder="{{ t('search_placeholder') }}" type="text" />
+
+                    <svg class="landing-search-icon" fill="none" height="20" id="landingSearchIcon"
+                        stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        viewBox="0 0 24 24" width="20">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
                     </svg>
@@ -37,17 +46,19 @@
                 </div>
                 <div class="landing-suggestions" id="landingSuggestions"></div>
             </div>
-            
+
             <div class="landing-actions">
                 <a class="planner-launch-btn landing-action-btn linia-btn-premium" href="{{ url_for_page('planner') }}">
-                    <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16">
+                    <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" width="16">
                         <circle cx="12" cy="10" r="3"></circle>
                         <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"></path>
                     </svg>
                     <span>{{ t('btn_planner') }}</span>
                 </a>
                 <a class="how-it-works-btn landing-action-btn linia-btn-premium" href="{{ url_for_page('about') }}">
-                    <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16">
+                    <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" width="16">
                         <circle cx="12" cy="12" r="10"></circle>
                         <line x1="12" x2="12" y1="16" y2="12"></line>
                         <line x1="12" x2="12.01" y1="8" y2="8"></line>
@@ -55,7 +66,7 @@
                     <span>{{ t('btn_how') }}</span>
                 </a>
             </div>
-            
+
             <div class="mobile-landing-extras">
                 <div class="mobile-section-header">
                     <h3>{{ t('recent_searches') }}</h3>
@@ -63,17 +74,19 @@
                 <div class="mobile-recents-list" id="recentSearchesList">
                 </div>
             </div>
-            
+
             <nav class="bottom-nav">
                 <a class="bottom-nav-item active" href="{{ url_for_page('home') }}">
-                    <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
+                    <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" width="24">
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                         <polyline points="9 22 9 12 15 12 15 22"></polyline>
                     </svg>
                     <span>{{ t('nav_home') }}</span>
                 </a>
                 <a class="bottom-nav-item" href="{{ url_for_page('planner') }}">
-                    <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
+                    <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" width="24">
                         <circle cx="6" cy="19" r="3"></circle>
                         <path d="M9 19h8.5a3.5 3.5 0 1 0 0-7h-11a3.5 3.5 0 1 1 0-7H15"></path>
                         <circle cx="18" cy="5" r="3"></circle>
@@ -81,7 +94,8 @@
                     <span>{{ t('nav_itinerary') }}</span>
                 </a>
                 <a class="bottom-nav-item" href="{{ url_for_page('about') }}">
-                    <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24">
+                    <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" width="24">
                         <circle cx="12" cy="12" r="10"></circle>
                         <line x1="12" x2="12" y1="16" y2="12"></line>
                         <line x1="12" x2="12.01" y1="8" y2="8"></line>
@@ -91,19 +105,46 @@
             </nav>
         </div>
     </div>
-    
-    <footer style="position: absolute; bottom: 0; left: 0; right: 0; padding: 24px; text-align: center; pointer-events: none; z-index: 10;">
-        <div class="landing-disclaimer" style="max-width: 600px; margin: 0 auto 12px; font-size: 11px; opacity: 0.6; pointer-events: auto;">
-            <p>{{ t('disclaimer_text') }}</p>
+
+    <footer class="linia-footer landing-footer">
+        <div class="linia-info-wrapper">
+            <button class="linia-info-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" width="18" height="18">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+            </button>
+
+            <div class="linia-info-tooltip">
+                <div class="tooltip-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" width="16" height="16">
+                        <path
+                            d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                        </path>
+                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    <h3>Important</h3>
+                </div>
+                <p>{{ t('disclaimer_text') }}</p>
+                <div class="tooltip-footer">
+                    <a href="{{ url_for_page('legal') }}" class="tooltip-legal-link">
+                        {{ t('nav_legal') }} &rarr;
+                    </a>
+                </div>
+            </div>
         </div>
-        <p style="font-size: 10px; margin-bottom: 8px; pointer-events: auto;">
-            <a href="{{ url_for_page('legal') }}" style="color: inherit; text-decoration: none; opacity: 0.5;">{{ t('nav_legal') }}</a>
-        </p>
-        <p>{{ t('footer_signature') }}</p>
-        <div class="color-bar-signature"></div>
+        <div class="footer-signature-container">
+            <a href="https://strakaza.fr" class="signature-link">{{ t('footer_signature') }}</a>
+            <div class="color-bar-signature"></div>
+        </div>
     </footer>
-    
-    <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const cities = [
@@ -877,7 +918,7 @@
                 { name: "Şanlıurfa", center: [37.16708, 38.79392] },
                 { name: "Şişli", center: [41.06046, 28.98717] }
             ];
-            
+
             const randomCity = cities[Math.floor(Math.random() * cities.length)];
             const bgMap = L.map('landingMap', {
                 center: randomCity.center,
@@ -890,13 +931,13 @@
                 boxZoom: false,
                 attributionControl: true
             });
-            
+
             L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
                 subdomains: 'abcd',
                 maxZoom: 20,
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
             }).addTo(bgMap);
-            
+
             const messages = [
                 "Bienvenue sur", "Welcome to", "Willkommen bei", "Bienvenido a", "Bem-vindo a",
                 "Welkom bij", "Mirësevini në", "Benvinguts a", "Dobrodošli u", "Добре дошли в",
@@ -905,11 +946,11 @@
                 "Bun venit la", "Witaj w", "Vítejte v", "Vitajte v", "Dobrodošli v",
                 "Välkommen till", "Hoş geldiniz", "Ласкаво просимо до", "Добро пожаловать в", "Сардэчна запрашаем у"
             ];
-            
+
             let currentIndex = Math.floor(Math.random() * messages.length);
             const cyclingText = document.getElementById('cyclingText');
             cyclingText.textContent = messages[currentIndex];
-            
+
             setInterval(() => {
                 cyclingText.classList.remove('text-visible');
                 cyclingText.classList.add('text-hidden');
@@ -924,13 +965,13 @@
                     cyclingText.classList.add('text-visible');
                 }, 400);
             }, 3000);
-            
+
             const searchInput = document.getElementById('landingSearchInput');
             const suggestionsDiv = document.getElementById('landingSuggestions');
             const searchSpinner = document.getElementById('landingSearchSpinner');
             const searchIcon = document.getElementById('landingSearchIcon');
             let searchTimeout = null;
-            
+
             searchInput.addEventListener('input', function () {
                 const query = this.value.trim();
                 clearTimeout(searchTimeout);
@@ -941,17 +982,17 @@
                 }
                 searchTimeout = setTimeout(() => fetchSuggestions(query), 300);
             });
-            
+
             document.addEventListener('click', function (e) {
                 if (!searchInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
                     suggestionsDiv.classList.remove('visible');
                 }
             });
-            
+
             searchInput.addEventListener('focus', function () {
                 if (suggestionsDiv.children.length > 0) suggestionsDiv.classList.add('visible');
             });
-            
+
             async function fetchSuggestions(query) {
                 searchSpinner.style.display = 'inline-block';
                 searchIcon.style.display = 'none';
@@ -965,7 +1006,7 @@
                     searchIcon.style.display = '';
                 }
             }
-            
+
             function renderSuggestions(suggestions) {
                 suggestionsDiv.innerHTML = '';
                 if (!suggestions.length) {
@@ -987,7 +1028,7 @@
                 });
                 suggestionsDiv.classList.add('visible');
             }
-            
+
             function saveRecentSearch(id, name) {
                 let recents = JSON.parse(localStorage.getItem('linia_recents') || '[]');
                 recents = recents.filter(r => r.id !== id);
@@ -995,7 +1036,7 @@
                 if (recents.length > 5) recents.pop();
                 localStorage.setItem('linia_recents', JSON.stringify(recents));
             }
-            
+
             function loadRecents() {
                 const recentList = document.getElementById('recentSearchesList');
                 if (!recentList) return;
@@ -1014,9 +1055,10 @@
                     </div>
                 `).join('');
             }
-            
+
             loadRecents();
         });
     </script>
 </body>
+
 </html>

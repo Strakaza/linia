@@ -34,7 +34,7 @@ csp = {
     'style-src': ["'self'", "'unsafe-inline'", "https://api.mapbox.com", "https://fonts.googleapis.com", "https://cdn.jsdelivr.net", "https://unpkg.com"],
     'img-src': ["'self'", "data:", "blob:", "https://*.mapbox.com", "https://liniabus.eu", "https://*.tile.openstreetmap.org", "https://*.basemaps.cartocdn.com"],
     'font-src': ["'self'", "https://fonts.gstatic.com", "https://cdn.jsdelivr.net"],
-    'connect-src': ["'self'", "https://api.mapbox.com", "https://events.mapbox.com", "https://unpkg.com", "https://router.project-osrm.org"],
+    'connect-src': ["'self'", "https://api.mapbox.com", "https://events.mapbox.com", "https://unpkg.com", "https://router.project-osrm.org", "https://cdnjs.cloudflare.com"],
     'worker-src': ["'self'", "blob:"],
     'child-src': ["'self'", "blob:"],
 }
