@@ -43,6 +43,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const loadingOverlay = document.getElementById('loadingOverlay');
     const loadingText = document.getElementById('loadingText');
     const toastContainer = document.getElementById('toastContainer');
+    const plannerBubble = document.getElementById('plannerBubble');
+    const plannerBubbleContent = document.getElementById('plannerBubbleContent');
+    const plannerBubbleText = document.getElementById('plannerBubbleText');
+    const reopenConnectedBtn = document.getElementById('reopenConnectedBtn');
+    const minimizeSidebarBtn = document.getElementById('minimizeSidebarBtn');
+    const plannerSidebar = document.getElementById('plannerSidebar');
     function showToast(message, type = 'info', duration = 3500) {
         if (!toastContainer) return;
         const toast = document.createElement('div');
@@ -133,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
         }
-        showLoading('Recherche des connexions...');
+        showLoading('LOADING...');
         try {
             const infoResponse = await fetch(`/api/stop_info/${encodeURIComponent(stopId)}`);
             const infoData = await infoResponse.json();
@@ -152,13 +158,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             searchInput.placeholder = 'Ajouter une étape...';
             renderTimeline();
-            renderMapItinerary();
+            await renderMapItinerary();
             await loadConnectedCities(stopInfo.stop_id, stopInfo.stop_name);
             updateButtons();
         } catch (err) {
             showToast('Erreur de connexion.', 'error');
             console.error(err);
-        } finally {
             hideLoading();
         }
     }
@@ -175,6 +180,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 renderConnectedCities();
                 renderSuggestionMarkers(data);
                 connectedPanel.classList.add('visible');
+                if (window.innerWidth <= 768 && reopenConnectedBtn) {
+                    reopenConnectedBtn.style.display = 'none';
+                }
             } else {
                 showToast(i18n.t('err_connection'), 'error');
             }
@@ -237,17 +245,14 @@ document.addEventListener('DOMContentLoaded', function () {
         clearSuggestionMarkers();
         const bounds = L.latLngBounds();
         let validPoints = 0;
-
         itinerary.forEach(stop => {
             if (stop.stop_lat && stop.stop_lon) {
                 bounds.extend([stop.stop_lat, stop.stop_lon]);
                 validPoints++;
             }
         });
-
         stops.forEach(stop => {
             if (!stop.stop_lat || !stop.stop_lon) return;
-
             const ops = stop.operators || [];
             let opsClass = 'suggestion-marker-unknown';
             if (ops.includes('flixbus') && ops.includes('blablacar_bus')) {
@@ -257,7 +262,6 @@ document.addEventListener('DOMContentLoaded', function () {
             } else if (ops.includes('blablacar_bus')) {
                 opsClass = 'suggestion-marker-blabla';
             }
-
             const marker = L.marker([stop.stop_lat, stop.stop_lon], {
                 icon: L.divIcon({
                     className: `planner-suggestion-marker ${opsClass}`,
@@ -266,7 +270,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }),
                 title: stop.stop_name
             }).addTo(map);
-
             marker.on('click', () => {
                 addStopWithOperators(stop.stop_id, stop.stop_name, stop.operators);
             });
@@ -274,10 +277,8 @@ document.addEventListener('DOMContentLoaded', function () {
             bounds.extend([stop.stop_lat, stop.stop_lon]);
             validPoints++;
         });
-
         if (validPoints > 0 && bounds.isValid()) {
             map.stop();
-            map.fitBounds(bounds, { padding: [180, 180], duration: 1.5 });
         }
     }
     async function addStopWithOperators(stopId, stopName, operators) {
@@ -285,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function () {
             showToast('Cette ville est déjà la dernière étape.', 'warning');
             return;
         }
-        showLoading('Recherche des connexions...');
+        showLoading('LOADING...');
         try {
             const infoResponse = await fetch(`/api/stop_info/${encodeURIComponent(stopId)}`);
             const infoData = await infoResponse.json();
@@ -304,13 +305,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             searchInput.placeholder = 'Ajouter une étape...';
             renderTimeline();
-            renderMapItinerary();
+            await renderMapItinerary();
             await loadConnectedCities(stopInfo.stop_id, stopInfo.stop_name);
             updateButtons();
         } catch (err) {
             showToast('Erreur de connexion.', 'error');
             console.error(err);
-        } finally {
             hideLoading();
         }
     }
@@ -320,6 +320,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     connectedClose.addEventListener('click', () => {
         connectedPanel.classList.remove('visible');
+        if (window.innerWidth <= 768 && reopenConnectedBtn && itinerary.length > 0) {
+            reopenConnectedBtn.style.display = 'flex';
+        }
     });
     function renderTimeline() {
         if (itinerary.length === 0) {
@@ -388,7 +391,10 @@ document.addEventListener('DOMContentLoaded', function () {
         markers = [];
         mapPolylines.forEach(p => map.removeLayer(p));
         mapPolylines = [];
-        if (itinerary.length === 0) return;
+        if (itinerary.length === 0) {
+            hideLoading();
+            return;
+        }
         const bounds = L.latLngBounds();
         itinerary.forEach((stop, index) => {
             const el = document.createElement('div');
@@ -417,24 +423,19 @@ document.addEventListener('DOMContentLoaded', function () {
             bounds.extend([stop.stop_lat, stop.stop_lon]);
         });
         if (itinerary.length >= 2) {
-            showLoading('Tracé de l\'itinéraire...');
-
             for (let i = 0; i < itinerary.length - 1; i++) {
                 const startStop = itinerary[i];
                 const endStop = itinerary[i + 1];
-
                 const ops = endStop.operators || [];
                 let lineColor = '#73d700';
                 let polylineClass = '';
                 const hasFlix = ops.includes('flixbus');
                 const hasBla = ops.includes('blablacar_bus');
-
                 if (hasFlix && hasBla) {
                     polylineClass = 'planner-mixed-polyline';
                 } else if (hasBla) {
                     lineColor = '#0070d2';
                 }
-
                 const geometry = await getRoadGeometry([startStop, endStop]);
                 if (geometry && geometry.coordinates) {
                     const latlngs = geometry.coordinates.map(c => [c[1], c[0]]);
@@ -460,12 +461,25 @@ document.addEventListener('DOMContentLoaded', function () {
                     mapPolylines.push(poly);
                 }
             }
-            hideLoading();
         }
         if (bounds.isValid() && itinerary.length > 1) {
-            map.fitBounds(bounds, { padding: [50, 50], duration: 1 });
+            map.fitBounds(bounds, { padding: [50, 50], duration: 1.2 });
         } else if (bounds.isValid() && itinerary.length === 1) {
-            map.setView([itinerary[0].stop_lat, itinerary[0].stop_lon], 11, { animate: true });
+            map.setView([itinerary[0].stop_lat, itinerary[0].stop_lon], 11, { animate: true, duration: 1.2 });
+        }
+        setTimeout(() => {
+            hideLoading();
+        }, 1500);
+    }
+    function updateMobileUI() {
+        if (!plannerBubble) return;
+        const textEl = plannerBubbleText || plannerBubbleContent;
+        if (!textEl) return;
+
+        if (itinerary.length === 0) {
+            textEl.textContent = i18n.t('mobile_bubble_empty');
+        } else {
+            textEl.textContent = i18n.t('mobile_bubble_stops', { count: itinerary.length });
         }
     }
     function updateButtons() {
@@ -474,8 +488,18 @@ document.addEventListener('DOMContentLoaded', function () {
         resetBtn.disabled = !hasStops;
         saveBtn.disabled = !hasStops;
         generatePdfBtn.disabled = itinerary.length < 2;
+        updateMobileUI();
         if (itinerary.length === 0) {
             connectedPanel.classList.remove('visible');
+            if (reopenConnectedBtn) reopenConnectedBtn.style.display = 'none';
+            // Block sidebar from being draggable when empty
+            if (plannerSidebar) plannerSidebar.classList.add('drag-disabled');
+        } else {
+            // Show reopen button if panel is closed and we have an itinerary
+            if (window.innerWidth <= 768 && reopenConnectedBtn && !connectedPanel.classList.contains('visible')) {
+                reopenConnectedBtn.style.display = 'flex';
+            }
+            if (plannerSidebar) plannerSidebar.classList.remove('drag-disabled');
         }
     }
     undoBtn.addEventListener('click', () => {
@@ -558,22 +582,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         generatePdfBtn.disabled = true;
         showLoading(i18n.t('pdf_generating'));
-        console.log('PDF: Starting generation process...');
         let pdfFinished = false;
         const timeoutHandle = setTimeout(() => {
             if (!pdfFinished) {
-                console.warn('PDF: Map capture timed out after 12s. Generating without map.');
                 pdfFinished = true;
                 showToast(i18n.t('pdf_timeout'), 'warning');
                 generatePDFFile(null);
             }
         }, 12000);
         try {
-            console.log('PDF: Waiting for map to settle...');
             await new Promise(r => setTimeout(r, 2000));
             map.invalidateSize();
             await new Promise(r => setTimeout(r, 300));
-            console.log('PDF: Capturing map via html2canvas...');
             const mapElement = document.getElementById('plannerMap');
             html2canvas(mapElement, {
                 useCORS: true,
@@ -594,7 +614,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (pdfFinished) return;
                 try {
                     const mapImage = canvas.toDataURL('image/png');
-                    console.log('PDF: Map captured successfully.');
                     clearTimeout(timeoutHandle);
                     pdfFinished = true;
                     generatePDFFile(mapImage);
@@ -625,7 +644,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     function generatePDFFile(mapImage) {
-        console.log('PDF: Building internal document structure...');
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         const pageWidth = doc.internal.pageSize.getWidth();
@@ -726,7 +744,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const firstName = (itinerary[0]?.stop_name || 'Linia').replace(/[^a-zA-Z0-9]/g, '-');
             const lastName = (itinerary[itinerary.length - 1]?.stop_name || 'Fin').replace(/[^a-zA-Z0-9]/g, '-');
             doc.save(`Linia_Itineraire_${firstName}_${lastName}.pdf`);
-            console.log('PDF: Document saved.');
             showToast(i18n.t('pdf_success'), 'success');
         } catch (pdfErr) {
             console.error('PDF construction error:', pdfErr);
@@ -736,5 +753,61 @@ document.addEventListener('DOMContentLoaded', function () {
             generatePdfBtn.disabled = false;
         }
     }
+    const disclaimerToggleBtn = document.getElementById('disclaimerToggleBtn');
+    const plannerDisclaimer = document.getElementById('plannerDisclaimer');
+    if (disclaimerToggleBtn && plannerDisclaimer) {
+        disclaimerToggleBtn.addEventListener('click', () => {
+            plannerDisclaimer.classList.toggle('collapsed');
+            const isCollapsed = plannerDisclaimer.classList.contains('collapsed');
+            const iconMinus = disclaimerToggleBtn.querySelector('.icon-minus');
+            const iconPlus = disclaimerToggleBtn.querySelector('.icon-plus');
+            if (iconMinus) iconMinus.style.display = isCollapsed ? 'none' : 'block';
+            if (iconPlus) iconPlus.style.display = isCollapsed ? 'block' : 'none';
+        });
+    }
+
+    if (typeof makePanelDraggable === 'function') {
+        makePanelDraggable('plannerSidebar', 'plannerSidebarHeader');
+        makePanelDraggable('connectedPanel', 'connectedHeader');
+    }
+
+    if (window.innerWidth <= 768) {
+        if (plannerBubble) {
+            plannerBubble.style.display = 'flex';
+        }
+        if (minimizeSidebarBtn) {
+            minimizeSidebarBtn.style.display = '';
+        }
+    }
+
+    if (plannerBubbleContent) {
+        plannerBubbleContent.addEventListener('click', () => {
+            if (itinerary.length === 0) {
+                searchInput.focus();
+                return;
+            }
+            plannerSidebar.classList.add('visible');
+            plannerBubble.style.display = 'none';
+        });
+    }
+
+    if (minimizeSidebarBtn) {
+        minimizeSidebarBtn.addEventListener('click', () => {
+            plannerSidebar.classList.remove('visible');
+            if (window.innerWidth <= 768 && plannerBubble) {
+                plannerBubble.style.display = 'flex';
+            }
+        });
+    }
+
+    if (reopenConnectedBtn) {
+        reopenConnectedBtn.addEventListener('click', () => {
+            if (itinerary.length > 0) {
+                const lastStop = itinerary[itinerary.length - 1];
+                loadConnectedCities(lastStop.stop_id, lastStop.stop_name);
+            }
+        });
+    }
+
     updateButtons();
 });
