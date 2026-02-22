@@ -96,10 +96,161 @@
         {% if preloaded_start_id and preloaded_end_id %}
         <div class="sr-only"
             style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">
+
+            {% if current_lang == 'fr' %}
             <h1>Trajet en bus de {{ city_a_name }} à {{ city_b_name }}</h1>
             <p>La distance entre {{ city_a_name }} et {{ city_b_name }} est couverte par les opérateurs de bus longue
                 distance comme FlixBus et BlaBlaCar Bus. Consultez notre carte interactive pour visualiser le tracé de
                 ce trajet complet et préparez votre voyage en bus.</p>
+            {% elif current_lang == 'en' %}
+            <h1>Bus route from {{ city_a_name }} to {{ city_b_name }}</h1>
+            <p>The distance between {{ city_a_name }} and {{ city_b_name }} is covered by long-distance bus operators
+                like FlixBus and BlaBlaCar Bus. View our interactive map to see the full route and plan your bus trip.
+            </p>
+            {% elif current_lang == 'de' %}
+            <h1>Busverbindung von {{ city_a_name }} nach {{ city_b_name }}</h1>
+            <p>Die Strecke zwischen {{ city_a_name }} und {{ city_b_name }} wird von Fernbusanbietern wie FlixBus und
+                BlaBlaCar Bus bedient. Sehen Sie sich unsere interaktive Karte an, um die Route zu überprüfen und Ihre
+                Reise zu planen.</p>
+            {% elif current_lang == 'es' %}
+            <h1>Ruta de autobús de {{ city_a_name }} a {{ city_b_name }}</h1>
+            <p>La distancia entre {{ city_a_name }} y {{ city_b_name }} está cubierta por operadores de autobuses de
+                larga distancia como FlixBus y BlaBlaCar Bus. Consulta nuestro mapa interactivo para ver la ruta
+                completa.</p>
+            {% elif current_lang == 'pt' %}
+            <h1>Viagem de ônibus de {{ city_a_name }} para {{ city_b_name }}</h1>
+            <p>A distância entre {{ city_a_name }} e {{ city_b_name }} é coberta por operadores de ônibus de longa
+                distância como FlixBus e BlaBlaCar Bus. Consulte nosso mapa interativo para visualizar o percurso
+                completo desta viagem e prepare sua viagem de ônibus.</p>
+            {% elif current_lang == 'nl' %}
+            <h1>Busreis van {{ city_a_name }} naar {{ city_b_name }}</h1>
+            <p>De afstand tussen {{ city_a_name }} en {{ city_b_name }} wordt gedekt door langeafstandsbusmaatschappijen
+                zoals FlixBus en BlaBlaCar Bus. Bekijk onze interactieve kaart om de volledige route te zien en bereid
+                je busreis voor.</p>
+            {% elif current_lang == 'sq' %}
+            <h1>Udhëtim me autobus nga {{ city_a_name }} në {{ city_b_name }}</h1>
+            <p>Distanca midis {{ city_a_name }} dhe {{ city_b_name }} mbulohet nga operatorët e autobusëve në distanca
+                të gjata si FlixBus dhe BlaBlaCar Bus. Shikoni hartën tonë interaktive për të parë itinerarin e plotë
+                dhe përgatitni udhëtimin tuaj me autobus.</p>
+            {% elif current_lang == 'ca' %}
+            <h1>Viatge en autobús de {{ city_a_name }} a {{ city_b_name }}</h1>
+            <p>La distància entre {{ city_a_name }} i {{ city_b_name }} està coberta per operadors d'autobusos de llarga
+                distància com FlixBus i BlaBlaCar Bus. Consulteu el nostre mapa interactiu per visualitzar el traçat
+                complet d'aquest viatge i prepareu el vostre viatge en autobús.</p>
+            {% elif current_lang == 'hr' %}
+            <h1>Autobusna ruta od {{ city_a_name }} do {{ city_b_name }}</h1>
+            <p>Udaljenost između {{ city_a_name }} i {{ city_b_name }} pokrivena je autobusnim prijevoznicima na dugim
+                relacijama kao što su FlixBus i BlaBlaCar Bus. Pogledajte našu interaktivnu kartu da vidite cijelu rutu
+                i pripremite svoje putovanje autobusom.</p>
+            {% elif current_lang == 'bg' %}
+            <h1>Автобусен маршрут от {{ city_a_name }} до {{ city_b_name }}</h1>
+            <p>Разстоянието между {{ city_a_name }} и {{ city_b_name }} се обслужва от автобусни оператори на дълги
+                разстояния като FlixBus и BlaBlaCar Bus. Разгледайте нашата интерактивна карта, за да визуализирате
+                пълния маршрут и да подготвите пътуването си с автобус.</p>
+            {% elif current_lang == 'da' %}
+            <h1>Busrejse fra {{ city_a_name }} til {{ city_b_name }}</h1>
+            <p>Afstanden mellem {{ city_a_name }} og {{ city_b_name }} dækkes af langdistancebusoperatører som FlixBus
+                og BlaBlaCar Bus. Se vores interaktive kort for at se hele ruten og forbered din bustur.</p>
+            {% elif current_lang == 'et' %}
+            <h1>Bussireis {{ city_a_name }}st {{ city_b_name }}e</h1>
+            <p>Vahemaa {{ city_a_name }} ja {{ city_b_name }} vahel on kaetud pikaajaliste bussioperaatoritega nagu
+                FlixBus ja BlaBlaCar Bus. Vaadake meie interaktiivset kaarti, et näha kogu marsruuti ja valmistuda oma
+                bussireisiks.</p>
+            {% elif current_lang == 'fi' %}
+            <h1>Bussimatka {{ city_a_name }}sta {{ city_b_name }}n</h1>
+            <p>Etäisyys {{ city_a_name }}n ja {{ city_b_name }}n välillä katetaan pitkän matkan bussioperaattoreilla,
+                kuten FlixBus ja BlaBlaCar Bus. Katso interaktiivista karttaamme nähdäksesi koko reitin ja valmistaudu
+                bussimatkaasi.</p>
+            {% elif current_lang == 'el' %}
+            <h1>Δρομολόγιο λεωφορείου από {{ city_a_name }} προς {{ city_b_name }}</h1>
+            <p>Η απόσταση μεταξύ {{ city_a_name }} και {{ city_b_name }} καλύπτεται από υπεραστικές εταιρείες λεωφορείων
+                όπως οι FlixBus και BlaBlaCar Bus. Δείτε τον διαδραστικό μας χάρτη για να οπτικοποιήσετε ολόκληρη τη
+                διαδρομή και ετοιμάστε το ταξίδι σας με λεωφορείο.</p>
+            {% elif current_lang == 'hu' %}
+            <h1>Buszjárat {{ city_a_name }} és {{ city_b_name }} között</h1>
+            <p>A {{ city_a_name }} és {{ city_b_name }} közötti távolságot távolsági buszüzemeltetők, mint a FlixBus és
+                a BlaBlaCar Bus fedezik. Tekintse meg interaktív térképünket a teljes útvonal megjelenítéséhez és
+                készüljön fel buszos utazására.</p>
+            {% elif current_lang == 'hi' %}
+            <h1>{{ city_a_name }} से {{ city_b_name }} के लिए बस मार्ग</h1>
+            <p>{{ city_a_name }} और {{ city_b_name }} के बीच की दूरी लंबी दूरी की बस ऑपरेटरों जैसे FlixBus और BlaBlaCar
+                Bus द्वारा कवर की जाती है। पूरे मार्ग को देखने और अपनी बस यात्रा की तैयारी के लिए हमारे इंटरैक्टिव
+                मानचित्र को देखें।</p>
+            {% elif current_lang == 'lv' %}
+            <h1>Autobusa maršruts no {{ city_a_name }} uz {{ city_b_name }}</h1>
+            <p>Attālumu starp {{ city_a_name }} un {{ city_b_name }} sedz tālsatiksmes autobusu operatori, piemēram,
+                FlixBus un BlaBlaCar Bus. Apskatiet mūsu interaktīvo karti, lai vizualizētu visu maršrutu un sagatavotos
+                savam autobusa braucienam.</p>
+            {% elif current_lang == 'lt' %}
+            <h1>Autobuso maršrutas iš {{ city_a_name }} į {{ city_b_name }}</h1>
+            <p>Atstumą tarp {{ city_a_name }} ir {{ city_b_name }} dengia tolimojo susisiekimo autobusų operatoriai,
+                tokie kaip „FlixBus“ ir „BlaBlaCar Bus“. Peržiūrėkite mūsų interaktyvų žemėlapį, kad pamatytumėte visą
+                maršrutą ir pasiruoštumėte kelionei autobusu.</p>
+            {% elif current_lang == 'lb' %}
+            <h1>Busstreck vun {{ city_a_name }} op {{ city_b_name }}</h1>
+            <p>D'Distanz tëscht {{ city_a_name }} an {{ city_b_name }} gëtt vu Fernbusbetreiber wéi FlixBus a BlaBlaCar
+                Bus ofgedeckt. Kuckt eis interaktiv Kaart fir de ganzen Trajet ze gesinn a preparéiert Är Busrees.</p>
+            {% elif current_lang == 'mk' %}
+            <h1>Автобуска рута од {{ city_a_name }} до {{ city_b_name }}</h1>
+            <p>Растојанието помеѓу {{ city_a_name }} и {{ city_b_name }} е покриено од автобуски оператори на долги
+                релации како FlixBus и BlaBlaCar Bus. Погледнете ја нашата интерактивна карта за да ја визуелизирате
+                целата рута и подгответе го вашето патување со автобус.</p>
+            {% elif current_lang == 'ro' %}
+            <h1>Cursă cu autobuzul de la {{ city_a_name }} la {{ city_b_name }}</h1>
+            <p>Distanța dintre {{ city_a_name }} și {{ city_b_name }} este acoperită de operatori de autobuze pe
+                distanțe lungi, cum ar fi FlixBus și BlaBlaCar Bus. Consultați harta noastră interactivă pentru a
+                vizualiza traseul complet și pregătiți-vă călătoria cu autobuzul.</p>
+            {% elif current_lang == 'pl' %}
+            <h1>Trasa autobusowa z {{ city_a_name }} do {{ city_b_name }}</h1>
+            <p>Odległość między {{ city_a_name }} a {{ city_b_name }} jest obsługiwana przez dalekobieżnych przewoźników
+                autobusowych, takich jak FlixBus i BlaBlaCar Bus. Sprawdź naszą interaktywną mapę, aby zobaczyć pełną
+                trasę i przygotować się do podróży autobusem.</p>
+            {% elif current_lang == 'cs' %}
+            <h1>Autobusová trasa z {{ city_a_name }} do {{ city_b_name }}</h1>
+            <p>Vzdálenost mezi {{ city_a_name }} a {{ city_b_name }} je pokryta dálkovými autobusovými dopravci, jako
+                jsou FlixBus a BlaBlaCar Bus. Podívejte se na naši interaktivní mapu a zobrazte si celou trasu a
+                připravte se na cestu autobusem.</p>
+            {% elif current_lang == 'sk' %}
+            <h1>Autobusová trasa z {{ city_a_name }} do {{ city_b_name }}</h1>
+            <p>Vzdialenosť medzi {{ city_a_name }} a {{ city_b_name }} je pokrytá diaľkovými autobusovými dopravcami,
+                ako sú FlixBus a BlaBlaCar Bus. Pozrite si našu interaktívnu mapu a zobrazte si celú trasu a pripravte
+                sa na cestu autobusom.</p>
+            {% elif current_lang == 'sl' %}
+            <h1>Avtobusna pot od {{ city_a_name }} do {{ city_b_name }}</h1>
+            <p>Razdaljo med {{ city_a_name }} in {{ city_b_name }} pokrivajo medkrajevni avtobusni prevozniki, kot sta
+                FlixBus in BlaBlaCar Bus. Oglejte si naš interaktivni zemljevid, da si ogledate celotno pot in se
+                pripravite na potovanje z avtobusom.</p>
+            {% elif current_lang == 'sv' %}
+            <h1>Bussresa från {{ city_a_name }} till {{ city_b_name }}</h1>
+            <p>Avståndet mellan {{ city_a_name }} och {{ city_b_name }} täcks av långdistansbussoperatörer som FlixBus
+                och BlaBlaCar Bus. Se vår interaktiva karta för att visualisera hela rutten och förbered din bussresa.
+            </p>
+            {% elif current_lang == 'tr' %}
+            <h1>{{ city_a_name }}'dan {{ city_b_name }}'a otobüs güzergahı</h1>
+            <p>{{ city_a_name }} ile {{ city_b_name }} arasındaki mesafe, FlixBus ve BlaBlaCar Bus gibi uzun mesafe
+                otobüs işletmecileri tarafından kapsanmaktadır. Tam güzergahı görmek ve otobüs yolculuğunuzu planlamak
+                için etkileşimli haritamızı inceleyin.</p>
+            {% elif current_lang == 'uk' %}
+            <h1>Автобусний маршрут з {{ city_a_name }} до {{ city_b_name }}</h1>
+            <p>Відстань між {{ city_a_name }} та {{ city_b_name }} покривається операторами далекого сполучення, такими
+                як FlixBus та BlaBlaCar Bus. Перегляньте нашу інтерактивну карту, щоб побачити повний маршрут та
+                підготуватися до подорожі автобусом.</p>
+            {% elif current_lang == 'ru' %}
+            <h1>Автобусный маршрут из {{ city_a_name }} в {{ city_b_name }}</h1>
+            <p>Расстояние между {{ city_a_name }} и {{ city_b_name }} покрывается операторами междугородних автобусов,
+                такими как FlixBus и BlaBlaCar Bus. Посмотрите нашу интерактивную карту, чтобы визуализировать полный
+                маршрут и подготовиться к поездке на автобусе.</p>
+            {% elif current_lang == 'be' %}
+            <h1>Аўтобусны маршрут з {{ city_a_name }} у {{ city_b_name }}</h1>
+            <p>Адлегласць паміж {{ city_a_name }} і {{ city_b_name }} пакрываецца аператарамі міжгародніх аўтобусаў,
+                такімі як FlixBus і BlaBlaCar Bus. Праглядзіце нашу інтэрактыўную карту, каб убачыць поўны маршрут і
+                падрыхтавацца да паездкі на аўтобусе.</p>
+            {% else %}
+            <h1>Bus : {{ city_a_name }} - {{ city_b_name }}</h1>
+            <p>Bus routes (Flixbus, BlaBlaCar Bus) between {{ city_a_name }} and {{ city_b_name }}. Interactive map and
+                itinerary.</p>
+            {% endif %}
+
         </div>
         {% elif connected_destinations %}
         <div class="sr-only"
