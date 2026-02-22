@@ -93,7 +93,8 @@
     "faq_report_a": "Vous pouvez ouvrir une issue sur le dépôt GitHub du projet ou contacter le développeur via contact@liniabus.eu",
     "mobile_bubble_empty": "Commencer par ajouter une ville",
     "mobile_bubble_stops": "{count} étapes",
-    "btn_reopen_connected": "Afficher les villes connectées"
+    "btn_reopen_connected": "Afficher les villes connectées",
+    "btn_share": "Partager"
   },
   "en": {
     "welcome": "Welcome to",
@@ -189,7 +190,8 @@
     "faq_report_a": "You can open an issue on the project's GitHub repository or contact the developer via contact@liniabus.eu",
     "mobile_bubble_empty": "Start by adding a city",
     "mobile_bubble_stops": "{count} stops",
-    "btn_reopen_connected": "Show connected cities"
+    "btn_reopen_connected": "Show connected cities",
+    "btn_share": "Share"
   },
   "de": {
     "welcome": "Willkommen bei",
@@ -285,7 +287,8 @@
     "faq_report_a": "Sie können ein Issue im GitHub-Repository des Projekts eröffnen oder den Entwickler über contact@liniabus.eu kontaktieren.",
     "mobile_bubble_empty": "Beginnen Sie mit dem Hinzufügen einer Stadt",
     "mobile_bubble_stops": "{count} Stationen",
-    "btn_reopen_connected": "Verbundene Städte anzeigen"
+    "btn_reopen_connected": "Verbundene Städte anzeigen",
+    "btn_share": "Teilen"
   },
   "es": {
     "welcome": "Bienvenido a",
@@ -381,7 +384,8 @@
     "faq_report_a": "Puede abrir una issue en el repositorio de GitHub del proyecto o contactar con el desarrollador a través de contact@liniabus.eu",
     "mobile_bubble_empty": "Empiece por añadir una ciudad",
     "mobile_bubble_stops": "{count} paradas",
-    "btn_reopen_connected": "Mostrar ciudades conectadas"
+    "btn_reopen_connected": "Mostrar ciudades conectadas",
+    "btn_share": "Compartir"
   },
   "pt": {
     "welcome": "Bem-vindo a",
@@ -477,7 +481,8 @@
     "faq_report_a": "Pode abrir uma issue no repositório GitHub do projeto ou contactar o programador através de contact@liniabus.eu",
     "mobile_bubble_empty": "Comece adicionando uma cidade",
     "mobile_bubble_stops": "{count} paradas",
-    "btn_reopen_connected": "Mostrar cidades conectadas"
+    "btn_reopen_connected": "Mostrar cidades conectadas",
+    "btn_share": "Partilhar"
   },
   "nl": {
     "welcome": "Welkom bij",
@@ -573,7 +578,8 @@
     "faq_report_a": "U kunt een issue openen in de GitHub-repository van het project of contact opnemen met de ontwikkelaar via contact@liniabus.eu",
     "mobile_bubble_empty": "Begin met het toevoegen van een stad",
     "mobile_bubble_stops": "{count} stops",
-    "btn_reopen_connected": "Toon verbonden steden"
+    "btn_reopen_connected": "Toon verbonden steden",
+    "btn_share": "Share"
   },
   "sq": {
     "welcome": "Mirësevini në",
@@ -669,7 +675,8 @@
     "faq_report_a": "Mund të hapni një issue në depon e projektit në GitHub ose të kontaktoni zhvilluesin përmes contact@liniabus.eu",
     "mobile_bubble_empty": "Filloni duke shtuar një qytet",
     "mobile_bubble_stops": "{count} ndalesa",
-    "btn_reopen_connected": "Trego qytetet e lidhura"
+    "btn_reopen_connected": "Trego qytetet e lidhura",
+    "btn_share": "Share"
   },
   "ca": {
     "welcome": "Benvinguts a",
@@ -768,7 +775,8 @@
     "faq_report_a": "Podeu obrir una issue al repositori GitHub del projecte o contactar amb el desenvolupador mitjançant contact@liniabus.eu",
     "mobile_bubble_empty": "Comenceu afegint una ciutat",
     "mobile_bubble_stops": "{count} parades",
-    "btn_reopen_connected": "Mostra les ciutats connectades"
+    "btn_reopen_connected": "Mostra les ciutats connectades",
+    "btn_share": "Share"
   },
   "hr": {
     "welcome": "Dobrodošli u",
@@ -867,7 +875,8 @@
     "faq_report_a": "Možete otvoriti issue u GitHub repozitoriju projekta ili kontaktirati developera putem contact@liniabus.eu",
     "mobile_bubble_empty": "Započnite dodavanjem grada",
     "mobile_bubble_stops": "{count} stanica",
-    "btn_reopen_connected": "Prikaži povezane gradove"
+    "btn_reopen_connected": "Prikaži povezane gradove",
+    "btn_share": "Share"
   },
   "bg": {
     "welcome": "Добре дошли в",
@@ -963,7 +972,8 @@
     "faq_report_a": "Можете да отворите issue в GitHub хранилището на проекта или да се свържете с разработчика чрез contact@liniabus.eu",
     "mobile_bubble_empty": "Започнете, като добавите град",
     "mobile_bubble_stops": "{count} спирки",
-    "btn_reopen_connected": "Покажи свързани градове"
+    "btn_reopen_connected": "Покажи свързани градове",
+    "btn_share": "Share"
   },
   "da": {
     "welcome": "Velkommen til",
@@ -1059,7 +1069,8 @@
     "faq_report_a": "Du kan åbne et issue i projektets GitHub-arkiv eller kontakte udvikleren via contact@liniabus.eu",
     "mobile_bubble_empty": "Start med at tilføje en by",
     "mobile_bubble_stops": "{count} stop",
-    "btn_reopen_connected": "Vis forbundne byer"
+    "btn_reopen_connected": "Vis forbundne byer",
+    "btn_share": "Share"
   },
   "et": {
     "welcome": "Tere tulemast",
@@ -1155,7 +1166,8 @@
     "faq_report_a": "Võite avada projekti GitHubi hoidlas issue või võtta arendajaga ühendust aadressil contact@liniabus.eu",
     "mobile_bubble_empty": "Alusta linna lisamisega",
     "mobile_bubble_stops": "{count} peatust",
-    "btn_reopen_connected": "Näita ühendatud linnu"
+    "btn_reopen_connected": "Näita ühendatud linnu",
+    "btn_share": "Share"
   },
   "fi": {
     "welcome": "Tervetuloa",
@@ -1251,7 +1263,8 @@
     "faq_report_a": "Voit avata issuuen projektin GitHub-tietovarastossa tai ottaa yhteyttä kehittäjään osoitteella contact@liniabus.eu",
     "mobile_bubble_empty": "Aloita lisäämällä kaupunki",
     "mobile_bubble_stops": "{count} pysäkkiä",
-    "btn_reopen_connected": "Näytä yhdistetyt kaupungit"
+    "btn_reopen_connected": "Näytä yhdistetyt kaupungit",
+    "btn_share": "Share"
   },
   "el": {
     "welcome": "Καλώς ήρθατε στο",
@@ -1347,7 +1360,8 @@
     "faq_report_a": "Μπορείτε να ανοίξετε ένα issue στο GitHub repository του έργου ή να επικοινωνήσετε με τον προγραμματιστή μέσω contact@liniabus.eu",
     "mobile_bubble_empty": "Ξεκινήστε προσθέτοντας μια πόλη",
     "mobile_bubble_stops": "{count} στάσεις",
-    "btn_reopen_connected": "Εμφάνιση συνδεδεμένων πόλεων"
+    "btn_reopen_connected": "Εμφάνιση συνδεδεμένων πόλεων",
+    "btn_share": "Share"
   },
   "hu": {
     "welcome": "Üdvözöljük a",
@@ -1443,7 +1457,8 @@
     "faq_report_a": "Nyithat egy issue-t a projekt GitHub tárhelyén, vagy kapcsolatba léphet a fejlesztővel a contact@liniabus.eu címen",
     "mobile_bubble_empty": "Kezdje egy város hozzáadásával",
     "mobile_bubble_stops": "{count} megálló",
-    "btn_reopen_connected": "Kapcsolódó városok mutatása"
+    "btn_reopen_connected": "Kapcsolódó városok mutatása",
+    "btn_share": "Share"
   },
   "hi": {
     "welcome": "स्वागत है",
@@ -1539,7 +1554,8 @@
     "faq_report_a": "आप प्रोजेक्ट के GitHub रिपॉजिटरी में एक issue खोल सकते हैं या contact@liniabus.eu पर डेवलपर से संपर्क कर सकते हैं।",
     "mobile_bubble_empty": "एक शहर जोड़कर शुरू करें",
     "mobile_bubble_stops": "{count} स्टॉप",
-    "btn_reopen_connected": "जुड़े हुए शहर दिखाएं"
+    "btn_reopen_connected": "जुड़े हुए शहर दिखाएं",
+    "btn_share": "Share"
   },
   "lv": {
     "welcome": "Laipni lūdzam",
@@ -1635,7 +1651,8 @@
     "faq_report_a": "Jūs varat atvērt issue projekta GitHub repozitorijā vai sazināties ar izstrādātāju, izmantojot contact@liniabus.eu",
     "mobile_bubble_empty": "Sāciet pievienojot pilsētu",
     "mobile_bubble_stops": "{count} pieturas",
-    "btn_reopen_connected": "Parādīt savienotās pilsētas"
+    "btn_reopen_connected": "Parādīt savienotās pilsētas",
+    "btn_share": "Share"
   },
   "lt": {
     "welcome": "Sveiki atvykę į",
@@ -1731,7 +1748,8 @@
     "faq_report_a": "Galite atidaryti issue projekto GitHub saugykloje arba susisiekti su kūrėju el. paštu contact@liniabus.eu",
     "mobile_bubble_empty": "Pradėkite pridėdami miestą",
     "mobile_bubble_stops": "{count} stotelės",
-    "btn_reopen_connected": "Rodyti susijusius miestus"
+    "btn_reopen_connected": "Rodyti susijusius miestus",
+    "btn_share": "Share"
   },
   "lb": {
     "welcome": "Wëllkomm op",
@@ -1827,7 +1845,8 @@
     "faq_report_a": "Dir kann en Issue am GitHub-Repository vum Projet opmaachen oder den Entwéckler iwwer contact@liniabus.eu kontaktéieren.",
     "mobile_bubble_empty": "Fänkt un mat derbäi vun enger Stad",
     "mobile_bubble_stops": "{count} Arrêten",
-    "btn_reopen_connected": "Weist verbonne Stied"
+    "btn_reopen_connected": "Weist verbonne Stied",
+    "btn_share": "Share"
   },
   "mk": {
     "welcome": "Добредојдовте во",
@@ -1923,7 +1942,8 @@
     "faq_report_a": "Можете да отворите issue во GitHub складиштето на проектот или да го контактирате развивачот преку contact@liniabus.eu",
     "mobile_bubble_empty": "Почнете со додавање на град",
     "mobile_bubble_stops": "{count} постојки",
-    "btn_reopen_connected": "Прикажи поврзани градови"
+    "btn_reopen_connected": "Прикажи поврзани градови",
+    "btn_share": "Share"
   },
   "ro": {
     "welcome": "Bun venit la",
@@ -2019,7 +2039,8 @@
     "faq_report_a": "Puteți deschide un issue în depozitul GitHub al proiectului sau puteți contacta dezvoltatorul prin contact@liniabus.eu",
     "mobile_bubble_empty": "Începeți prin adăugarea unui oraș",
     "mobile_bubble_stops": "{count} opriri",
-    "btn_reopen_connected": "Afișează orașele conectate"
+    "btn_reopen_connected": "Afișează orașele conectate",
+    "btn_share": "Share"
   },
   "pl": {
     "welcome": "Witaj w",
@@ -2115,7 +2136,8 @@
     "faq_report_a": "Możesz otworzyć issue w repozytorium GitHub projektu lub skontaktować się z deweloperem przez contact@liniabus.eu",
     "mobile_bubble_empty": "Zacznij od dodania miasta",
     "mobile_bubble_stops": "{count} przystanków",
-    "btn_reopen_connected": "Pokaż połączone miasta"
+    "btn_reopen_connected": "Pokaż połączone miasta",
+    "btn_share": "Share"
   },
   "cs": {
     "welcome": "Vítejte v",
@@ -2211,7 +2233,8 @@
     "faq_report_a": "Můžete otevřít issue v repozitáři GitHub projektu nebo kontaktovat vývojáře prostřednictvím contact@liniabus.eu",
     "mobile_bubble_empty": "Začněte přidáním města",
     "mobile_bubble_stops": "{count} zastávek",
-    "btn_reopen_connected": "Zobrazit spojená města"
+    "btn_reopen_connected": "Zobrazit spojená města",
+    "btn_share": "Share"
   },
   "sk": {
     "welcome": "Vitajte v",
@@ -2307,7 +2330,8 @@
     "faq_report_a": "Môžete otvoriť issue v GitHub repozitári projektu alebo kontaktovať vývojára prostredníctvom contact@liniabus.eu",
     "mobile_bubble_empty": "Začnite pridaním mesta",
     "mobile_bubble_stops": "{count} zastávok",
-    "btn_reopen_connected": "Zobraziť spojené mestá"
+    "btn_reopen_connected": "Zobraziť spojené mestá",
+    "btn_share": "Share"
   },
   "sl": {
     "welcome": "Dobrodošli v",
@@ -2403,7 +2427,8 @@
     "faq_report_a": "Lahko odprete issue v repozitoriju GitHub projekta ali stopite v stik z razvijalcem prek contact@liniabus.eu",
     "mobile_bubble_empty": "Začnite z dodajanjem mesta",
     "mobile_bubble_stops": "{count} postaj",
-    "btn_reopen_connected": "Pokaži povezana mesta"
+    "btn_reopen_connected": "Pokaži povezana mesta",
+    "btn_share": "Share"
   },
   "sv": {
     "welcome": "Välkommen till",
@@ -2499,7 +2524,8 @@
     "faq_report_a": "Du kan öppna ett issue i projektets GitHub-arkiv eller kontakta utvecklaren via contact@liniabus.eu",
     "mobile_bubble_empty": "Börja med att lägga till en stad",
     "mobile_bubble_stops": "{count} stopp",
-    "btn_reopen_connected": "Visa anslutna städer"
+    "btn_reopen_connected": "Visa anslutna städer",
+    "btn_share": "Share"
   },
   "tr": {
     "welcome": "Hoş geldiniz",
@@ -2595,7 +2621,8 @@
     "faq_report_a": "Projenin GitHub deposunda bir issue açabilir veya contact@liniabus.eu aracılığıyla geliştiriciyle iletişime geçebilirsiniz.",
     "mobile_bubble_empty": "Bir şehir ekleyerek başlayın",
     "mobile_bubble_stops": "{count} durak",
-    "btn_reopen_connected": "Bağlı şehirleri göster"
+    "btn_reopen_connected": "Bağlı şehirleri göster",
+    "btn_share": "Share"
   },
   "uk": {
     "welcome": "Ласкаво просимо до",
@@ -2691,7 +2718,8 @@
     "faq_report_a": "Ви можете відкрити issue у репозиторії GitHub проекту або зв'язатися з розробником через contact@liniabus.eu",
     "mobile_bubble_empty": "Почніть із додавання міста",
     "mobile_bubble_stops": "{count} зупинок",
-    "btn_reopen_connected": "Показати пов’язані міста"
+    "btn_reopen_connected": "Показати пов’язані міста",
+    "btn_share": "Share"
   },
   "ru": {
     "welcome": "Добро пожаловать в",
@@ -2787,7 +2815,8 @@
     "faq_report_a": "Вы можете открыть issue в репозитории GitHub проекта или связаться с разработчиком через contact@liniabus.eu",
     "mobile_bubble_empty": "Начните с добавления города",
     "mobile_bubble_stops": "{count} остановок",
-    "btn_reopen_connected": "Показать связанные города"
+    "btn_reopen_connected": "Показать связанные города",
+    "btn_share": "Share"
   },
   "be": {
     "welcome": "Сардэчна запрашаем у",
@@ -2883,6 +2912,7 @@
     "faq_report_a": "Вы можаце адкрыць issue ў рэпазітарыі GitHub праекта або звязацца з распрацоўнікам праз contact@liniabus.eu",
     "mobile_bubble_empty": "Пачніце з дадання горада",
     "mobile_bubble_stops": "{count} прыпынкаў",
-    "btn_reopen_connected": "Паказаць звязаныя гарады"
+    "btn_reopen_connected": "Паказаць звязаныя гарады",
+    "btn_share": "Share"
   }
 }

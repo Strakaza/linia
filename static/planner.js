@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const timeline = document.getElementById('plannerTimeline');
     const undoBtn = document.getElementById('undoBtn');
     const resetBtn = document.getElementById('resetBtn');
+    const shareBtn = document.getElementById('shareBtn');
     const generatePdfBtn = document.getElementById('generatePdfBtn');
     const saveBtn = document.getElementById('saveBtn');
     const loadBtn = document.getElementById('loadBtn');
@@ -487,6 +488,7 @@ document.addEventListener('DOMContentLoaded', function () {
         undoBtn.disabled = !hasStops;
         resetBtn.disabled = !hasStops;
         saveBtn.disabled = !hasStops;
+        if (shareBtn) shareBtn.disabled = !hasStops;
         generatePdfBtn.disabled = itinerary.length < 2;
         updateMobileUI();
         if (itinerary.length === 0) {
@@ -543,6 +545,93 @@ document.addEventListener('DOMContentLoaded', function () {
         URL.revokeObjectURL(url);
         showToast(i18n.t('toast_saved'), 'success');
     });
+    const SHARE_COPIED_TEXTS = {
+        fr: 'Lien copié !', en: 'Link copied!', de: 'Link kopiert!', es: '¡Enlace copiado!',
+        pt: 'Link copiado!', nl: 'Link gekopieerd!', sq: 'Lidhja u kopjua!', ca: 'Enllaç copiat!',
+        hr: 'Poveznica kopirana!', bg: 'Линкът е копиран!', da: 'Link kopieret!', et: 'Link kopeeritud!',
+        fi: 'Linkki kopioitu!', el: 'Ο σύνδεσμος αντιγράφηκε!', hu: 'Link másolva!', hi: 'लिंक कॉपी हो गया!',
+        lv: 'Saite nokopēta!', lt: 'Nuoroda nukopijuota!', lb: 'Link kopéiert!', mk: 'Линкот е копиран!',
+        ro: 'Link copiat!', pl: 'Link skopiowany!', cs: 'Odkaz zkopírován!', sk: 'Odkaz skopírovaný!',
+        sl: 'Povezava kopirana!', sv: 'Länk kopierad!', tr: 'Bağlantı kopyalandı!', uk: 'Посилання скопійовано!',
+        ru: 'Ссылка скопирована!', be: 'Спасылка скапіравана!'
+    };
+
+    function showConfettiNotification() {
+        const existing = document.getElementById('confettiNotification');
+        if (existing) existing.remove();
+        const lang = i18n.currentLang || 'fr';
+        const text = SHARE_COPIED_TEXTS[lang] || SHARE_COPIED_TEXTS['fr'];
+        const overlay = document.createElement('div');
+        overlay.id = 'confettiNotification';
+        overlay.className = 'confetti-overlay';
+        const colors = ['var(--linia-orange)', 'var(--linia-purple)', 'var(--linia-teal)'];
+        const colorHex = ['#CC5533', '#414288', '#008080'];
+        let confettiHTML = '';
+        for (let i = 0; i < 40; i++) {
+            const color = colorHex[i % 3];
+            const left = Math.random() * 100;
+            const delay = Math.random() * 0.5;
+            const size = 6 + Math.random() * 8;
+            const rotation = Math.random() * 360;
+            const drift = -50 + Math.random() * 100;
+            const type = i % 3 === 0 ? 'circle' : (i % 3 === 1 ? 'rect' : 'diamond');
+            confettiHTML += `<div class="confetti-particle confetti-${type}" style="left:${left}%;background:${color};width:${size}px;height:${size * (type === 'rect' ? 0.5 : 1)}px;animation-delay:${delay}s;--drift:${drift}px;--rotation:${rotation}deg;"></div>`;
+        }
+        overlay.innerHTML = `
+            <div class="confetti-container">${confettiHTML}</div>
+            <div class="confetti-modal">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--linia-teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span class="confetti-text">${text}</span>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+        requestAnimationFrame(() => overlay.classList.add('visible'));
+        setTimeout(() => {
+            overlay.classList.remove('visible');
+            overlay.addEventListener('transitionend', () => overlay.remove(), { once: true });
+            setTimeout(() => overlay.remove(), 500);
+        }, 2500);
+    }
+
+    if (shareBtn) {
+        shareBtn.addEventListener('click', () => {
+            if (itinerary.length === 0) {
+                showToast(i18n.t('toast_empty_itinerary') || 'Ajoutez des villes pour partager.', 'warning');
+                return;
+            }
+            const stopIds = itinerary.map(stop => stop.stop_id).join(',');
+            const url = new URL(window.location.origin + window.location.pathname);
+            url.searchParams.set('route', stopIds);
+            const shareUrl = url.toString();
+            const shareTitle = 'Linia — ' + itinerary.map(s => s.stop_name).join(' → ');
+            function doCopy(text) {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+            }
+            if (navigator.share) {
+                navigator.share({ title: shareTitle, text: shareTitle, url: shareUrl }).catch(() => { });
+            } else if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    showConfettiNotification();
+                }).catch(() => {
+                    doCopy(shareUrl);
+                    showConfettiNotification();
+                });
+            } else {
+                doCopy(shareUrl);
+                showConfettiNotification();
+            }
+        });
+    }
     loadBtn.addEventListener('click', () => {
         loadInput.click();
     });
@@ -809,5 +898,48 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    async function loadSharedRoute() {
+        const params = new URLSearchParams(window.location.search);
+        const routeParam = params.get('route');
+        if (!routeParam) return;
+        const stopIds = routeParam.split(',').filter(id => id.trim());
+        if (stopIds.length === 0) return;
+        showLoading(i18n.t('loading') || 'Chargement...');
+        try {
+            for (let idx = 0; idx < stopIds.length; idx++) {
+                const stopId = stopIds[idx].trim();
+                const response = await fetch(`/api/stop_info/${encodeURIComponent(stopId)}`);
+                const data = await response.json();
+                if (!response.ok || !data.stop_info) continue;
+                const stopInfo = data.stop_info;
+                itinerary.push({
+                    stop_id: stopInfo.stop_id,
+                    stop_name: stopInfo.stop_name,
+                    stop_lat: parseFloat(stopInfo.stop_lat),
+                    stop_lon: parseFloat(stopInfo.stop_lon),
+                    operators: []
+                });
+            }
+            if (itinerary.length > 0) {
+                renderTimeline();
+                await renderMapItinerary();
+                updateButtons();
+                searchInput.placeholder = i18n.t('search_add_step') || 'Ajouter une étape...';
+                const lastStop = itinerary[itinerary.length - 1];
+                await loadConnectedCities(lastStop.stop_id, lastStop.stop_name);
+                showToast(i18n.t('toast_route_loaded') || 'Itinéraire chargé !', 'success');
+            }
+        } catch (err) {
+            console.error('Error loading shared route:', err);
+            showToast(i18n.t('err_connection') || 'Erreur de connexion.', 'error');
+        } finally {
+            hideLoading();
+        }
+        const cleanUrl = new URL(window.location.href);
+        cleanUrl.searchParams.delete('route');
+        window.history.replaceState({}, '', cleanUrl);
+    }
+
+    loadSharedRoute();
     updateButtons();
 });

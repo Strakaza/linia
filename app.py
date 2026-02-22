@@ -93,6 +93,30 @@ def normalize_lang(lang_code: str | None) -> str:
     lang_code = lang_code.lower()
     return lang_code if lang_code in SUPPORTED_LANGS else DEFAULT_LANG
 
+def get_route_separator(lang_code: str) -> str:
+    separators = {
+        "fr": "-vers-", "en": "-to-", "de": "-nach-", "es": "-a-", 
+        "it": "-verso-", "pt": "-para-", "nl": "-naar-", "pl": "-do-",
+        "cs": "-do-", "hu": "-ba-", "ro": "-spre-", "bg": "-do-",
+        "ru": "-v-", "tr": "-a-", "uk": "-v-", "sv": "-till-",
+        "da": "-til-", "fi": "-naan-", "no": "-til-", "el": "-pros-",
+        "hr": "-do-", "sr": "-do-", "sk": "-do-", "sl": "-v-",
+        "et": "-sse-", "lv": "-uz-", "lt": "-i-"
+    }
+    return separators.get(lang_code, "-to-")
+
+def parse_route_slug(slug: str):
+    separators = [
+        "-vers-", "-to-", "-nach-", "-a-", "-verso-", "-para-", "-naar-", 
+        "-do-", "-ba-", "-spre-", "-v-", "-till-", "-til-", "-naan-", "-pros-", "-sse-", "-uz-", "-i-"
+    ]
+    for sep in separators:
+        if sep in slug:
+            parts = slug.split(sep)
+            if len(parts) == 2:
+                return parts[0], parts[1], sep
+    return None, None, None
+
 def build_lang_urls(page_key: str, path_slug: str | None = None) -> dict:
     urls = {}
     is_city_page = (page_key == "city")
@@ -313,8 +337,19 @@ def try_find_stop_by_slug(slug):
         app.logger.error(f"Erreur recherche dynamique slug: {e}")
     return None
 
-def get_ssr_connected_stops(stop_id, current_lang):
-    """Récupère les villes connectées pour le maillage SEO."""
+def get_ssr_connected_stops(stop_id, current_lang, source_slug=None):
+    """Récupère les villes connectées pour le maillage SEO. Transforme les liens en A vers B."""
+    if not source_slug:
+        for hub_key, hub_data in TOP_HUBS.items():
+            if str(hub_data["id"]) == str(stop_id):
+                source_slug = hub_data["slugs"].get(current_lang, hub_data["slugs"].get("default"))
+                break
+        if not source_slug:
+            with closing(get_db()) as conn:
+                row = conn.execute("SELECT stop_name FROM stops WHERE stop_id = ?", (str(stop_id),)).fetchone()
+                if row: source_slug = simple_slugify(row['stop_name'])
+                else: source_slug = "depart"
+
     try:
         query = """
             SELECT DISTINCT s.stop_id, s.stop_name
@@ -328,13 +363,14 @@ def get_ssr_connected_stops(stop_id, current_lang):
         with closing(get_db()) as conn:
             cursor = conn.execute(query, (str(stop_id), str(stop_id)))
             results = []
+            sep = get_route_separator(current_lang)
             for row in cursor:
                 s_id = row['stop_id']
                 s_name = row['stop_name'] or ''
                 city_slug = None
                 # Cherche slug traduit si top hub
                 for hub_key, hub_data in TOP_HUBS.items():
-                    if hub_data["id"] == s_id:
+                    if str(hub_data["id"]) == str(s_id):
                         city_slug = hub_data["slugs"].get(current_lang, hub_data["slugs"].get("default"))
                         break
                 if not city_slug:
@@ -343,7 +379,8 @@ def get_ssr_connected_stops(stop_id, current_lang):
                 prefix = f"{BASE_URL}"
                 if current_lang != "fr":
                     prefix += f"/{current_lang}"
-                link_url = f"{prefix}/bus/{city_slug}"
+                
+                link_url = f"{prefix}/bus/{source_slug}{sep}{city_slug}"
                 results.append({"name": s_name, "url": link_url})
             return results
     except Exception as e:
@@ -447,7 +484,7 @@ def city_seo_page(url_slug, lang_code=None):
         "hreflang_urls": lang_urls,
     }
 
-    connected_dests = get_ssr_connected_stops(stop_id, current_lang)
+    connected_dests = get_ssr_connected_stops(stop_id, current_lang, url_slug)
     
     return _render_page(
         page_key="city", 
@@ -458,6 +495,85 @@ def city_seo_page(url_slug, lang_code=None):
         preloaded_stop_id=stop_id,
         preloaded_stop_name=city_name,
         connected_destinations=connected_dests
+    )
+
+def route_a_to_b_page(slug_a, slug_b, lang_code=None):
+    current_lang = normalize_lang(lang_code)
+    
+    # 1. Trouver les villes
+    key_a, city_a = find_city_by_slug(slug_a)
+    if not city_a:
+        city_a = try_find_stop_by_slug(slug_a)
+        key_a = slug_a
+        
+    key_b, city_b = find_city_by_slug(slug_b)
+    if not city_b:
+        city_b = try_find_stop_by_slug(slug_b)
+        key_b = slug_b
+        
+    if not city_a or not city_b:
+        abort(404)
+        
+    name_a, name_b = city_a["name"], city_b["name"]
+    
+    # Textes SEO ciblés "A vers B"
+    title_translations = {
+        "fr": f"Bus {name_a} ↔ {name_b} : Carte, Lignes et Comparateur",
+        "en": f"Bus {name_a} ↔ {name_b} : Map, Routes and Tickets",
+        "de": f"Bus {name_a} ↔ {name_b} : Karte, Routen und Tickets",
+        "es": f"Autobús {name_a} ↔ {name_b} : Mapa, Rutas y Billetes",
+        "it": f"Autobus {name_a} ↔ {name_b} : Mappa, Percorsi e Biglietti"
+    }
+    desc_translations = {
+        "fr": f"Visualisez le trajet en bus de {name_a} à {name_b} sur notre carte interactive. Comparez les lignes FlixBus et BlaBlaCar pour ce trajet.",
+        "en": f"View the bus route from {name_a} to {name_b} on our interactive map. Compare FlixBus and BlaBlaCar routes for this journey.",
+        "de": f"Sehen Sie sich die Buslinie von {name_a} nach {name_b} auf unserer interaktiven Karte an. Vergleichen Sie FlixBus und BlaBlaCar für diese Strecke.",
+        "es": f"Vea la ruta de autobús de {name_a} a {name_b} en nuestro mapa interactivo. Compare las rutas de FlixBus y BlaBlaCar para este viaje.",
+        "it": f"Visualizza il percorso in autobus da {name_a} a {name_b} sulla nostra mappa interattiva. Confronta le linee FlixBus e BlaBlaCar per questo viaggio."
+    }
+    
+    title = title_translations.get(current_lang, f"Bus {name_a} ↔ {name_b} : Map, Routes and Tickets")
+    desc = desc_translations.get(current_lang, f"View the bus route from {name_a} to {name_b} on our interactive map. Compare FlixBus and BlaBlaCar routes for this journey.")
+    
+    # Build equivalent urls for hreflang
+    lang_urls = {}
+    for lang in SUPPORTED_LANGS:
+        sep = get_route_separator(lang)
+        slug_a_lang = city_a["slugs"].get(lang, city_a["slugs"].get("default")) if "slugs" in city_a else simple_slugify(name_a)
+        slug_b_lang = city_b["slugs"].get(lang, city_b["slugs"].get("default")) if "slugs" in city_b else simple_slugify(name_b)
+        
+        prefix = f"{BASE_URL}"
+        if lang != "fr":
+            prefix += f"/{lang}"
+            
+        lang_urls[lang] = f"{prefix}/bus/{slug_a_lang}{sep}{slug_b_lang}"
+        if lang == "en":
+            lang_urls["x-default"] = lang_urls[lang]
+            
+    if "x-default" not in lang_urls:
+         lang_urls["x-default"] = lang_urls["fr"]
+
+    current_url = lang_urls.get(current_lang, BASE_URL + "/")
+    
+    custom_seo = {
+        "page_title": title,
+        "page_description": desc,
+        "canonical_url": current_url,
+        "og_title": title,
+        "og_description": desc,
+        "og_url": current_url,
+        "hreflang_urls": lang_urls,
+    }
+    
+    return _render_page(
+        page_key="route_a_b",
+        lang_code=current_lang,
+        template_name="map.html",
+        seo_meta_override=custom_seo,
+        preloaded_start_id=city_a["id"],
+        preloaded_end_id=city_b["id"],
+        city_a_name=name_a,
+        city_b_name=name_b
     )
 
 # --- ROUTES ---
@@ -482,26 +598,27 @@ def download_unified_gtfs():
 def universal_router(path):
     parts = path.strip('/').split('/')
     
-    # 1. Cas : Juste un code langue
     if len(parts) == 1 and parts[0] in SUPPORTED_LANGS:
         return _render_page("home", parts[0], "landing.html")
         
-    # 2. Cas : Villes SEO en Français (ex: /bus/berlin)
     if len(parts) == 2 and parts[0] == "bus":
+        slug_a, slug_b, sep = parse_route_slug(parts[1])
+        if slug_a and slug_b:
+            return route_a_to_b_page(slug_a, slug_b, "fr")
         return city_seo_page(parts[1], "fr")
         
-    # 3. Cas : Villes SEO avec langue (ex: /de/bus/berlin)
     if len(parts) == 3 and parts[0] in SUPPORTED_LANGS and parts[1] == "bus":
+        slug_a, slug_b, sep = parse_route_slug(parts[2])
+        if slug_a and slug_b:
+            return route_a_to_b_page(slug_a, slug_b, parts[0])
         return city_seo_page(parts[2], parts[0])
         
-    # 4. Cas : Pages statiques (FR)
     if len(parts) == 1:
         slug = parts[0]
         for page_key, translations in URL_SLUGS.items():
             if slug == translations.get("fr", page_key):
                 return _render_page(page_key, "fr", f"{page_key}.html")
                 
-    # 5. Cas : Pages statiques (Langue)
     if len(parts) == 2 and parts[0] in SUPPORTED_LANGS:
         lang = parts[0]
         slug = parts[1]
@@ -537,6 +654,27 @@ def sitemap():
             if lang not in urls: continue
             xml += f'  <url>\n    <loc>{urls[lang]}</loc>\n'
             for alt_lang, alt_url in urls.items():
+                xml += f'    <xhtml:link rel="alternate" hreflang="{alt_lang}" href="{alt_url}" />\n'
+            xml += '  </url>\n'
+
+    # Trajets A vers B (Top combinations)
+    import itertools
+    hub_keys = list(TOP_HUBS.keys())[:11]
+    for key_a, key_b in itertools.permutations(hub_keys, 2):
+        lang_urls = {}
+        for lang in SUPPORTED_LANGS:
+            sep = get_route_separator(lang)
+            slug_a_lang = TOP_HUBS[key_a]["slugs"].get(lang, TOP_HUBS[key_a]["slugs"].get("default"))
+            slug_b_lang = TOP_HUBS[key_b]["slugs"].get(lang, TOP_HUBS[key_b]["slugs"].get("default"))
+            prefix = f"{BASE_URL}"
+            if lang != "fr":
+                prefix += f"/{lang}"
+            lang_urls[lang] = f"{prefix}/bus/{slug_a_lang}{sep}{slug_b_lang}"
+            
+        for lang, url in lang_urls.items():
+            if lang not in SUPPORTED_LANGS: continue
+            xml += f'  <url>\n    <loc>{url}</loc>\n'
+            for alt_lang, alt_url in lang_urls.items():
                 xml += f'    <xhtml:link rel="alternate" hreflang="{alt_lang}" href="{alt_url}" />\n'
             xml += '  </url>\n'
             

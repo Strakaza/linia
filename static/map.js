@@ -271,14 +271,6 @@ document.addEventListener('DOMContentLoaded', function () {
         openRoutePanel();
         routePanelBody.querySelectorAll('.route-item').forEach(item => {
             item.addEventListener('click', handleRouteClick);
-            item.addEventListener('mouseenter', async () => {
-                const tripId = item.dataset.tripId;
-                if (!tripId) return;
-                highlightRouteOnMap(tripId);
-            });
-            item.addEventListener('mouseleave', () => {
-                clearHighlightLayer();
-            });
         });
     }
     async function highlightRouteOnMap(tripId) {
@@ -472,10 +464,72 @@ document.addEventListener('DOMContentLoaded', function () {
             hideLoading();
         }
     }
+    async function drawPreloadedRoute(startId, endId, nameA, nameB) {
+        showLoading("Chargement du trajet...");
+        try {
+            const [resA, resB] = await Promise.all([
+                fetch(`/api/stop_info/${encodeURIComponent(startId)}`),
+                fetch(`/api/stop_info/${encodeURIComponent(endId)}`)
+            ]);
+
+            if (!resA.ok || !resB.ok) {
+                showToast("Erreur lors du chargement des villes.", "error");
+                hideLoading();
+                return;
+            }
+            const dataA = await resA.json();
+            const dataB = await resB.json();
+            const stopA = dataA.stop_info;
+            const stopB = dataB.stop_info;
+
+            const bounds = L.latLngBounds();
+
+            [stopA, stopB].forEach((stop) => {
+                const el = document.createElement('div');
+                el.className = 'linia-map-marker';
+                const icon = L.divIcon({ html: el, className: '', iconSize: [14, 14], iconAnchor: [7, 7] });
+                const marker = L.marker([stop.stop_lat, stop.stop_lon], { icon: icon }).bindPopup(stop.stop_name).addTo(map);
+                stopMarkers.push(marker);
+                bounds.extend([stop.stop_lat, stop.stop_lon]);
+            });
+
+            const geometry = await getRoadGeometry([stopA, stopB]);
+            if (geometry && geometry.coordinates) {
+                const latlngs = geometry.coordinates.map(c => [c[1], c[0]]);
+                tripLinePolyline = L.polyline(latlngs, {
+                    color: '#73d700',
+                    weight: 6,
+                    opacity: 0.8,
+                    lineJoin: 'round',
+                    lineCap: 'round'
+                }).addTo(map);
+            } else {
+                tripLinePolyline = L.polyline([[stopA.stop_lat, stopA.stop_lon], [stopB.stop_lat, stopB.stop_lon]], {
+                    color: '#73d700',
+                    weight: 6,
+                    dashArray: '5, 10',
+                    opacity: 0.8
+                }).addTo(map);
+            }
+
+            if (bounds.isValid()) {
+                map.fitBounds(bounds, { padding: [50, 50], duration: 1.2 });
+            }
+        } catch (e) {
+            console.error('Route interaction error:', e);
+            showToast('Erreur lors du chargement du trajet.', 'error');
+        } finally {
+            hideLoading();
+        }
+    }
+
     const initialParams = new URLSearchParams(window.location.search);
     const stopIdParam = initialParams.get('stop_id') || window.PRELOADED_STOP_ID;
     const stopNameParam = initialParams.get('stop_name') || window.PRELOADED_STOP_NAME;
-    if (stopIdParam) {
+
+    if (window.PRELOADED_START_ID && window.PRELOADED_END_ID) {
+        drawPreloadedRoute(window.PRELOADED_START_ID, window.PRELOADED_END_ID, window.CITY_A_NAME, window.CITY_B_NAME);
+    } else if (stopIdParam) {
         if (stopNameParam) searchInput.value = stopNameParam;
         handleStopSelect(stopIdParam, stopNameParam || '');
     }

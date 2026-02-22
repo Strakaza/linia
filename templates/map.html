@@ -58,7 +58,7 @@
 
         <div class="loading-overlay" id="loadingOverlay">
             <div class="spinner"></div>
-            <span id="loadingText">{{ t('loading') }}</span>
+            <span id="loadingText" style="margin-top: 10px;">{{ t('loading') }}</span>
         </div>
 
         <button class="reopen-panel-btn" id="reopenPanelBtn" style="display:none;" title="Afficher les lignes">
@@ -93,7 +93,15 @@
             <div class="route-panel-body" id="routePanelBody">
             </div>
         </div>
-        {% if connected_destinations %}
+        {% if preloaded_start_id and preloaded_end_id %}
+        <div class="sr-only"
+            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">
+            <h1>Trajet en bus de {{ city_a_name }} à {{ city_b_name }}</h1>
+            <p>La distance entre {{ city_a_name }} et {{ city_b_name }} est couverte par les opérateurs de bus longue
+                distance comme FlixBus et BlaBlaCar Bus. Consultez notre carte interactive pour visualiser le tracé de
+                ce trajet complet et préparez votre voyage en bus.</p>
+        </div>
+        {% elif connected_destinations %}
         <div class="sr-only"
             style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">
             <h1>Trajets en bus au départ de {{ preloaded_stop_name }}</h1>
@@ -106,7 +114,12 @@
             </ul>
         </div>
         {% endif %}
-        <footer <nav class="bottom-nav">
+        <footer class="app-footer"
+            style="position: absolute; bottom: 0; padding: 12px; font-size: 11px; pointer-events: none; z-index: 10000;">
+            <p style="margin-bottom: 4px;">{{ t('footer_signature') }}</p>
+            <div class="color-bar-signature" style="max-width: 150px;"></div>
+        </footer>
+        <nav class="bottom-nav">
             <a class="bottom-nav-item" href="{{ url_for_page('home') }}">
                 <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                     stroke-width="2" viewBox="0 0 24 24" width="24">
@@ -133,7 +146,7 @@
                 </svg>
                 <span>{{ t('nav_info') }}</span>
             </a>
-            </nav>
+        </nav>
     </div>
 
     <div class="toast-container" id="toastContainer"></div>
@@ -145,6 +158,14 @@
     <script>
         window.PRELOADED_STOP_ID = "{{ preloaded_stop_id }}";
         window.PRELOADED_STOP_NAME = "{{ preloaded_stop_name }}";
+    </script>
+    {% endif %}
+    {% if preloaded_start_id and preloaded_end_id %}
+    <script>
+        window.PRELOADED_START_ID = "{{ preloaded_start_id }}";
+        window.PRELOADED_END_ID = "{{ preloaded_end_id }}";
+        window.CITY_A_NAME = "{{ city_a_name }}";
+        window.CITY_B_NAME = "{{ city_b_name }}";
     </script>
     {% endif %}
 

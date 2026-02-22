@@ -7,7 +7,7 @@
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet" />
 </head>
 
-<body>
+<body class="planner-body">
     <div class="planner-page">
         <svg style="width:0;height:0;position:absolute;">
             <defs>
@@ -30,7 +30,17 @@
 
         <div class="planner-sidebar" id="plannerSidebar">
             <div class="planner-sidebar-header">
-                <h2>{{ t('itinerary_title') }}</h2>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <h2>{{ t('itinerary_title') }}</h2>
+                    <button class="minimize-sidebar-btn" id="minimizeSidebarBtn"
+                        title="{{ t('btn_close') | default('Fermer') }}"
+                        style="display: none; background: none; border: none; cursor: pointer; color: var(--text-secondary);">
+                        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                </div>
                 <div class="planner-sidebar-actions">
                     <button class="planner-btn planner-btn-ghost" disabled="" id="undoBtn" title="{{ t('btn_undo') }}">
                         <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round"
@@ -62,47 +72,79 @@
                 </div>
             </div>
 
-            <div class="planner-disclaimer">
-                <div class="disclaimer-header">
-                    <svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" x2="12" y1="16" y2="12"></line>
-                        <line x1="12" x2="12.01" y1="8" y2="8"></line>
+            <div class="planner-disclaimer collapsed" id="plannerDisclaimer">
+                <div class="disclaimer-header"
+                    style="display: flex; justify-content: space-between; align-items: center; width: 100%; cursor: pointer;"
+                    onclick="document.getElementById('plannerDisclaimer').classList.toggle('collapsed')">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                            width="16">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" x2="12" y1="16" y2="12"></line>
+                            <line x1="12" x2="12.01" y1="8" y2="8"></line>
+                        </svg>
+                        <strong>{{ t('disclaimer_title') }}</strong>
+                    </div>
+                    <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" width="16">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    <strong>{{ t('disclaimer_title') }}</strong>
                 </div>
-                <p>{{ t('disclaimer_text') }}</p>
+                <div class="disclaimer-content-wrapper">
+                    <p id="disclaimerText">{{ t('disclaimer_text') }}</p>
+                </div>
             </div>
 
             <div class="planner-sidebar-footer" id="plannerFooter">
                 <input accept=".json" id="loadItineraryInput" style="display: none;" type="file" />
-                <button class="planner-footer-btn" id="loadBtn" title="{{ t('btn_load') }}">
-                    <svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" x2="12" y1="15" y2="3"></line>
-                    </svg>
-                    <span>{{ t('btn_load') }}</span>
-                </button>
-                <button class="planner-footer-btn" id="saveBtn" title="{{ t('btn_save') }}">
-                    <svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20">
-                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                        <polyline points="7 3 7 8 15 8"></polyline>
-                    </svg>
-                    <span>{{ t('btn_save') }}</span>
-                </button>
-                <div class="planner-footer-divider"></div>
-                <button class="linia-btn-premium" id="generatePdfBtn" style="width: 100%;">
-                    <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" width="16">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="16" x2="8" y1="13" y2="13"></line>
-                        <line x1="16" x2="8" y1="17" y2="17"></line>
-                    </svg>
-                    <span>{{ t('btn_pdf') }}</span>
-                </button>
+                <div style="display: flex; gap: 8px; width: 100%; margin-bottom: 8px; align-items: center;">
+                    <button class="planner-footer-btn" id="loadBtn" title="{{ t('btn_load') }}"
+                        style="flex: 1; margin: 0;">
+                        <svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                            width="20">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" x2="12" y1="15" y2="3"></line>
+                        </svg>
+                        <span>{{ t('btn_load') }}</span>
+                    </button>
+                    <div class="planner-footer-divider"></div>
+                    <button class="planner-footer-btn" id="saveBtn" title="{{ t('btn_save') }}"
+                        style="flex: 1; margin: 0;">
+                        <svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                            width="20">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+                        </svg>
+                        <span>{{ t('btn_save') }}</span>
+                    </button>
+                </div>
+                <!-- Premium Buttons Row -->
+                <div style="display: flex; gap: 8px; width: 100%;">
+                    <button class="linia-btn-premium" id="shareBtn" style="flex: 1; margin: 0;"
+                        title="{{ t('btn_share') | default('Partager') }}">
+                        <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                        <span>{{ t('btn_share') | default('Partager') }}</span>
+                    </button>
+                    <button class="linia-btn-premium" id="generatePdfBtn" style="flex: 1; margin: 0;">
+                        <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" x2="8" y1="13" y2="13"></line>
+                            <line x1="16" x2="8" y1="17" y2="17"></line>
+                        </svg>
+                        <span>{{ t('btn_pdf') }}</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -135,10 +177,20 @@
             </div>
         </div>
 
-        <div class="loading-overlay" id="loadingOverlay">
-            <div class="spinner"></div>
-            <span id="loadingText">{{ t('loading') }}</span>
+        <button class="expanding-nav-btn nav-btn-reopen-connected" id="reopenConnectedBtn" style="display:none;"
+            title="{{ t('btn_reopen') | default('Rouvrir') }}">
+            <svg class="svgIcon" fill="none" height="22" stroke="currentColor" stroke-linecap="round"
+                stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="22">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+
+        <div class="planner-bubble" id="plannerBubble" style="display: none;">
+            <div class="planner-bubble-content" id="plannerBubbleContent">
+                <span id="plannerBubbleText"></span>
+            </div>
         </div>
+
 
         <nav class="bottom-nav">
             <a class="bottom-nav-item" href="{{ url_for_page('home') }}">
@@ -168,6 +220,104 @@
                 <span>{{ t('nav_info') }}</span>
             </a>
         </nav>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <svg class="pl" viewBox="0 0 160 160" width="160px" height="160px" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#000"></stop>
+                    <stop offset="100%" stop-color="#fff"></stop>
+                </linearGradient>
+                <mask id="mask1">
+                    <rect x="0" y="0" width="160" height="160" fill="url(#grad)"></rect>
+                </mask>
+                <mask id="mask2">
+                    <rect x="28" y="28" width="104" height="104" fill="url(#grad)"></rect>
+                </mask>
+            </defs>
+            <g>
+                <g class="pl__ring-rotate">
+                    <circle class="pl__ring-stroke" cx="80" cy="80" r="72" fill="none" stroke="var(--linia-orange)"
+                        stroke-width="16" stroke-dasharray="452.39 452.39" stroke-dashoffset="452"
+                        stroke-linecap="round" transform="rotate(-45,80,80)"></circle>
+                </g>
+            </g>
+            <g mask="url(#mask1)">
+                <g class="pl__ring-rotate">
+                    <circle class="pl__ring-stroke" cx="80" cy="80" r="72" fill="none" stroke="var(--linia-purple)"
+                        stroke-width="16" stroke-dasharray="452.39 452.39" stroke-dashoffset="452"
+                        stroke-linecap="round" transform="rotate(-45,80,80)"></circle>
+                </g>
+            </g>
+            <g>
+                <g stroke-width="4" stroke-dasharray="12 12" stroke-dashoffset="12" stroke-linecap="round"
+                    transform="translate(80,80)">
+                    <polyline class="pl__tick" stroke="#e0dfe6" points="0,2 0,14"
+                        transform="rotate(-135,0,0) translate(0,40)"></polyline>
+                    <polyline class="pl__tick" stroke="#e0dfe6" points="0,2 0,14"
+                        transform="rotate(-90,0,0) translate(0,40)"></polyline>
+                    <polyline class="pl__tick" stroke="#e0dfe6" points="0,2 0,14"
+                        transform="rotate(-45,0,0) translate(0,40)"></polyline>
+                    <polyline class="pl__tick" stroke="#e0dfe6" points="0,2 0,14"
+                        transform="rotate(0,0,0) translate(0,40)"></polyline>
+                    <polyline class="pl__tick" stroke="#e0dfe6" points="0,2 0,14"
+                        transform="rotate(45,0,0) translate(0,40)"></polyline>
+                    <polyline class="pl__tick" stroke="#e0dfe6" points="0,2 0,14"
+                        transform="rotate(90,0,0) translate(0,40)"></polyline>
+                    <polyline class="pl__tick" stroke="#e0dfe6" points="0,2 0,14"
+                        transform="rotate(135,0,0) translate(0,40)"></polyline>
+                    <polyline class="pl__tick" stroke="#e0dfe6" points="0,2 0,14"
+                        transform="rotate(180,0,0) translate(0,40)"></polyline>
+                </g>
+            </g>
+            <g mask="url(#mask1)">
+                <g stroke-width="4" stroke-dasharray="12 12" stroke-dashoffset="12" stroke-linecap="round"
+                    transform="translate(80,80)">
+                    <polyline class="pl__tick" stroke="#9b9bc4" points="0,2 0,14"
+                        transform="rotate(-135,0,0) translate(0,40)"></polyline>
+                    <polyline class="pl__tick" stroke="#9b9bc4" points="0,2 0,14"
+                        transform="rotate(-90,0,0) translate(0,40)"></polyline>
+                    <polyline class="pl__tick" stroke="#9b9bc4" points="0,2 0,14"
+                        transform="rotate(-45,0,0) translate(0,40)"></polyline>
+                    <polyline class="pl__tick" stroke="#9b9bc4" points="0,2 0,14"
+                        transform="rotate(0,0,0) translate(0,40)"></polyline>
+                    <polyline class="pl__tick" stroke="#9b9bc4" points="0,2 0,14"
+                        transform="rotate(45,0,0) translate(0,40)"></polyline>
+                    <polyline class="pl__tick" stroke="#9b9bc4" points="0,2 0,14"
+                        transform="rotate(90,0,0) translate(0,40)"></polyline>
+                    <polyline class="pl__tick" stroke="#9b9bc4" points="0,2 0,14"
+                        transform="rotate(135,0,0) translate(0,40)"></polyline>
+                    <polyline class="pl__tick" stroke="#9b9bc4" points="0,2 0,14"
+                        transform="rotate(180,0,0) translate(0,40)"></polyline>
+                </g>
+            </g>
+            <g>
+                <g transform="translate(64,28)">
+                    <g class="pl__arrows" transform="rotate(45,16,52)">
+                        <path fill="var(--linia-teal)"
+                            d="M17.998,1.506l13.892,43.594c.455,1.426-.56,2.899-1.998,2.899H2.108c-1.437,0-2.452-1.473-1.998-2.899L14.002,1.506c.64-2.008,3.356-2.008,3.996,0Z">
+                        </path>
+                        <path fill="var(--linia-purple)"
+                            d="M14.009,102.499L.109,58.889c-.453-1.421,.559-2.889,1.991-2.889H29.899c1.433,0,2.444,1.468,1.991,2.889l-13.899,43.61c-.638,2.001-3.345,2.001-3.983,0Z">
+                        </path>
+                    </g>
+                </g>
+            </g>
+            <g mask="url(#mask2)">
+                <g transform="translate(64,28)">
+                    <g class="pl__arrows" transform="rotate(45,16,52)">
+                        <path fill="var(--linia-orange)"
+                            d="M17.998,1.506l13.892,43.594c.455,1.426-.56,2.899-1.998,2.899H2.108c-1.437,0-2.452-1.473-1.998-2.899L14.002,1.506c.64-2.008,3.356-2.008,3.996,0Z">
+                        </path>
+                        <path fill="var(--linia-teal)"
+                            d="M14.009,102.499L.109,58.889c-.453-1.421,.559-2.889,1.991-2.889H29.899c1.433,0,2.444,1.468,1.991,2.889l-13.899,43.61c-.638,2.001-3.345,2.001-3.983,0Z">
+                        </path>
+                    </g>
+                </g>
+            </g>
+        </svg>
+        <span id="loadingText" style="margin-top: 10px;">{{ t('loading') }}</span>
     </div>
 
     <div class="toast-container" id="toastContainer"></div>
