@@ -11,7 +11,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 import traceback
 from contextlib import closing
 
-# --- CHARGEMENT DES TRADUCTIONS ---
+# --- CHARGEMENT DES TRADUCTIONS (FORCED RELOAD) ---
 try:
     with open('translations.json', 'r', encoding='utf-8') as f:
         TRANSLATIONS = json.load(f)
@@ -402,7 +402,13 @@ def _render_page(page_key: str, lang_code: str | None, template_name: str, path_
         )
 
     def translate(key, **t_kwargs):
-        dict_lang = TRANSLATIONS.get(current_lang, TRANSLATIONS.get('fr', {}))
+        try:
+            with open('translations.json', 'r', encoding='utf-8') as f:
+                current_translations = json.load(f)
+        except:
+            current_translations = TRANSLATIONS
+            
+        dict_lang = current_translations.get(current_lang, current_translations.get('fr', {}))
         if 'count' in t_kwargs:
             count = t_kwargs['count']
             plural_key = f"{key}_one" if count == 1 else f"{key}_other"
@@ -419,7 +425,13 @@ def _render_page(page_key: str, lang_code: str | None, template_name: str, path_
         slug = get_translated_slug(page_key_target, current_lang)
         return f"/{slug}" if current_lang == "fr" else f"/{current_lang}/{slug}"
 
-    dict_lang = TRANSLATIONS.get(current_lang, TRANSLATIONS.get('fr', {}))
+    try:
+        with open('translations.json', 'r', encoding='utf-8') as f:
+            current_translations = json.load(f)
+    except:
+        current_translations = TRANSLATIONS
+
+    dict_lang = current_translations.get(current_lang, current_translations.get('fr', {}))
 
     context = {
         "current_lang": current_lang,

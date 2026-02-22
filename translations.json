@@ -90,11 +90,13 @@
     "faq_update_q": "À quelle fréquence les données sont-elles mises à jour ?",
     "faq_update_a": "Les données GTFS sont mises à jour le premier jour de chaque mois.",
     "faq_report_q": "Comment signaler une erreur ou proposer une amélioration ?",
-    "faq_report_a": "Vous pouvez ouvrir une issue sur le dépôt GitHub du projet ou contacter le développeur via contact@liniabus.eu",
+    "faq_report_a": "Vous pouvez ouvrir une issue sur le dépôt {github} du projet ou contacter le développeur via contact@liniabus.eu",
     "mobile_bubble_empty": "Commencer par ajouter une ville",
     "mobile_bubble_stops": "{count} étapes",
     "btn_reopen_connected": "Afficher les villes connectées",
-    "btn_share": "Partager"
+    "btn_share": "Partager",
+    "view_on_github": "Voir sur GitHub",
+    "github_hover_prefix": "Voir le projet sur"
   },
   "en": {
     "welcome": "Welcome to",
@@ -187,11 +189,13 @@
     "faq_update_q": "How often is the data updated?",
     "faq_update_a": "GTFS data is updated on the first day of each month.",
     "faq_report_q": "How can I report an error or suggest an improvement?",
-    "faq_report_a": "You can open an issue on the project's GitHub repository or contact the developer via contact@liniabus.eu",
+    "faq_report_a": "You can open an issue on the project's {github} repository or contact the developer via contact@liniabus.eu",
     "mobile_bubble_empty": "Start by adding a city",
     "mobile_bubble_stops": "{count} stops",
     "btn_reopen_connected": "Show connected cities",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "View on GitHub",
+    "github_hover_prefix": "View the project on"
   },
   "de": {
     "welcome": "Willkommen bei",
@@ -284,11 +288,13 @@
     "faq_update_q": "Wie oft werden die Daten aktualisiert?",
     "faq_update_a": "Die GTFS-Daten werden am ersten Tag jedes Monats aktualisiert.",
     "faq_report_q": "Wie kann ich einen Fehler melden oder eine Verbesserung vorschlagen?",
-    "faq_report_a": "Sie können ein Issue im GitHub-Repository des Projekts eröffnen oder den Entwickler über contact@liniabus.eu kontaktieren.",
+    "faq_report_a": "Sie können ein Issue im {github}-Repository des Projekts eröffnen oder den Entwickler über contact@liniabus.eu kontaktieren.",
     "mobile_bubble_empty": "Beginnen Sie mit dem Hinzufügen einer Stadt",
     "mobile_bubble_stops": "{count} Stationen",
     "btn_reopen_connected": "Verbundene Städte anzeigen",
-    "btn_share": "Teilen"
+    "btn_share": "Teilen",
+    "view_on_github": "Auf GitHub ansehen",
+    "github_hover_prefix": "Projekt auf"
   },
   "es": {
     "welcome": "Bienvenido a",
@@ -381,11 +387,13 @@
     "faq_update_q": "¿Con qué frecuencia se actualizan los datos?",
     "faq_update_a": "Los datos GTFS se actualizan el primer día de cada mes.",
     "faq_report_q": "¿Cómo puedo informar de un error o sugerir una mejora?",
-    "faq_report_a": "Puede abrir una issue en el repositorio de GitHub del proyecto o contactar con el desarrollador a través de contact@liniabus.eu",
+    "faq_report_a": "Puede abrir una issue en el repositorio de {github} del proyecto o contactar con el desarrollador a través de contact@liniabus.eu",
     "mobile_bubble_empty": "Empiece por añadir una ciudad",
     "mobile_bubble_stops": "{count} paradas",
     "btn_reopen_connected": "Mostrar ciudades conectadas",
-    "btn_share": "Compartir"
+    "btn_share": "Compartir",
+    "view_on_github": "Ver en GitHub",
+    "github_hover_prefix": "Ver el proyecto en"
   },
   "pt": {
     "welcome": "Bem-vindo a",
@@ -478,11 +486,13 @@
     "faq_update_q": "Com que frequência os dados são atualizados?",
     "faq_update_a": "Os dados GTFS são atualizados no primeiro dia de cada mês.",
     "faq_report_q": "Como posso reportar um erro ou sugerir uma melhoria?",
-    "faq_report_a": "Pode abrir uma issue no repositório GitHub do projeto ou contactar o programador através de contact@liniabus.eu",
+    "faq_report_a": "Pode abrir uma issue no repositório {github} do projeto ou contactar o programador através de contact@liniabus.eu",
     "mobile_bubble_empty": "Comece adicionando uma cidade",
     "mobile_bubble_stops": "{count} paradas",
     "btn_reopen_connected": "Mostrar cidades conectadas",
-    "btn_share": "Partilhar"
+    "btn_share": "Partilhar",
+    "view_on_github": "Ver no GitHub",
+    "github_hover_prefix": "Ver o projeto no"
   },
   "nl": {
     "welcome": "Welkom bij",
@@ -575,11 +585,13 @@
     "faq_update_q": "Hoe vaak worden de gegevens bijgewerkt?",
     "faq_update_a": "De GTFS-gegevens worden op de eerste dag van elke maand bijgewerkt.",
     "faq_report_q": "Hoe kan ik een fout melden of een verbetering voorstellen?",
-    "faq_report_a": "U kunt een issue openen in de GitHub-repository van het project of contact opnemen met de ontwikkelaar via contact@liniabus.eu",
+    "faq_report_a": "U kunt een issue openen in de {github}-repository van het project of contact opnemen met de ontwikkelaar via contact@liniabus.eu",
     "mobile_bubble_empty": "Begin met het toevoegen van een stad",
     "mobile_bubble_stops": "{count} stops",
     "btn_reopen_connected": "Toon verbonden steden",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Bekijk op GitHub",
+    "github_hover_prefix": "Project op"
   },
   "sq": {
     "welcome": "Mirësevini në",
@@ -672,11 +684,13 @@
     "faq_update_q": "Sa shpesh përditësohen të dhënat?",
     "faq_update_a": "Të dhënat GTFS përditësohen të ditën e parë të çdo muaji.",
     "faq_report_q": "Si mund të raportoj një gabim ose të propozoj një përmirësim?",
-    "faq_report_a": "Mund të hapni një issue në depon e projektit në GitHub ose të kontaktoni zhvilluesin përmes contact@liniabus.eu",
+    "faq_report_a": "Mund të hapni një issue në depon e projektit në {github} ose të kontaktoni zhvilluesin përmes contact@liniabus.eu",
     "mobile_bubble_empty": "Filloni duke shtuar një qytet",
     "mobile_bubble_stops": "{count} ndalesa",
     "btn_reopen_connected": "Trego qytetet e lidhura",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Shiko në GitHub",
+    "github_hover_prefix": "Shih projektin në"
   },
   "ca": {
     "welcome": "Benvinguts a",
@@ -772,11 +786,13 @@
     "faq_update_q": "Amb quina freqüència s'actualitzen les dades?",
     "faq_update_a": "Les dades GTFS s'actualitzen el primer dia de cada mes.",
     "faq_report_q": "Com puc informar d'un error o suggerir una millora?",
-    "faq_report_a": "Podeu obrir una issue al repositori GitHub del projecte o contactar amb el desenvolupador mitjançant contact@liniabus.eu",
+    "faq_report_a": "Podeu obrir una issue al repositori {github} del projecte o contactar amb el desenvolupador mitjançant contact@liniabus.eu",
     "mobile_bubble_empty": "Comenceu afegint una ciutat",
     "mobile_bubble_stops": "{count} parades",
     "btn_reopen_connected": "Mostra les ciutats connectades",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Veure a GitHub",
+    "github_hover_prefix": "Veure el projecte a"
   },
   "hr": {
     "welcome": "Dobrodošli u",
@@ -872,11 +888,13 @@
     "faq_update_q": "Koliko se često podaci ažuriraju?",
     "faq_update_a": "GTFS podaci ažuriraju se prvog dana svakog mjeseca.",
     "faq_report_q": "Kako mogu prijaviti pogrešku ili predložiti poboljšanje?",
-    "faq_report_a": "Možete otvoriti issue u GitHub repozitoriju projekta ili kontaktirati developera putem contact@liniabus.eu",
+    "faq_report_a": "Možete otvoriti issue u {github} repozitoriju projekta ili kontaktirati developera putem contact@liniabus.eu",
     "mobile_bubble_empty": "Započnite dodavanjem grada",
     "mobile_bubble_stops": "{count} stanica",
     "btn_reopen_connected": "Prikaži povezane gradove",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Pogledaj na GitHubu",
+    "github_hover_prefix": "Pogledaj projekt na"
   },
   "bg": {
     "welcome": "Добре дошли в",
@@ -969,11 +987,13 @@
     "faq_update_q": "Колко често се актуализират данните?",
     "faq_update_a": "GTFS данните се актуализират на първия ден на всеки месец.",
     "faq_report_q": "Как мога да докладвам грешка или да предложа подобрение?",
-    "faq_report_a": "Можете да отворите issue в GitHub хранилището на проекта или да се свържете с разработчика чрез contact@liniabus.eu",
+    "faq_report_a": "Можете да отворите issue в {github} хранилището на проекта или да се свържете с разработчика чрез contact@liniabus.eu",
     "mobile_bubble_empty": "Започнете, като добавите град",
     "mobile_bubble_stops": "{count} спирки",
     "btn_reopen_connected": "Покажи свързани градове",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Вижте в GitHub",
+    "github_hover_prefix": "Вижте проекта в"
   },
   "da": {
     "welcome": "Velkommen til",
@@ -1066,11 +1086,13 @@
     "faq_update_q": "Hvor ofte opdateres dataene?",
     "faq_update_a": "GTFS-data opdateres den første dag i hver måned.",
     "faq_report_q": "Hvordan kan jeg rapportere en fejl eller foreslå en forbedring?",
-    "faq_report_a": "Du kan åbne et issue i projektets GitHub-arkiv eller kontakte udvikleren via contact@liniabus.eu",
+    "faq_report_a": "Du kan åbne et issue i projektets {github}-arkiv eller kontakte udvikleren via contact@liniabus.eu",
     "mobile_bubble_empty": "Start med at tilføje en by",
     "mobile_bubble_stops": "{count} stop",
     "btn_reopen_connected": "Vis forbundne byer",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Se på GitHub",
+    "github_hover_prefix": "Se projektet på"
   },
   "et": {
     "welcome": "Tere tulemast",
@@ -1163,11 +1185,13 @@
     "faq_update_q": "Kui sageli andmeid uuendatakse?",
     "faq_update_a": "GTFS andmeid uuendatakse igaku esimesel päeval.",
     "faq_report_q": "Kuidas saan teatada veast või esitada parandusettepanekut?",
-    "faq_report_a": "Võite avada projekti GitHubi hoidlas issue või võtta arendajaga ühendust aadressil contact@liniabus.eu",
+    "faq_report_a": "Võite avada projekti {github}i hoidlas issue või võtta arendajaga ühendust aadressil contact@liniabus.eu",
     "mobile_bubble_empty": "Alusta linna lisamisega",
     "mobile_bubble_stops": "{count} peatust",
     "btn_reopen_connected": "Näita ühendatud linnu",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Vaata GitHubis",
+    "github_hover_prefix": "Vaata projekti"
   },
   "fi": {
     "welcome": "Tervetuloa",
@@ -1260,11 +1284,13 @@
     "faq_update_q": "Kuinka usein tietoja päivitetään?",
     "faq_update_a": "GTFS-tiedot päivitetään kuukauden ensimmäisenä päivänä.",
     "faq_report_q": "Miten voin ilmoittaa virheestä tai ehdottaa parannusta?",
-    "faq_report_a": "Voit avata issuuen projektin GitHub-tietovarastossa tai ottaa yhteyttä kehittäjään osoitteella contact@liniabus.eu",
+    "faq_report_a": "Voit avata issuuen projektin {github}-tietovarastossa tai ottaa yhteyttä kehittäjään osoitteella contact@liniabus.eu",
     "mobile_bubble_empty": "Aloita lisäämällä kaupunki",
     "mobile_bubble_stops": "{count} pysäkkiä",
     "btn_reopen_connected": "Näytä yhdistetyt kaupungit",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Katso GitHubissa",
+    "github_hover_prefix": "Katso projekti"
   },
   "el": {
     "welcome": "Καλώς ήρθατε στο",
@@ -1357,11 +1383,13 @@
     "faq_update_q": "Πόσο συχνά ενημερώνονται τα δεδομένα;",
     "faq_update_a": "Τα δεδομένα GTFS ενημερώνονται την πρώτη ημέρα κάθε μήνα.",
     "faq_report_q": "Πώς μπορώ να αναφέρω ένα σφάλμα ή να προτείνω μια βελτίωση;",
-    "faq_report_a": "Μπορείτε να ανοίξετε ένα issue στο GitHub repository του έργου ή να επικοινωνήσετε με τον προγραμματιστή μέσω contact@liniabus.eu",
+    "faq_report_a": "Μπορείτε να ανοίξετε ένα issue στο {github} repository του έργου ή να επικοινωνήσετε με τον προγραμματιστή μέσω contact@liniabus.eu",
     "mobile_bubble_empty": "Ξεκινήστε προσθέτοντας μια πόλη",
     "mobile_bubble_stops": "{count} στάσεις",
     "btn_reopen_connected": "Εμφάνιση συνδεδεμένων πόλεων",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Δείτε στο GitHub",
+    "github_hover_prefix": "Δείτε το έργο στο"
   },
   "hu": {
     "welcome": "Üdvözöljük a",
@@ -1454,11 +1482,13 @@
     "faq_update_q": "Milyen gyakran frissítik az adatokat?",
     "faq_update_a": "A GTFS adatokat minden hónap első napján frissítik.",
     "faq_report_q": "Hogyan jelenthetek hibát vagy tehetek javaslatot?",
-    "faq_report_a": "Nyithat egy issue-t a projekt GitHub tárhelyén, vagy kapcsolatba léphet a fejlesztővel a contact@liniabus.eu címen",
+    "faq_report_a": "Nyithat egy issue-t a projekt {github} tárhelyén, vagy kapcsolatba léphet a fejlesztővel a contact@liniabus.eu címen",
     "mobile_bubble_empty": "Kezdje egy város hozzáadásával",
     "mobile_bubble_stops": "{count} megálló",
     "btn_reopen_connected": "Kapcsolódó városok mutatása",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Megtekintés a GitHubon",
+    "github_hover_prefix": "Projekt megtekintése a"
   },
   "hi": {
     "welcome": "स्वागत है",
@@ -1551,11 +1581,13 @@
     "faq_update_q": "डेटा कितनी बार अपडेट किया जाता है?",
     "faq_update_a": "GTFS डेटा हर महीने के पहले दिन अपडेट किया जाता है।",
     "faq_report_q": "मैं त्रुटि की रिपोर्ट कैसे करूं या सुधार का सुझाव कैसे दूं?",
-    "faq_report_a": "आप प्रोजेक्ट के GitHub रिपॉजिटरी में एक issue खोल सकते हैं या contact@liniabus.eu पर डेवलपर से संपर्क कर सकते हैं।",
+    "faq_report_a": "आप प्रोजेक्ट के {github} रिपॉजिटरी में एक issue खोल सकते हैं या contact@liniabus.eu पर डेवलपर से संपर्क कर सकते हैं।",
     "mobile_bubble_empty": "एक शहर जोड़कर शुरू करें",
     "mobile_bubble_stops": "{count} स्टॉप",
     "btn_reopen_connected": "जुड़े हुए शहर दिखाएं",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "GitHub पर देखें",
+    "github_hover_prefix": "प्रोजेक्ट देखें"
   },
   "lv": {
     "welcome": "Laipni lūdzam",
@@ -1648,11 +1680,13 @@
     "faq_update_q": "Cik bieži dati tiek atjaunināti?",
     "faq_update_a": "GTFS dati tiek atjaunināti katra mēneša pirmajā dienā.",
     "faq_report_q": "Kā es varu ziņot par kļūdu vai ierosināt uzlabojumu?",
-    "faq_report_a": "Jūs varat atvērt issue projekta GitHub repozitorijā vai sazināties ar izstrādātāju, izmantojot contact@liniabus.eu",
+    "faq_report_a": "Jūs varat atvērt issue projekta {github} repozitorijā vai sazināties ar izstrādātāju, izmantojot contact@liniabus.eu",
     "mobile_bubble_empty": "Sāciet pievienojot pilsētu",
     "mobile_bubble_stops": "{count} pieturas",
     "btn_reopen_connected": "Parādīt savienotās pilsētas",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Skatīt GitHub",
+    "github_hover_prefix": "Skatīt projektu"
   },
   "lt": {
     "welcome": "Sveiki atvykę į",
@@ -1745,11 +1779,13 @@
     "faq_update_q": "Kaip dažnai atnaujinami duomenys?",
     "faq_update_a": "GTFS duomenys atnaujinami kiekvieno mėnesio pirmąją dieną.",
     "faq_report_q": "Kaip galiu pranešti apie klaidą arba pasiūlyti patobulinimą?",
-    "faq_report_a": "Galite atidaryti issue projekto GitHub saugykloje arba susisiekti su kūrėju el. paštu contact@liniabus.eu",
+    "faq_report_a": "Galite atidaryti issue projekto {github} saugykloje arba susisiekti su kūrėju el. paštu contact@liniabus.eu",
     "mobile_bubble_empty": "Pradėkite pridėdami miestą",
     "mobile_bubble_stops": "{count} stotelės",
     "btn_reopen_connected": "Rodyti susijusius miestus",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Žiūrėti GitHub",
+    "github_hover_prefix": "Žiūrėti projektą"
   },
   "lb": {
     "welcome": "Wëllkomm op",
@@ -1842,11 +1878,13 @@
     "faq_update_q": "Wéi dacks ginn d'Daten aktualiséiert?",
     "faq_update_a": "GTFS-Daten ginn deen éischten Dag vun all Mount aktualiséiert.",
     "faq_report_q": "Wéi kann ech e Feeler mellen oder eng Verbesserung virschloen?",
-    "faq_report_a": "Dir kann en Issue am GitHub-Repository vum Projet opmaachen oder den Entwéckler iwwer contact@liniabus.eu kontaktéieren.",
+    "faq_report_a": "Dir kann en Issue am {github}-Repository vum Projet opmaachen oder den Entwéckler iwwer contact@liniabus.eu kontaktéieren.",
     "mobile_bubble_empty": "Fänkt un mat derbäi vun enger Stad",
     "mobile_bubble_stops": "{count} Arrêten",
     "btn_reopen_connected": "Weist verbonne Stied",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Op GitHub gesinn",
+    "github_hover_prefix": "Projet op"
   },
   "mk": {
     "welcome": "Добредојдовте во",
@@ -1939,11 +1977,13 @@
     "faq_update_q": "Колку често се ажурираат податоците?",
     "faq_update_a": "GTFS податоците се ажурираат на првиот ден од секој месец.",
     "faq_report_q": "Како можам да пријавам грешка или да предложам подобрување?",
-    "faq_report_a": "Можете да отворите issue во GitHub складиштето на проектот или да го контактирате развивачот преку contact@liniabus.eu",
+    "faq_report_a": "Можете да отворите issue во {github} складиштето на проектот или да го контактирате развивачот преку contact@liniabus.eu",
     "mobile_bubble_empty": "Почнете со додавање на град",
     "mobile_bubble_stops": "{count} постојки",
     "btn_reopen_connected": "Прикажи поврзани градови",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Види на GitHub",
+    "github_hover_prefix": "Види го проектот на"
   },
   "ro": {
     "welcome": "Bun venit la",
@@ -2036,11 +2076,13 @@
     "faq_update_q": "Cât de des sunt actualizate datele?",
     "faq_update_a": "Datele GTFS sunt actualizate în prima zi a fiecărei luni.",
     "faq_report_q": "Cum pot raporta o eroare sau sugera o îmbunătățire?",
-    "faq_report_a": "Puteți deschide un issue în depozitul GitHub al proiectului sau puteți contacta dezvoltatorul prin contact@liniabus.eu",
+    "faq_report_a": "Puteți deschide un issue în depozitul {github} al proiectului sau puteți contacta dezvoltatorul prin contact@liniabus.eu",
     "mobile_bubble_empty": "Începeți prin adăugarea unui oraș",
     "mobile_bubble_stops": "{count} opriri",
     "btn_reopen_connected": "Afișează orașele conectate",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Vezi pe GitHub",
+    "github_hover_prefix": "Vezi proiectul pe"
   },
   "pl": {
     "welcome": "Witaj w",
@@ -2133,11 +2175,13 @@
     "faq_update_q": "Jak często aktualizowane są dane?",
     "faq_update_a": "Dane GTFS są aktualizowane pierwszego dnia każdego miesiąca.",
     "faq_report_q": "Jak mogę zgłosić błąd lub zasugerować ulepszenie?",
-    "faq_report_a": "Możesz otworzyć issue w repozytorium GitHub projektu lub skontaktować się z deweloperem przez contact@liniabus.eu",
+    "faq_report_a": "Możesz otworzyć issue w repozytorium {github} projektu lub skontaktować się z deweloperem przez contact@liniabus.eu",
     "mobile_bubble_empty": "Zacznij od dodania miasta",
     "mobile_bubble_stops": "{count} przystanków",
     "btn_reopen_connected": "Pokaż połączone miasta",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Zobacz na GitHubie",
+    "github_hover_prefix": "Zobacz projekt na"
   },
   "cs": {
     "welcome": "Vítejte v",
@@ -2230,11 +2274,13 @@
     "faq_update_q": "Jak často jsou data aktualizována?",
     "faq_update_a": "Data GTFS jsou aktualizována první den každého měsíce.",
     "faq_report_q": "Jak mohu nahlásit chybu nebo navrhnout vylepšení?",
-    "faq_report_a": "Můžete otevřít issue v repozitáři GitHub projektu nebo kontaktovat vývojáře prostřednictvím contact@liniabus.eu",
+    "faq_report_a": "Můžete otevřít issue v repozitáři {github} projektu nebo kontaktovat vývojáře prostřednictvím contact@liniabus.eu",
     "mobile_bubble_empty": "Začněte přidáním města",
     "mobile_bubble_stops": "{count} zastávek",
     "btn_reopen_connected": "Zobrazit spojená města",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Zobrazit na GitHubu",
+    "github_hover_prefix": "Zobrazit projekt na"
   },
   "sk": {
     "welcome": "Vitajte v",
@@ -2327,11 +2373,13 @@
     "faq_update_q": "Ako často sú údaje aktualizované?",
     "faq_update_a": "Údaje GTFS sú aktualizované prvý deň každého mesiaca.",
     "faq_report_q": "Ako môžem nahlásiť chybu alebo navrhnúť vylepšenie?",
-    "faq_report_a": "Môžete otvoriť issue v GitHub repozitári projektu alebo kontaktovať vývojára prostredníctvom contact@liniabus.eu",
+    "faq_report_a": "Môžete otvoriť issue v {github} repozitári projektu alebo kontaktovať vývojára prostredníctvom contact@liniabus.eu",
     "mobile_bubble_empty": "Začnite pridaním mesta",
     "mobile_bubble_stops": "{count} zastávok",
     "btn_reopen_connected": "Zobraziť spojené mestá",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Zobraziť na GitHubu",
+    "github_hover_prefix": "Zobraziť projekt na"
   },
   "sl": {
     "welcome": "Dobrodošli v",
@@ -2424,11 +2472,13 @@
     "faq_update_q": "Kako pogosto se podatki posodabljajo?",
     "faq_update_a": "Podatki GTFS se posodabljajo prvi dan vsakega meseca.",
     "faq_report_q": "Kako lahko prijavim napako ali predlagam izboljšavo?",
-    "faq_report_a": "Lahko odprete issue v repozitoriju GitHub projekta ali stopite v stik z razvijalcem prek contact@liniabus.eu",
+    "faq_report_a": "Lahko odprete issue v repozitoriju {github} projekta ali stopite v stik z razvijalcem prek contact@liniabus.eu",
     "mobile_bubble_empty": "Začnite z dodajanjem mesta",
     "mobile_bubble_stops": "{count} postaj",
     "btn_reopen_connected": "Pokaži povezana mesta",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Poglej na GitHubu",
+    "github_hover_prefix": "Poglej projekt na"
   },
   "sv": {
     "welcome": "Välkommen till",
@@ -2521,11 +2571,13 @@
     "faq_update_q": "Hur ofta uppdateras data?",
     "faq_update_a": "GTFS-data uppdateras den första dagen i varje månad.",
     "faq_report_q": "Hur kan jag rapportera ett fel eller föreslå en förbättring?",
-    "faq_report_a": "Du kan öppna ett issue i projektets GitHub-arkiv eller kontakta utvecklaren via contact@liniabus.eu",
+    "faq_report_a": "Du kan öppna ett issue i projektets {github}-arkiv eller kontakta utvecklaren via contact@liniabus.eu",
     "mobile_bubble_empty": "Börja med att lägga till en stad",
     "mobile_bubble_stops": "{count} stopp",
     "btn_reopen_connected": "Visa anslutna städer",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Visa på GitHub",
+    "github_hover_prefix": "Visa projektet på"
   },
   "tr": {
     "welcome": "Hoş geldiniz",
@@ -2618,11 +2670,13 @@
     "faq_update_q": "Veriler ne sıklıkla güncellenir?",
     "faq_update_a": "GTFS verileri her ayın ilk günü güncellenir.",
     "faq_report_q": "Hata nasıl bildirilir veya iyileştirme önerilir?",
-    "faq_report_a": "Projenin GitHub deposunda bir issue açabilir veya contact@liniabus.eu aracılığıyla geliştiriciyle iletişime geçebilirsiniz.",
+    "faq_report_a": "Projenin {github} deposunda bir issue açabilir veya contact@liniabus.eu aracılığıyla geliştiriciyle iletişime geçebilirsiniz.",
     "mobile_bubble_empty": "Bir şehir ekleyerek başlayın",
     "mobile_bubble_stops": "{count} durak",
     "btn_reopen_connected": "Bağlı şehirleri göster",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "GitHub'da gör",
+    "github_hover_prefix": "Projeyi şurada gör:"
   },
   "uk": {
     "welcome": "Ласкаво просимо до",
@@ -2715,11 +2769,13 @@
     "faq_update_q": "Як часто оновлюються дані?",
     "faq_update_a": "Дані GTFS оновлюються першого дня кожного місяця.",
     "faq_report_q": "Як я можу повідомити про помилку або запропонувати покращення?",
-    "faq_report_a": "Ви можете відкрити issue у репозиторії GitHub проекту або зв'язатися з розробником через contact@liniabus.eu",
+    "faq_report_a": "Ви можете відкрити issue у репозиторії {github} проекту або зв'язатися з розробником через contact@liniabus.eu",
     "mobile_bubble_empty": "Почніть із додавання міста",
     "mobile_bubble_stops": "{count} зупинок",
     "btn_reopen_connected": "Показати пов’язані міста",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Переглянути на GitHub",
+    "github_hover_prefix": "Переглянути проект на"
   },
   "ru": {
     "welcome": "Добро пожаловать в",
@@ -2812,11 +2868,13 @@
     "faq_update_q": "Как часто обновляются данные?",
     "faq_update_a": "Данные GTFS обновляются первого числа каждого месяца.",
     "faq_report_q": "Как сообщить об ошибке или предложить улучшение?",
-    "faq_report_a": "Вы можете открыть issue в репозитории GitHub проекта или связаться с разработчиком через contact@liniabus.eu",
+    "faq_report_a": "Вы можете открыть issue в репозитории {github} проекта или связаться с разработчиком через contact@liniabus.eu",
     "mobile_bubble_empty": "Начните с добавления города",
     "mobile_bubble_stops": "{count} остановок",
     "btn_reopen_connected": "Показать связанные города",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Посмотреть на GitHub",
+    "github_hover_prefix": "Посмотреть проект на"
   },
   "be": {
     "welcome": "Сардэчна запрашаем у",
@@ -2909,10 +2967,12 @@
     "faq_update_q": "Як часта абнаўляюцца даныя?",
     "faq_update_a": "Даныя GTFS абнаўляюцца першага дня кожнага месяца.",
     "faq_report_q": "Як паведаміць пра памылку або прапанаваць паляпшэнне?",
-    "faq_report_a": "Вы можаце адкрыць issue ў рэпазітарыі GitHub праекта або звязацца з распрацоўнікам праз contact@liniabus.eu",
+    "faq_report_a": "Вы можаце адкрыць issue ў рэпазітарыі {github} праекта або звязацца з распрацоўнікам праз contact@liniabus.eu",
     "mobile_bubble_empty": "Пачніце з дадання горада",
     "mobile_bubble_stops": "{count} прыпынкаў",
     "btn_reopen_connected": "Паказаць звязаныя гарады",
-    "btn_share": "Share"
+    "btn_share": "Share",
+    "view_on_github": "Паглядзець на GitHub",
+    "github_hover_prefix": "Паглядзець праект на"
   }
 }
