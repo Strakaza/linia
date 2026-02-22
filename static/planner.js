@@ -596,6 +596,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 2500);
     }
 
+    const ITINERARY_LOADED_TEXTS = {
+        fr: "Itinéraire chargé !", en: "Itinerary loaded!", de: "Route geladen!", es: "¡Itinerario cargado!",
+        pt: "Itinerário carregado!", nl: "Route geladen!", sq: "Itinerari u ngarkua!", ca: "Itinerari carregat!",
+        hr: "Ruta učitana!", bg: "Маршрутът е зареден!", da: "Rute indlæst!", et: "Marsruut laetud!",
+        fi: "Reitti ladattu!", el: "Η διαδρομή φορτώθηκε!", hu: "Útvonal betöltve!", hi: "मार्ग लोड हो गया!",
+        lv: "Maršruts ielādēts!", lt: "Maršrutas įkeltas!", lb: "Route gelueden!", mk: "Рутата е вчитана!",
+        ro: "Itinerar încărcat!", pl: "Trasa załadowana!", cs: "Trasa načtena!", sk: "Trasa načítaná!",
+        sl: "Pot naložena!", sv: "Rutt laddad!", tr: "Rota yüklendi!", uk: "Маршрут завантажено!",
+        ru: "Маршрут загружен!", be: "Маршрут загружаны!"
+    };
+
     if (shareBtn) {
         shareBtn.addEventListener('click', () => {
             if (itinerary.length === 0) {
@@ -607,6 +618,7 @@ document.addEventListener('DOMContentLoaded', function () {
             url.searchParams.set('route', stopIds);
             const shareUrl = url.toString();
             const shareTitle = 'Linia — ' + itinerary.map(s => s.stop_name).join(' → ');
+
             function doCopy(text) {
                 const ta = document.createElement('textarea');
                 ta.value = text;
@@ -614,21 +626,29 @@ document.addEventListener('DOMContentLoaded', function () {
                 ta.style.opacity = '0';
                 document.body.appendChild(ta);
                 ta.select();
-                document.execCommand('copy');
+                try {
+                    document.execCommand('copy');
+                    showConfettiNotification();
+                } catch (err) {
+                    console.error('Fallback copy failed', err);
+                }
                 document.body.removeChild(ta);
             }
-            if (navigator.share) {
-                navigator.share({ title: shareTitle, text: shareTitle, url: shareUrl }).catch(() => { });
-            } else if (navigator.clipboard && navigator.clipboard.writeText) {
+
+            // We prioritize clipboard + notification for immediate feedback
+            if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(shareUrl).then(() => {
                     showConfettiNotification();
                 }).catch(() => {
                     doCopy(shareUrl);
-                    showConfettiNotification();
                 });
             } else {
                 doCopy(shareUrl);
-                showConfettiNotification();
+            }
+
+            // Silent fallback for native share sheet (mobile)
+            if (navigator.share) {
+                navigator.share({ title: shareTitle, text: shareTitle, url: shareUrl }).catch(() => { });
             }
         });
     }
@@ -927,7 +947,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 searchInput.placeholder = i18n.t('search_add_step') || 'Ajouter une étape...';
                 const lastStop = itinerary[itinerary.length - 1];
                 await loadConnectedCities(lastStop.stop_id, lastStop.stop_name);
-                showToast(i18n.t('toast_route_loaded') || 'Itinéraire chargé !', 'success');
+                const lang = i18n.currentLang || 'fr';
+                const msg = ITINERARY_LOADED_TEXTS[lang] || ITINERARY_LOADED_TEXTS['fr'];
+                showToast(msg, 'success');
             }
         } catch (err) {
             console.error('Error loading shared route:', err);

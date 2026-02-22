@@ -96,7 +96,8 @@
     "btn_reopen_connected": "Afficher les villes connectées",
     "btn_share": "Partager",
     "view_on_github": "Voir sur GitHub",
-    "github_hover_prefix": "Voir le projet sur"
+    "github_hover_prefix": "Voir le projet sur",
+    "toast_route_loaded": "Itinéraire chargé !"
   },
   "en": {
     "welcome": "Welcome to",
@@ -195,7 +196,8 @@
     "btn_reopen_connected": "Show connected cities",
     "btn_share": "Share",
     "view_on_github": "View on GitHub",
-    "github_hover_prefix": "View the project on"
+    "github_hover_prefix": "View the project on",
+    "toast_route_loaded": "Itinerary loaded!"
   },
   "de": {
     "welcome": "Willkommen bei",
@@ -294,7 +296,8 @@
     "btn_reopen_connected": "Verbundene Städte anzeigen",
     "btn_share": "Teilen",
     "view_on_github": "Auf GitHub ansehen",
-    "github_hover_prefix": "Projekt auf"
+    "github_hover_prefix": "Projekt auf",
+    "toast_route_loaded": "Route geladen!"
   },
   "es": {
     "welcome": "Bienvenido a",
@@ -393,7 +396,8 @@
     "btn_reopen_connected": "Mostrar ciudades conectadas",
     "btn_share": "Compartir",
     "view_on_github": "Ver en GitHub",
-    "github_hover_prefix": "Ver el proyecto en"
+    "github_hover_prefix": "Ver el proyecto en",
+    "toast_route_loaded": "¡Itinerario cargado!"
   },
   "pt": {
     "welcome": "Bem-vindo a",
@@ -492,7 +496,8 @@
     "btn_reopen_connected": "Mostrar cidades conectadas",
     "btn_share": "Partilhar",
     "view_on_github": "Ver no GitHub",
-    "github_hover_prefix": "Ver o projeto no"
+    "github_hover_prefix": "Ver o projeto no",
+    "toast_route_loaded": "Itinerário carregado!"
   },
   "nl": {
     "welcome": "Welkom bij",
@@ -591,7 +596,8 @@
     "btn_reopen_connected": "Toon verbonden steden",
     "btn_share": "Share",
     "view_on_github": "Bekijk op GitHub",
-    "github_hover_prefix": "Project op"
+    "github_hover_prefix": "Project op",
+    "toast_route_loaded": "Route geladen!"
   },
   "sq": {
     "welcome": "Mirësevini në",
@@ -690,7 +696,8 @@
     "btn_reopen_connected": "Trego qytetet e lidhura",
     "btn_share": "Share",
     "view_on_github": "Shiko në GitHub",
-    "github_hover_prefix": "Shih projektin në"
+    "github_hover_prefix": "Shih projektin në",
+    "toast_route_loaded": "Itinerari u ngarkua!"
   },
   "ca": {
     "welcome": "Benvinguts a",
@@ -792,7 +799,8 @@
     "btn_reopen_connected": "Mostra les ciutats connectades",
     "btn_share": "Share",
     "view_on_github": "Veure a GitHub",
-    "github_hover_prefix": "Veure el projecte a"
+    "github_hover_prefix": "Veure el projecte a",
+    "toast_route_loaded": "Itinerari carregat!"
   },
   "hr": {
     "welcome": "Dobrodošli u",
@@ -894,7 +902,8 @@
     "btn_reopen_connected": "Prikaži povezane gradove",
     "btn_share": "Share",
     "view_on_github": "Pogledaj na GitHubu",
-    "github_hover_prefix": "Pogledaj projekt na"
+    "github_hover_prefix": "Pogledaj projekt na",
+    "toast_route_loaded": "Ruta učitana!"
   },
   "bg": {
     "welcome": "Добре дошли в",
@@ -993,7 +1002,8 @@
     "btn_reopen_connected": "Покажи свързани градове",
     "btn_share": "Share",
     "view_on_github": "Вижте в GitHub",
-    "github_hover_prefix": "Вижте проекта в"
+    "github_hover_prefix": "Вижте проекта в",
+    "toast_route_loaded": "Маршрутът е зареден!"
   },
   "da": {
     "welcome": "Velkommen til",
@@ -1092,7 +1102,8 @@
     "btn_reopen_connected": "Vis forbundne byer",
     "btn_share": "Share",
     "view_on_github": "Se på GitHub",
-    "github_hover_prefix": "Se projektet på"
+    "github_hover_prefix": "Se projektet på",
+    "toast_route_loaded": "Rute indlæst!"
   },
   "et": {
     "welcome": "Tere tulemast",
@@ -1191,7 +1202,8 @@
     "btn_reopen_connected": "Näita ühendatud linnu",
     "btn_share": "Share",
     "view_on_github": "Vaata GitHubis",
-    "github_hover_prefix": "Vaata projekti"
+    "github_hover_prefix": "Vaata projekti",
+    "toast_route_loaded": "Marsruut laetud!"
   },
   "fi": {
     "welcome": "Tervetuloa",
@@ -1290,7 +1302,8 @@
     "btn_reopen_connected": "Näytä yhdistetyt kaupungit",
     "btn_share": "Share",
     "view_on_github": "Katso GitHubissa",
-    "github_hover_prefix": "Katso projekti"
+    "github_hover_prefix": "Katso projekti",
+    "toast_route_loaded": "Reitti ladattu!"
   },
   "el": {
     "welcome": "Καλώς ήρθατε στο",
@@ -1389,7 +1402,8 @@
     "btn_reopen_connected": "Εμφάνιση συνδεδεμένων πόλεων",
     "btn_share": "Share",
     "view_on_github": "Δείτε στο GitHub",
-    "github_hover_prefix": "Δείτε το έργο στο"
+    "github_hover_prefix": "Δείτε το έργο στο",
+    "toast_route_loaded": "Η διαδρομή φορτώθηκε!"
   },
   "hu": {
     "welcome": "Üdvözöljük a",
@@ -1488,7 +1502,8 @@
     "btn_reopen_connected": "Kapcsolódó városok mutatása",
     "btn_share": "Share",
     "view_on_github": "Megtekintés a GitHubon",
-    "github_hover_prefix": "Projekt megtekintése a"
+    "github_hover_prefix": "Projekt megtekintése a",
+    "toast_route_loaded": "Útvonal betöltve!"
   },
   "hi": {
     "welcome": "स्वागत है",
@@ -1587,7 +1602,8 @@
     "btn_reopen_connected": "जुड़े हुए शहर दिखाएं",
     "btn_share": "Share",
     "view_on_github": "GitHub पर देखें",
-    "github_hover_prefix": "प्रोजेक्ट देखें"
+    "github_hover_prefix": "प्रोजेक्ट देखें",
+    "toast_route_loaded": "मार्ग लोड हो गया!"
   },
   "lv": {
     "welcome": "Laipni lūdzam",
@@ -1686,7 +1702,8 @@
     "btn_reopen_connected": "Parādīt savienotās pilsētas",
     "btn_share": "Share",
     "view_on_github": "Skatīt GitHub",
-    "github_hover_prefix": "Skatīt projektu"
+    "github_hover_prefix": "Skatīt projektu",
+    "toast_route_loaded": "Maršruts ielādēts!"
   },
   "lt": {
     "welcome": "Sveiki atvykę į",
@@ -1785,7 +1802,8 @@
     "btn_reopen_connected": "Rodyti susijusius miestus",
     "btn_share": "Share",
     "view_on_github": "Žiūrėti GitHub",
-    "github_hover_prefix": "Žiūrėti projektą"
+    "github_hover_prefix": "Žiūrėti projektą",
+    "toast_route_loaded": "Maršrutas įkeltas!"
   },
   "lb": {
     "welcome": "Wëllkomm op",
@@ -1884,7 +1902,8 @@
     "btn_reopen_connected": "Weist verbonne Stied",
     "btn_share": "Share",
     "view_on_github": "Op GitHub gesinn",
-    "github_hover_prefix": "Projet op"
+    "github_hover_prefix": "Projet op",
+    "toast_route_loaded": "Route gelueden!"
   },
   "mk": {
     "welcome": "Добредојдовте во",
@@ -1983,7 +2002,8 @@
     "btn_reopen_connected": "Прикажи поврзани градови",
     "btn_share": "Share",
     "view_on_github": "Види на GitHub",
-    "github_hover_prefix": "Види го проектот на"
+    "github_hover_prefix": "Види го проектот на",
+    "toast_route_loaded": "Рутата е вчитана!"
   },
   "ro": {
     "welcome": "Bun venit la",
@@ -2082,7 +2102,8 @@
     "btn_reopen_connected": "Afișează orașele conectate",
     "btn_share": "Share",
     "view_on_github": "Vezi pe GitHub",
-    "github_hover_prefix": "Vezi proiectul pe"
+    "github_hover_prefix": "Vezi proiectul pe",
+    "toast_route_loaded": "Itinerar încărcat!"
   },
   "pl": {
     "welcome": "Witaj w",
@@ -2181,7 +2202,8 @@
     "btn_reopen_connected": "Pokaż połączone miasta",
     "btn_share": "Share",
     "view_on_github": "Zobacz na GitHubie",
-    "github_hover_prefix": "Zobacz projekt na"
+    "github_hover_prefix": "Zobacz projekt na",
+    "toast_route_loaded": "Trasa załadowana!"
   },
   "cs": {
     "welcome": "Vítejte v",
@@ -2280,7 +2302,8 @@
     "btn_reopen_connected": "Zobrazit spojená města",
     "btn_share": "Share",
     "view_on_github": "Zobrazit na GitHubu",
-    "github_hover_prefix": "Zobrazit projekt na"
+    "github_hover_prefix": "Zobrazit projekt na",
+    "toast_route_loaded": "Trasa načtena!"
   },
   "sk": {
     "welcome": "Vitajte v",
@@ -2379,7 +2402,8 @@
     "btn_reopen_connected": "Zobraziť spojené mestá",
     "btn_share": "Share",
     "view_on_github": "Zobraziť na GitHubu",
-    "github_hover_prefix": "Zobraziť projekt na"
+    "github_hover_prefix": "Zobraziť projekt na",
+    "toast_route_loaded": "Trasa načítaná!"
   },
   "sl": {
     "welcome": "Dobrodošli v",
@@ -2478,7 +2502,8 @@
     "btn_reopen_connected": "Pokaži povezana mesta",
     "btn_share": "Share",
     "view_on_github": "Poglej na GitHubu",
-    "github_hover_prefix": "Poglej projekt na"
+    "github_hover_prefix": "Poglej projekt na",
+    "toast_route_loaded": "Pot naložena!"
   },
   "sv": {
     "welcome": "Välkommen till",
@@ -2577,7 +2602,8 @@
     "btn_reopen_connected": "Visa anslutna städer",
     "btn_share": "Share",
     "view_on_github": "Visa på GitHub",
-    "github_hover_prefix": "Visa projektet på"
+    "github_hover_prefix": "Visa projektet på",
+    "toast_route_loaded": "Rutt laddad!"
   },
   "tr": {
     "welcome": "Hoş geldiniz",
@@ -2676,7 +2702,8 @@
     "btn_reopen_connected": "Bağlı şehirleri göster",
     "btn_share": "Share",
     "view_on_github": "GitHub'da gör",
-    "github_hover_prefix": "Projeyi şurada gör:"
+    "github_hover_prefix": "Projeyi şurada gör:",
+    "toast_route_loaded": "Rota yüklendi!"
   },
   "uk": {
     "welcome": "Ласкаво просимо до",
@@ -2775,7 +2802,8 @@
     "btn_reopen_connected": "Показати пов’язані міста",
     "btn_share": "Share",
     "view_on_github": "Переглянути на GitHub",
-    "github_hover_prefix": "Переглянути проект на"
+    "github_hover_prefix": "Переглянути проект на",
+    "toast_route_loaded": "Маршрут завантажено!"
   },
   "ru": {
     "welcome": "Добро пожаловать в",
@@ -2874,7 +2902,8 @@
     "btn_reopen_connected": "Показать связанные города",
     "btn_share": "Share",
     "view_on_github": "Посмотреть на GitHub",
-    "github_hover_prefix": "Посмотреть проект на"
+    "github_hover_prefix": "Посмотреть проект на",
+    "toast_route_loaded": "Маршрут загружен!"
   },
   "be": {
     "welcome": "Сардэчна запрашаем у",
@@ -2973,6 +3002,7 @@
     "btn_reopen_connected": "Паказаць звязаныя гарады",
     "btn_share": "Share",
     "view_on_github": "Паглядзець на GitHub",
-    "github_hover_prefix": "Паглядзець праект на"
+    "github_hover_prefix": "Паглядзець праект на",
+    "toast_route_loaded": "Маршрут загружаны!"
   }
 }
