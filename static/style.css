@@ -343,6 +343,28 @@ a:hover {
     display: block;
 }
 
+.landing-search-info {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 20px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    opacity: 0.8;
+    animation: fadeIn 0.8s ease-out 0.3s both;
+    text-align: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.landing-search-info svg {
+    flex-shrink: 0;
+    color: var(--linia-teal);
+}
+
 .suggestion-item {
     padding: 12px 20px;
     cursor: pointer;
