@@ -239,11 +239,13 @@ def get_stop_info_and_routes(stop_id_input):
                     t.route_id,
                     COALESCE(t.trip_headsign, '') as trip_headsign,
                     COALESCE(r.route_long_name, '') as route_long_name,
-                    COALESCE(r.route_short_name, '') as route_short_name
+                    COALESCE(r.route_short_name, '') as route_short_name,
+                    (SELECT COUNT(*) FROM stop_times WHERE trip_id = t.trip_id) as stop_count
                 FROM stop_times st
                 JOIN trips t ON st.trip_id = t.trip_id
                 JOIN routes r ON t.route_id = r.route_id
                 WHERE st.stop_id = ?
+                ORDER BY stop_count DESC
             """
             routes_cursor = conn.execute(query, (s_id,))
             passing_routes = []
