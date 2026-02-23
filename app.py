@@ -52,6 +52,14 @@ app.logger.setLevel(log_level)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1)
 
 @app.before_request
+def handle_redirection():
+    # Redirection SEO du domaine Render vers le domaine principal
+    host = request.host
+    if host and "onrender.com" in host:
+        new_url = request.url.replace(host, "liniabus.eu")
+        return redirect(new_url, code=301)
+
+@app.before_request
 def log_request_info():
     app.logger.info(f"Requête reçue: [ANONYME] [{request.method}] {request.url}")
 
