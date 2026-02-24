@@ -98,7 +98,14 @@
     "btn_share": "Partager",
     "view_on_github": "Voir sur GitHub",
     "github_hover_prefix": "Voir le projet sur",
-    "toast_route_loaded": "Itinéraire chargé !"
+    "toast_route_loaded": "Itinéraire chargé !",
+    "err_404_status": "Connexion Perdue",
+    "err_404_title": "ERREUR 404",
+    "err_404_not_found": "Fichier introuvable",
+    "err_404_dragonfly": "La libellule vit !",
+    "err_404_back_home": "RETOUR_ACCUEIL",
+    "err_404_plan_itinerary": "PLANIFIER_TRAJET",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "en": {
     "welcome": "Welcome to",
@@ -199,7 +206,14 @@
     "btn_share": "Share",
     "view_on_github": "View on GitHub",
     "github_hover_prefix": "View the project on",
-    "toast_route_loaded": "Itinerary loaded!"
+    "toast_route_loaded": "Itinerary loaded!",
+    "err_404_status": "Connection Lost",
+    "err_404_title": "ERROR 404",
+    "err_404_not_found": "File not found",
+    "err_404_dragonfly": "The dragonfly lives !",
+    "err_404_back_home": "BACK_HOME",
+    "err_404_plan_itinerary": "PLAN_ITINERARY",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "de": {
     "welcome": "Willkommen bei",
@@ -300,7 +314,14 @@
     "btn_share": "Teilen",
     "view_on_github": "Auf GitHub ansehen",
     "github_hover_prefix": "Projekt auf",
-    "toast_route_loaded": "Route geladen!"
+    "toast_route_loaded": "Route geladen!",
+    "err_404_status": "Verbindung verloren",
+    "err_404_title": "FEHLER 404",
+    "err_404_not_found": "Datei nicht gefunden",
+    "err_404_dragonfly": "Die Libelle lebt !",
+    "err_404_back_home": "ZURÜCK_ZUR_STARTSEITE",
+    "err_404_plan_itinerary": "REISEPLAN_ERSTELLEN",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "es": {
     "welcome": "Bienvenido a",
@@ -401,7 +422,14 @@
     "btn_share": "Compartir",
     "view_on_github": "Ver en GitHub",
     "github_hover_prefix": "Ver el proyecto en",
-    "toast_route_loaded": "¡Itinerario cargado!"
+    "toast_route_loaded": "¡Itinerario cargado!",
+    "err_404_status": "Conexión perdida",
+    "err_404_title": "ERROR 404",
+    "err_404_not_found": "Archivo no encontrado",
+    "err_404_dragonfly": "¡La libélula vive !",
+    "err_404_back_home": "VOLVER_A_INICIO",
+    "err_404_plan_itinerary": "PLANIFICAR_TRAYECTO",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "pt": {
     "welcome": "Bem-vindo a",
@@ -502,7 +530,14 @@
     "btn_share": "Partilhar",
     "view_on_github": "Ver no GitHub",
     "github_hover_prefix": "Ver o projeto no",
-    "toast_route_loaded": "Itinerário carregado!"
+    "toast_route_loaded": "Itinerário carregado!",
+    "err_404_status": "Conexão perdida",
+    "err_404_title": "ERRO 404",
+    "err_404_not_found": "Arquivo não encontrado",
+    "err_404_dragonfly": "A libélula vive !",
+    "err_404_back_home": "VOLTAR_AO_INICIO",
+    "err_404_plan_itinerary": "PLANEJAR_TRAJETO",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "nl": {
     "welcome": "Welkom bij",
@@ -603,7 +638,14 @@
     "btn_share": "Share",
     "view_on_github": "Bekijk op GitHub",
     "github_hover_prefix": "Project op",
-    "toast_route_loaded": "Route geladen!"
+    "toast_route_loaded": "Route geladen!",
+    "err_404_status": "Verbinding verbroken",
+    "err_404_title": "FOUT 404",
+    "err_404_not_found": "Bestand niet gevonden",
+    "err_404_dragonfly": "De libel leeft !",
+    "err_404_back_home": "TERUG_NAAR_HOME",
+    "err_404_plan_itinerary": "ROUTE_PLANNEN",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "sq": {
     "welcome": "Mirësevini në",
@@ -704,7 +746,14 @@
     "btn_share": "Share",
     "view_on_github": "Shiko në GitHub",
     "github_hover_prefix": "Shih projektin në",
-    "toast_route_loaded": "Itinerari u ngarkua!"
+    "toast_route_loaded": "Itinerari u ngarkua!",
+    "err_404_status": "Lidhja u humb",
+    "err_404_title": "GABIM 404",
+    "err_404_not_found": "Skedari nuk u gjet",
+    "err_404_dragonfly": "Pilivesa jeton !",
+    "err_404_back_home": "KTHEHU_TE_FAQJA_KRYESORE",
+    "err_404_plan_itinerary": "PLANIFIKO_ITINERARIN",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "ca": {
     "welcome": "Benvinguts a",
@@ -808,7 +857,14 @@
     "btn_share": "Share",
     "view_on_github": "Veure a GitHub",
     "github_hover_prefix": "Veure el projecte a",
-    "toast_route_loaded": "Itinerari carregat!"
+    "toast_route_loaded": "Itinerari carregat!",
+    "err_404_status": "Connexió perduda",
+    "err_404_title": "ERROR 404",
+    "err_404_not_found": "Fitxer no trobat",
+    "err_404_dragonfly": "La libèl·lula viu !",
+    "err_404_back_home": "TORNAR_A_L_INICI",
+    "err_404_plan_itinerary": "PLANIFICAR_TRAJECTE",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "hr": {
     "welcome": "Dobrodošli u",
@@ -912,7 +968,14 @@
     "btn_share": "Share",
     "view_on_github": "Pogledaj na GitHubu",
     "github_hover_prefix": "Pogledaj projekt na",
-    "toast_route_loaded": "Ruta učitana!"
+    "toast_route_loaded": "Ruta učitana!",
+    "err_404_status": "Veza izgubljena",
+    "err_404_title": "GREŠKA 404",
+    "err_404_not_found": "Datoteka nije pronađena",
+    "err_404_dragonfly": "Vilin konjic živi !",
+    "err_404_back_home": "POVRATAK_NA_POČETNU",
+    "err_404_plan_itinerary": "PLANIRAJ_PUT",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "bg": {
     "welcome": "Добре дошли в",
@@ -1013,7 +1076,14 @@
     "btn_share": "Share",
     "view_on_github": "Вижте в GitHub",
     "github_hover_prefix": "Вижте проекта в",
-    "toast_route_loaded": "Маршрутът е зареден!"
+    "toast_route_loaded": "Маршрутът е зареден!",
+    "err_404_status": "Връзката е загубена",
+    "err_404_title": "ГРЕШКА 404",
+    "err_404_not_found": "Файлът не е намерен",
+    "err_404_dragonfly": "Водното конче живее !",
+    "err_404_back_home": "ОБРАТНО_КЪМ_НАЧАЛОТО",
+    "err_404_plan_itinerary": "ПЛАНИРАНЕ_НА_МАРШРУТ",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "da": {
     "welcome": "Velkommen til",
@@ -1114,7 +1184,14 @@
     "btn_share": "Share",
     "view_on_github": "Se på GitHub",
     "github_hover_prefix": "Se projektet på",
-    "toast_route_loaded": "Rute indlæst!"
+    "toast_route_loaded": "Rute indlæst!",
+    "err_404_status": "Forbindelse afbrudt",
+    "err_404_title": "FEJL 404",
+    "err_404_not_found": "Fil ikke fundet",
+    "err_404_dragonfly": "Guldsmeden lever !",
+    "err_404_back_home": "TILBAGE_TIL_START",
+    "err_404_plan_itinerary": "PLANLÆG_RUTE",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "et": {
     "welcome": "Tere tulemast",
@@ -1215,7 +1292,14 @@
     "btn_share": "Share",
     "view_on_github": "Vaata GitHubis",
     "github_hover_prefix": "Vaata projekti",
-    "toast_route_loaded": "Marsruut laetud!"
+    "toast_route_loaded": "Marsruut laetud!",
+    "err_404_status": "Ühendus katkenud",
+    "err_404_title": "VIGA 404",
+    "err_404_not_found": "Faili ei leitud",
+    "err_404_dragonfly": "Kiil elab !",
+    "err_404_back_home": "TAGASI_AVALEHELE",
+    "err_404_plan_itinerary": "PLAA_MARSRUUT",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "fi": {
     "welcome": "Tervetuloa",
@@ -1316,7 +1400,14 @@
     "btn_share": "Share",
     "view_on_github": "Katso GitHubissa",
     "github_hover_prefix": "Katso projekti",
-    "toast_route_loaded": "Reitti ladattu!"
+    "toast_route_loaded": "Reitti ladattu!",
+    "err_404_status": "Yhteys katkesi",
+    "err_404_title": "VIRHE 404",
+    "err_404_not_found": "Tiedostoa ei löytynyt",
+    "err_404_dragonfly": "Sudenkorento elää !",
+    "err_404_back_home": "PALAA_KOTIIN",
+    "err_404_plan_itinerary": "LUO_REITTI",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "el": {
     "welcome": "Καλώς ήρθατε στο",
@@ -1417,7 +1508,14 @@
     "btn_share": "Share",
     "view_on_github": "Δείτε στο GitHub",
     "github_hover_prefix": "Δείτε το έργο στο",
-    "toast_route_loaded": "Η διαδρομή φορτώθηκε!"
+    "toast_route_loaded": "Η διαδρομή φορτώθηκε!",
+    "err_404_status": "Η σύνδεση χάθηκε",
+    "err_404_title": "ΣΦΑΛΜΑ 404",
+    "err_404_not_found": "Το αρχείο δεν βρέθηκε",
+    "err_404_dragonfly": "Η λιβελούλα ζει !",
+    "err_404_back_home": "ΕΠΙΣΤΡΟΦΗ_ΣΤΗΝ_ΑΡΧΙΚΗ",
+    "err_404_plan_itinerary": "ΣΧΕΔΙΑΣΜΟΣ_ΔΙΑΔΡΟΜΗΣ",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "hu": {
     "welcome": "Üdvözöljük a",
@@ -1518,7 +1616,14 @@
     "btn_share": "Share",
     "view_on_github": "Megtekintés a GitHubon",
     "github_hover_prefix": "Projekt megtekintése a",
-    "toast_route_loaded": "Útvonal betöltve!"
+    "toast_route_loaded": "Útvonal betöltve!",
+    "err_404_status": "Kapcsolat megszakadt",
+    "err_404_title": "HIBA 404",
+    "err_404_not_found": "A fájl nem található",
+    "err_404_dragonfly": "A szitakötő él !",
+    "err_404_back_home": "VISSZA_A_KEZDŐLAPRA",
+    "err_404_plan_itinerary": "ÚTVONAL_TERVEZÉSE",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "hi": {
     "welcome": "स्वागत है",
@@ -1619,7 +1724,14 @@
     "btn_share": "Share",
     "view_on_github": "GitHub पर देखें",
     "github_hover_prefix": "प्रोजेक्ट देखें",
-    "toast_route_loaded": "मार्ग लोड हो गया!"
+    "toast_route_loaded": "मार्ग लोड हो गया!",
+    "err_404_status": "कनेक्शन टूट गया",
+    "err_404_title": "त्रुटि 404",
+    "err_404_not_found": "फ़ाइल नहीं मिली",
+    "err_404_dragonfly": "ड्रैगनफ्लाई जीवित है !",
+    "err_404_back_home": "होम_पर_वापस_जाएँ",
+    "err_404_plan_itinerary": "यात्रा_कार्यक्रम_बनाएँ",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "lv": {
     "welcome": "Laipni lūdzam",
@@ -1720,7 +1832,14 @@
     "btn_share": "Share",
     "view_on_github": "Skatīt GitHub",
     "github_hover_prefix": "Skatīt projektu",
-    "toast_route_loaded": "Maršruts ielādēts!"
+    "toast_route_loaded": "Maršruts ielādēts!",
+    "err_404_status": "Savienojums pazaudēts",
+    "err_404_title": "KĻŪDA 404",
+    "err_404_not_found": "Fails nav atrasts",
+    "err_404_dragonfly": "Spāre dzīvo !",
+    "err_404_back_home": "ATPAKAĻ_UZ_SĀKUMU",
+    "err_404_plan_itinerary": "PLĀNOT_MARŠRUTU",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "lt": {
     "welcome": "Sveiki atvykę į",
@@ -1821,7 +1940,14 @@
     "btn_share": "Share",
     "view_on_github": "Žiūrėti GitHub",
     "github_hover_prefix": "Žiūrėti projektą",
-    "toast_route_loaded": "Maršrutas įkeltas!"
+    "toast_route_loaded": "Maršrutas įkeltas!",
+    "err_404_status": "Ryšys nutrūko",
+    "err_404_title": "KLAIDA 404",
+    "err_404_not_found": "Failas nerastas",
+    "err_404_dragonfly": "Laumžirgis gyvas !",
+    "err_404_back_home": "GRĮŽTI_Į_PRADŽIĄ",
+    "err_404_plan_itinerary": "PLANUOTI_MARŠRUTĄ",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "lb": {
     "welcome": "Wëllkomm op",
@@ -1922,7 +2048,14 @@
     "btn_share": "Share",
     "view_on_github": "Op GitHub gesinn",
     "github_hover_prefix": "Projet op",
-    "toast_route_loaded": "Route gelueden!"
+    "toast_route_loaded": "Route gelueden!",
+    "err_404_status": "Verbindung verluer",
+    "err_404_title": "FEELER 404",
+    "err_404_not_found": "Datei net fonnt",
+    "err_404_dragonfly": "D'Libell lieft !",
+    "err_404_back_home": "ZURÉCK_OP_D_STARTSEIT",
+    "err_404_plan_itinerary": "REES_PLANEN",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "mk": {
     "welcome": "Добредојдовте во",
@@ -2023,7 +2156,14 @@
     "btn_share": "Share",
     "view_on_github": "Види на GitHub",
     "github_hover_prefix": "Види го проектот на",
-    "toast_route_loaded": "Рутата е вчитана!"
+    "toast_route_loaded": "Рутата е вчитана!",
+    "err_404_status": "Врската е изгубена",
+    "err_404_title": "ГРЕШКА 404",
+    "err_404_not_found": "Датотеката не е пронајдена",
+    "err_404_dragonfly": "Вилиното коњче живее !",
+    "err_404_back_home": "КТХЕХУ_НА_ПОЧЕТНАТА",
+    "err_404_plan_itinerary": "ПЛАНИРАЈ_ИТИНЕРАР",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "ro": {
     "welcome": "Bun venit la",
@@ -2124,7 +2264,14 @@
     "btn_share": "Share",
     "view_on_github": "Vezi pe GitHub",
     "github_hover_prefix": "Vezi proiectul pe",
-    "toast_route_loaded": "Itinerar încărcat!"
+    "toast_route_loaded": "Itinerar încărcat!",
+    "err_404_status": "Conexiune pierdută",
+    "err_404_title": "EROARE 404",
+    "err_404_not_found": "Fișierul nu a fost găsit",
+    "err_404_dragonfly": "Libelula trăiește !",
+    "err_404_back_home": "ÎNAPOI_LA_ACASĂ",
+    "err_404_plan_itinerary": "PLANIFICĂ_ITINERARIUL",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "pl": {
     "welcome": "Witaj w",
@@ -2225,7 +2372,14 @@
     "btn_share": "Share",
     "view_on_github": "Zobacz na GitHubie",
     "github_hover_prefix": "Zobacz projekt na",
-    "toast_route_loaded": "Trasa załadowana!"
+    "toast_route_loaded": "Trasa załadowana!",
+    "err_404_status": "Połączenie utracone",
+    "err_404_title": "BŁĄD 404",
+    "err_404_not_found": "Nie znaleziono pliku",
+    "err_404_dragonfly": "Ważka żyje !",
+    "err_404_back_home": "POWRÓT_DO_STRONY_GŁÓWNEJ",
+    "err_404_plan_itinerary": "PLANUJ_PODRÓŻ",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "cs": {
     "welcome": "Vítejte v",
@@ -2326,7 +2480,14 @@
     "btn_share": "Share",
     "view_on_github": "Zobrazit na GitHubu",
     "github_hover_prefix": "Zobrazit projekt na",
-    "toast_route_loaded": "Trasa načtena!"
+    "toast_route_loaded": "Trasa načtena!",
+    "err_404_status": "Spojení ztraceno",
+    "err_404_title": "CHYBA 404",
+    "err_404_not_found": "Soubor nenalezen",
+    "err_404_dragonfly": "Vážka žije !",
+    "err_404_back_home": "ZPĚT_NA_HLAVNÍ_STRANU",
+    "err_404_plan_itinerary": "PLÁNOVAT_TRASY",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "sk": {
     "welcome": "Vitajte v",
@@ -2427,7 +2588,14 @@
     "btn_share": "Share",
     "view_on_github": "Zobraziť na GitHubu",
     "github_hover_prefix": "Zobraziť projekt na",
-    "toast_route_loaded": "Trasa načítaná!"
+    "toast_route_loaded": "Trasa načítaná!",
+    "err_404_status": "Spojenie stratené",
+    "err_404_title": "CHYBA 404",
+    "err_404_not_found": "Súbor nenájdený",
+    "err_404_dragonfly": "Vážka žije !",
+    "err_404_back_home": "SPÄŤ_NA_HLAVNÚ_STRÁNKU",
+    "err_404_plan_itinerary": "PLÁNOVAŤ_TRASY",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "sl": {
     "welcome": "Dobrodošli v",
@@ -2528,7 +2696,14 @@
     "btn_share": "Share",
     "view_on_github": "Poglej na GitHubu",
     "github_hover_prefix": "Poglej projekt na",
-    "toast_route_loaded": "Pot naložena!"
+    "toast_route_loaded": "Pot naložena!",
+    "err_404_status": "Povezava izgubljena",
+    "err_404_title": "NAPAKA 404",
+    "err_404_not_found": "Datoteka ni bila najdena",
+    "err_404_dragonfly": "Kačji pastir živi !",
+    "err_404_back_home": "NAZAJ_NA_DOMAČO_STRAN",
+    "err_404_plan_itinerary": "NAČRRTUJ_POT",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "sv": {
     "welcome": "Välkommen till",
@@ -2629,7 +2804,14 @@
     "btn_share": "Share",
     "view_on_github": "Visa på GitHub",
     "github_hover_prefix": "Visa projektet på",
-    "toast_route_loaded": "Rutt laddad!"
+    "toast_route_loaded": "Rutt laddad!",
+    "err_404_status": "Anslutning förlorad",
+    "err_404_title": "FEL 404",
+    "err_404_not_found": "Filen hittades inte",
+    "err_404_dragonfly": "Trollsländan lever !",
+    "err_404_back_home": "TILLBAKA_TILL_START",
+    "err_404_plan_itinerary": "PLANERA_RUTT",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "tr": {
     "welcome": "Hoş geldiniz",
@@ -2730,7 +2912,14 @@
     "btn_share": "Share",
     "view_on_github": "GitHub'da gör",
     "github_hover_prefix": "Projeyi şurada gör:",
-    "toast_route_loaded": "Rota yüklendi!"
+    "toast_route_loaded": "Rota yüklendi!",
+    "err_404_status": "Bağlantı kesildi",
+    "err_404_title": "HATA 404",
+    "err_404_not_found": "Dosya bulunamadı",
+    "err_404_dragonfly": "Yusufçuk yaşıyor !",
+    "err_404_back_home": "ANA_SAYFAYA_DÖN",
+    "err_404_plan_itinerary": "GÜZERGAH_PLANLA",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "uk": {
     "welcome": "Ласкаво просимо до",
@@ -2831,7 +3020,14 @@
     "btn_share": "Share",
     "view_on_github": "Переглянути на GitHub",
     "github_hover_prefix": "Переглянути проект на",
-    "toast_route_loaded": "Маршрут завантажено!"
+    "toast_route_loaded": "Маршрут завантажено!",
+    "err_404_status": "З’єднання втрачено",
+    "err_404_title": "ПОМИЛКА 404",
+    "err_404_not_found": "Файл не знайдено",
+    "err_404_dragonfly": "Бабка живе !",
+    "err_404_back_home": "НАЗАД_ДО_ГОЛОВНОЇ",
+    "err_404_plan_itinerary": "ПЛАНУВАТИ_МАРШРУТ",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "ru": {
     "welcome": "Добро пожаловать в",
@@ -2932,7 +3128,14 @@
     "btn_share": "Share",
     "view_on_github": "Посмотреть на GitHub",
     "github_hover_prefix": "Посмотреть проект на",
-    "toast_route_loaded": "Маршрут загружен!"
+    "toast_route_loaded": "Маршрут загружен!",
+    "err_404_status": "Соединение потеряно",
+    "err_404_title": "ОШИБКА 404",
+    "err_404_not_found": "Файл не найден",
+    "err_404_dragonfly": "Стрекоза живет !",
+    "err_404_back_home": "НАЗАД_НА_ГЛАВНУЮ",
+    "err_404_plan_itinerary": "ПЛАНИРОВАТЬ_МАРШРУТ",
+    "err_404_warning": "EUROPEAN ROAD"
   },
   "be": {
     "welcome": "Сардэчна запрашаем у",
@@ -3033,6 +3236,13 @@
     "btn_share": "Share",
     "view_on_github": "Паглядзець на GitHub",
     "github_hover_prefix": "Паглядзець праект на",
-    "toast_route_loaded": "Маршрут загружаны!"
+    "toast_route_loaded": "Маршрут загружаны!",
+    "err_404_status": "Злучэнне страчана",
+    "err_404_title": "ПАМЫЛКА 404",
+    "err_404_not_found": "Файл не знойдзены",
+    "err_404_dragonfly": "Страказа жывая !",
+    "err_404_back_home": "НАЗАД_НА_ГАЛОЎНУЮ",
+    "err_404_plan_itinerary": "ПЛАНАВАЦЬ_МАРШРУТ",
+    "err_404_warning": "EUROPEAN ROAD"
   }
 }

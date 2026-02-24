@@ -639,6 +639,23 @@ def universal_router(path):
                 return _render_page(page_key, lang, f"{page_key}.html")
                 
     abort(404)
+    
+@app.errorhandler(404)
+def page_not_found(e):
+    path_parts = request.path.strip('/').split('/')
+    lang = path_parts[0] if path_parts and path_parts[0] in SUPPORTED_LANGS else DEFAULT_LANG
+    
+    seo_meta_override = {
+        "page_title": "404 - Linia",
+        "page_description": "Page non trouvée",
+        "canonical_url": request.url,
+        "og_title": "404 - Linia",
+        "og_description": "Page non trouvée",
+        "og_url": request.url,
+        "hreflang_urls": {}
+    }
+    
+    return _render_page("error_404", lang, "404.html", seo_meta_override=seo_meta_override), 404
 
 @app.route('/robots.txt')
 def robots_txt():
