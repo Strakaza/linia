@@ -59,7 +59,19 @@ def handle_redirection():
 
 @app.before_request
 def log_request_info():
-    app.logger.info(f"Requête reçue: [ANONYME] [{request.method}] {request.url}")
+    # 1. On ignore les requêtes HEAD (bots de surveillance) et les fichiers statiques/API
+    if request.method == "HEAD" or request.path.startswith(("/static/", "/api/")):
+        return
+
+    # 2. On récupère le site d'origine (Referer)
+    referer = request.referrer or "Direct / Inconnu"
+    
+    # 3. Optionnel : Nettoyer un peu l'affichage pour plus de lisibilité
+    if "liniabus.eu" in referer:
+        referer = "Navigation interne" # Le visiteur navigue de page en page sur ton site
+
+    # 4. On écrit dans les logs
+    app.logger.info(f"Visite: [{request.method}] {request.path} | Provenance: {referer}")
 
 # --- FONCTIONS UTILITAIRES ---
 
