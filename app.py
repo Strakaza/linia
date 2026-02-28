@@ -59,8 +59,8 @@ def handle_redirection():
 
 @app.before_request
 def log_request_info():
-    # 1. On ignore les requêtes HEAD (bots de surveillance) et les fichiers statiques/API
-    if request.method == "HEAD" or request.path.startswith(("/static/", "/api/")):
+    # 1. On ignore les requêtes HEAD (bots de surveillance) et les fichiers statiques
+    if request.method == "HEAD" or request.path.startswith("/static/"):
         return
 
     # 2. On récupère le site d'origine (Referer)
@@ -71,7 +71,7 @@ def log_request_info():
         referer = "Navigation interne" # Le visiteur navigue de page en page sur ton site
 
     # 4. On écrit dans les logs
-    app.logger.info(f"Visite: [{request.method}] {request.path} | Provenance: {referer}")
+    app.logger.info(f"Visite: [{request.method}] {request.url} | Provenance: {referer}")
 
 # --- FONCTIONS UTILITAIRES ---
 
