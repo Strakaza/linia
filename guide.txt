@@ -1,0 +1,66 @@
+# Linia Mobile Project - LLM Instructions (`llms.txt`)
+
+> Linia is a web application that provides a centralized interface to visualize and plan long-distance bus routes across Europe using FlixBus and BlaBlaCar Bus data.
+
+## 🤖 Context & Goal
+You are an AI assistant helping to build, maintain, and optimize **Linia**. This project relies heavily on Python (Flask backend), SQLite (for pre-compiled GTFS data), and Vanilla JS (frontend). 
+
+The goal is to maintain a lightweight, heavily SEO-optimized, multilingual (30 languages), and blazing-fast web application without relying on heavy frontend frameworks (no React, no Vue).
+
+## 🛠️ Tech Stack & Architecture
+
+- **Backend:** Python 3, Flask, Flask-Caching, SQLite3.
+- **Frontend:** HTML5, CSS3, Vanilla JS, Leaflet/Mapbox for interactive maps.
+- **Data Pipeline:** Pandas (`build_gtfs.py`) processes, sanitizes, and unifies incoming GTFS datasets into an optimized `gtfs.sqlite` database.
+- **Server/Deployment:** Gunicorn, hosted at `liniabus.eu`. 
+- **Localization (i18n):** SSR (Server-Side Rendering) architecture driven by a massive `translations.json` dictionary containing UI translations for 30 languages.
+
+## 📁 Key Files & Directories
+
+- `app.py`: The main Flask core. Contains routing, API endpoints (`/api/*`), SEO metadata generation (`get_seo_meta`), dynamic page rendering (City pages, Route A to B pages), and SQLite database interactions.
+- `build_gtfs.py`: The ETL script. Downloads, extracts, processes, cleanses, and merges multiple GTFS feeds into a single optimized SQLite database (`output_gtfs/unified/gtfs.sqlite`).
+- `config_data.py`: Stores static configurations, such as top cities (`TOP_HUBS`), SEO dictionaries, base URLs, translations for URL slugs (`URL_SLUGS`), and supported languages.
+- `translations.json`: The single source of truth for UI translations. Always append new translation keys here rather than hardcoding in templates.
+- `templates/`: Jinja2 HTML templates (`landing.html`, `map.html`, `404.html`, etc.). Templates use the `t()` helper injected by `app.py` for translations.
+- `static/`: Contains frontend assets (JavaScript files, CSS stylesheets, images).
+
+## 🧠 Core Guidelines for LLMs
+
+1. **Translations (i18n):** 
+   - All user-facing strings MUST be localized using keys from `translations.json`. 
+   - If you add or modify a string, you MUST update `translations.json` for **all 30 supported languages**. 
+   - In Python/Jinja templates, use the `t('key_name')` function. In JS, rely on the `translations` object if injected.
+
+2. **Database & GTFS Queries:** 
+   - The SQLite database (`gtfs.sqlite`) is **read-only** in production, compiled ahead of time by `build_gtfs.py`. 
+   - SQL queries in `app.py` MUST be highly optimized (use indexes where appropriate, though the DB is mostly pre-indexed by the build script). 
+   - Primary keys like `stop_id`, `route_id`, and `trip_id` are stored and treated as `strings` (since GTFS IDs are often alphanumeric, e.g., `FLX-...` or `BLA-...`).
+
+3. **SEO & Routing (Critical):** 
+   - The project relies heavily on SSR for SEO scoring. 
+   - When adding or modifying routes in `app.py`, ensure that `hreflang` tags, `canonical_url`, and Open Graph (`<meta property="og:...">`) properties are correctly maintained in `_render_page()` and `get_seo_meta()`.
+   - URL slugs for cities and pages are translated. Use `get_translated_slug()` and `build_lang_urls()`.
+
+4. **Performance & Caching:** 
+   - `app.py` uses `Flask-Caching` for API endpoints (`@cache.cached()`). 
+   - Ensure that cache timeouts are respected when modifying data structures. 
+   - Keep frontend asset sizes (CSS/JS) minimal.
+
+5. **Frontend Philosophy:** 
+   - **No Frameworks:** Avoid adding React/Vue/Angular/Tailwind unless explicitly requested. Rely on Vanilla JavaScript and custom CSS. 
+   - DOM manipulation should be clean and efficient. Keep CSS minimal and responsive.
+
+6. **Logging & Tracking:** 
+   - `app.py` has a robust logging middleware (`log_request_info()`) that classifies bots vs. users (`[🤖 BOT]` vs `[👤 USER]`), captures the `User-Agent`, and logs search queries (`Query: ...`). 
+   - Do not accidentally bypass this when adding new routes.
+
+## 🗄️ Database Schema Schema (`gtfs.sqlite`)
+
+The `build_gtfs.py` script generates an SQLite DB containing standard GTFS tables:
+- `stops` (stop_id, stop_name, stop_lat, stop_lon)
+- `routes` (route_id, route_short_name, route_long_name, route_type)
+- `trips` (trip_id, route_id, service_id, trip_headsign, shape_id)
+- `stop_times` (trip_id, arrival_time, departure_time, stop_id, stop_sequence)
+- `shapes` (shape_id, shape_pt_lat, shape_pt_lon, shape_pt_sequence)
+
+*Note: IDs (like `route_id`) often start with an operator prefix (e.g., `FLX-` for Flixbus, `BLA-` for BlaBlaCar) added during the ETL process.*

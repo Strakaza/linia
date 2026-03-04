@@ -684,6 +684,10 @@ def page_not_found(e):
 def robots_txt():
     return send_from_directory(app.static_folder, 'robots.txt')
 
+@app.route('/llms.txt')
+def llms_txt():
+    return send_from_directory(app.static_folder, 'llms.txt')
+
 @app.route('/sitemap.xml')
 @cache.cached(timeout=86400)
 def sitemap():
