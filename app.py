@@ -59,19 +59,30 @@ def handle_redirection():
 
 @app.before_request
 def log_request_info():
-    # 1. On ignore les requêtes HEAD (bots de surveillance) et les fichiers statiques
+    # 1. On ignore les requêtes de surveillance (HEAD) et les fichiers statiques
     if request.method == "HEAD" or request.path.startswith("/static/"):
         return
 
-    # 2. On récupère le site d'origine (Referer)
+    # 2. On récupère le site d'origine
     referer = request.referrer or "Direct / Inconnu"
-    
-    # 3. Optionnel : Nettoyer un peu l'affichage pour plus de lisibilité
     if "liniabus.eu" in referer:
-        referer = "Navigation interne" # Le visiteur navigue de page en page sur ton site
+        referer = "Navigation interne"
 
-    # 4. On écrit dans les logs
-    app.logger.info(f"Visite: [{request.method}] {request.url} | Provenance: {referer}")
+    # 3. Gestion du User-Agent et détection de bots
+    user_agent = request.headers.get("User-Agent", "Inconnu")
+    ua_lower = user_agent.lower()
+    bot_keywords = ['bot', 'spider', 'crawl', 'google', 'bing', 'yandex', 'slurp', 'ahrefs', 'petalbot']
+    is_bot = any(keyword in ua_lower for keyword in bot_keywords)
+    visitor_tag = "[🤖 BOT]" if is_bot else "[👤 USER]"
+
+    # 4. Capture de la recherche (étudie l'utilisation de l'autocomplétion)
+    # Ton code utilise 'query' pour l'API (/api/search_stops?query=...)
+    search_query = request.args.get('query') or request.args.get('q') or ""
+    query_log = f" | Query: '{search_query}'" if search_query else ""
+
+    # 5. Écriture dans les logs
+    # Format : TAG [METHOD] PATH | Query: 'ville' | Prov: ... | UA: ...
+    app.logger.info(f"{visitor_tag} [{request.method}] {request.path}{query_log} | Prov: {referer} | UA: {user_agent}")
 
 # --- FONCTIONS UTILITAIRES ---
 
