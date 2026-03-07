@@ -38,6 +38,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const tripPanelTitle = document.getElementById('tripPanelTitle');
     const tripPanelSubtitle = document.getElementById('tripPanelSubtitle');
     const tripPanelClose = document.getElementById('tripPanelClose');
+
+    function escapeHTML(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>'"]/g, tag => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+        }[tag] || tag));
+    }
+
     function showToast(message, type = 'info', duration = 3500) {
         if (!toastContainer) return;
         const toast = document.createElement('div');
@@ -144,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
         suggestions.forEach(stop => {
             const item = document.createElement('div');
             item.className = 'suggestion-item';
-            item.textContent = stop.stop_name;
+            item.textContent = stop.stop_name; // textContent is safe
             item.addEventListener('click', function () {
                 searchInput.value = stop.stop_name;
                 suggestionsDiv.innerHTML = '';
@@ -239,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
         const stopName = cachedStopInfo ? cachedStopInfo.stop_name : i18n.t('this_stop');
-        routePanelTitle.innerHTML = i18n.t('lines_from_stop_html', { stopName: stopName });
+        routePanelTitle.innerHTML = i18n.t('lines_from_stop_html', { stopName: escapeHTML(stopName) });
         operatorLegend.style.display = 'flex';
         hasRouteData = true;
         let filtered = cachedRoutes.filter(route => {
@@ -263,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 : 'route-item--unknown';
             const name = route.display_name || i18n.t('unnamed_line');
             html += `<li class="route-item ${opClass}" data-trip-id="${route.trip_id}">
-                        <strong>${name}</strong>
+                        <strong>${escapeHTML(name)}</strong>
                      </li>`;
         });
         html += '</ul>';
@@ -332,10 +340,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 const isFlix = tripData.operator === 'flixbus';
                 activeClass = isFlix ? 'active-flix' : 'active-blabla';
             }
-            html += `<li class="timeline-item ${activeClass}" data-stop-id="${stop.stop_id || ''}" data-stop-name="${stop.stop_name}" style="cursor:pointer;">
+            html += `<li class="timeline-item ${activeClass}" data-stop-id="${stop.stop_id || ''}" data-stop-name="${escapeHTML(stop.stop_name)}" style="cursor:pointer;">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
-                            <span class="timeline-city-name">${stop.stop_name}</span>
+                            <span class="timeline-city-name">${escapeHTML(stop.stop_name)}</span>
                         </div>
                      </li>`;
         });

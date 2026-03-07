@@ -7,6 +7,8 @@ from flask import Flask, jsonify, render_template, request, send_from_directory,
 from flask_cors import CORS
 from flask_talisman import Talisman
 from flask_caching import Cache
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from werkzeug.middleware.proxy_fix import ProxyFix
 import traceback
 from contextlib import closing
@@ -25,7 +27,15 @@ GTFS_DATA_PATH = os.path.join("output_gtfs", "unified")
 from config_data import TOP_HUBS, BASE_URL, SUPPORTED_LANGS, DEFAULT_LANG, OG_LOCALES, URL_SLUGS, SEARCH_SYNONYMS, SEO_CONFIG
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": ["https://liniabus.eu", "https://www.liniabus.eu"]}}) # Allowed origins for API
+
+# Rate Limiting
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["200 per day", "50 per hour"],
+    storage_uri="memory://"
+)
 
 # Configuration de sécurité CSP
 csp = {
@@ -70,6 +80,7 @@ def log_request_info():
 
     # 3. Gestion du User-Agent et détection de bots
     user_agent = request.headers.get("User-Agent", "Inconnu")
+    user_agent = user_agent.replace('\n', '').replace('\r', '') # Prevent Log Forging
     ua_lower = user_agent.lower()
     bot_keywords = ['bot', 'spider', 'crawl', 'google', 'bing', 'yandex', 'slurp', 'ahrefs', 'petalbot']
     is_bot = any(keyword in ua_lower for keyword in bot_keywords)
@@ -739,6 +750,7 @@ def sitemap():
 # --- API ENDPOINTS ---
 
 @app.route('/api/search_stops', methods=['GET'])
+@limiter.limit("5 per second") # Limite stricte pour la recherche
 def api_search_stops():
     query_term = request.args.get('query', default='', type=str).strip()
     if not query_term or len(query_term) < 2: return jsonify([]), 200
@@ -826,4 +838,4 @@ def api_get_connected_stops(stop_id):
 
 if __name__ == "__main__":
     app.logger.info("--- DÉMARRAGE MODE DÉVELOPPEMENT ---")
-    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+    app.run(debug=os.environ.get("FLASK_ENV") == "development", host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))

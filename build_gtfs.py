@@ -96,7 +96,11 @@ def download_and_extract(url, operator_key):
         temp_dir = os.path.join(OUTPUT_DIR, f"temp_{operator_key}")
         os.makedirs(temp_dir, exist_ok=True)
         with zipfile.ZipFile(io.BytesIO(response.content)) as z:
-            z.extractall(temp_dir)
+            for member in z.namelist():
+                member_path = os.path.abspath(os.path.join(temp_dir, member))
+                if not member_path.startswith(os.path.abspath(temp_dir)):
+                    raise Exception("Tentative de Path Traversal détectée dans le ZIP")
+                z.extract(member, temp_dir)
         return temp_dir
     except Exception as e:
         logger.error(f"Erreur téléchargement {operator_key}: {e}")

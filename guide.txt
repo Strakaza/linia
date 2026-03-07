@@ -1,4 +1,4 @@
-# Linia Mobile Project - LLM Instructions (`llms.txt`)
+# Linia Project - LLM Instructions (`llms.txt`)
 
 > Linia is a web application that provides a centralized interface to visualize and plan long-distance bus routes across Europe using FlixBus and BlaBlaCar Bus data.
 

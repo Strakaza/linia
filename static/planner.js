@@ -50,6 +50,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const reopenConnectedBtn = document.getElementById('reopenConnectedBtn');
     const minimizeSidebarBtn = document.getElementById('minimizeSidebarBtn');
     const plannerSidebar = document.getElementById('plannerSidebar');
+
+    function escapeHTML(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>'"]/g, tag => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+        }[tag] || tag));
+    }
+
     function showToast(message, type = 'info', duration = 3500) {
         if (!toastContainer) return;
         const toast = document.createElement('div');
@@ -217,9 +225,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const operators = city.operators || [];
             const primaryOp = operators[0] || 'unknown';
             const dotColor = (OP_COLORS[primaryOp] || OP_COLORS.unknown).main;
-            html += `<li class="planner-city-item ${dimClass}" data-stop-id="${city.stop_id}" data-stop-name="${city.stop_name}" data-operators='${JSON.stringify(operators)}'>
+            html += `<li class="planner-city-item ${dimClass}" data-stop-id="${city.stop_id}" data-stop-name="${escapeHTML(city.stop_name)}" data-operators='${JSON.stringify(operators)}'>
                         <div class="planner-city-dot" style="background:${dotColor};"></div>
-                        <span class="planner-city-name">${city.stop_name}</span>
+                        <span class="planner-city-name">${escapeHTML(city.stop_name)}</span>
                         <div class="planner-city-operators">
                             ${isInItinerary ? `<span class="planner-city-badge">${i18n.t('already_added')}</span>` : getOperatorBadgesHTML(operators)}
                         </div>
@@ -362,7 +370,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
                         <div class="planner-timeline-content">
                             <span class="planner-step-label">${stepLabel}</span>
-                            <span class="planner-step-city">${stop.stop_name}</span>
+                            <span class="planner-step-city">${escapeHTML(stop.stop_name)}</span>
                             ${operatorBadges ? `<div class="planner-step-operators">${operatorBadges}</div>` : ''}
                         </div>
                      </li>`;
