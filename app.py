@@ -23,7 +23,6 @@ except Exception as e:
 
 GTFS_DATA_PATH = os.path.join("output_gtfs", "unified")
 
-# Import de la configuration déportée
 from config_data import TOP_HUBS, BASE_URL, SUPPORTED_LANGS, DEFAULT_LANG, OG_LOCALES, URL_SLUGS, SEARCH_SYNONYMS, SEO_CONFIG
 
 app = Flask(__name__)
@@ -37,7 +36,6 @@ limiter = Limiter(
     storage_uri="memory://"
 )
 
-# Configuration de sécurité CSP
 csp = {
     'default-src': "'self'",
     'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://api.mapbox.com", "https://cdn.jsdelivr.net", "https://unpkg.com", "https://cdnjs.cloudflare.com"],
@@ -50,10 +48,8 @@ csp = {
 }
 Talisman(app, content_security_policy=csp, force_https=False)
 
-# Configuration du cache
 cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache', 'CACHE_DEFAULT_TIMEOUT': 3600})
 
-# Configuration des logs
 log_level_str = os.environ.get("LOG_LEVEL", "INFO").upper()
 log_level = getattr(logging, log_level_str, logging.INFO)
 app.logger.setLevel(log_level)
@@ -69,16 +65,13 @@ def handle_redirection():
 
 @app.before_request
 def log_request_info():
-    # 1. On ignore les requêtes de surveillance (HEAD) et les fichiers statiques
     if request.method == "HEAD" or request.path.startswith("/static/"):
         return
 
-    # 2. On récupère le site d'origine
     referer = request.referrer or "Direct / Inconnu"
     if "liniabus.eu" in referer:
         referer = "Navigation interne"
 
-    # 3. Gestion du User-Agent et détection de bots
     user_agent = request.headers.get("User-Agent", "Inconnu")
     user_agent = user_agent.replace('\n', '').replace('\r', '') # Prevent Log Forging
     ua_lower = user_agent.lower()
@@ -86,16 +79,25 @@ def log_request_info():
     is_bot = any(keyword in ua_lower for keyword in bot_keywords)
     visitor_tag = "[🤖 BOT]" if is_bot else "[👤 USER]"
 
-    # 4. Capture de la recherche (étudie l'utilisation de l'autocomplétion)
-    # Ton code utilise 'query' pour l'API (/api/search_stops?query=...)
+
     search_query = request.args.get('query') or request.args.get('q') or ""
     query_log = f" | Query: '{search_query}'" if search_query else ""
 
-    # 5. Écriture dans les logs
-    # Format : TAG [METHOD] PATH | Query: 'ville' | Prov: ... | UA: ...
+
     app.logger.info(f"{visitor_tag} [{request.method}] {request.path}{query_log} | Prov: {referer} | UA: {user_agent}")
 
-# --- FONCTIONS UTILITAIRES ---
+BAD_BOTS = [
+    'semrushbot', 'ahrefsbot', 'mj12bot', 'dotbot', 
+    'petalbot', 'rogerbot', 'blexbot', 'megaindex', 
+    'yandex', 'barkrowler', 'serpstatbot'
+]
+
+@app.before_request
+def block_bad_bots():
+    user_agent = request.headers.get("User-Agent", "").lower()
+    if any(bot in user_agent for bot in BAD_BOTS):
+        abort(403)
+
 
 def get_operator_from_id(item_id):
     if item_id is None or not isinstance(item_id, str): return "unknown"
