@@ -63,6 +63,18 @@ def handle_redirection():
         new_url = request.url.replace(host, "liniabus.eu")
         return redirect(new_url, code=301)
 
+BAD_BOTS = [
+    'semrushbot', 'ahrefsbot', 'mj12bot', 'dotbot', 
+    'petalbot', 'rogerbot', 'blexbot', 'megaindex', 
+    'yandex', 'barkrowler', 'serpstatbot', 'backlinksextendedbot'
+]
+
+@app.before_request
+def block_bad_bots():
+    user_agent = request.headers.get("User-Agent", "").lower()
+    if any(bot in user_agent for bot in BAD_BOTS):
+        abort(403)
+
 @app.before_request
 def log_request_info():
     if request.method == "HEAD" or request.path.startswith("/static/"):
@@ -85,18 +97,6 @@ def log_request_info():
 
 
     app.logger.info(f"{visitor_tag} [{request.method}] {request.path}{query_log} | Prov: {referer} | UA: {user_agent}")
-
-BAD_BOTS = [
-    'semrushbot', 'ahrefsbot', 'mj12bot', 'dotbot', 
-    'petalbot', 'rogerbot', 'blexbot', 'megaindex', 
-    'yandex', 'barkrowler', 'serpstatbot'
-]
-
-@app.before_request
-def block_bad_bots():
-    user_agent = request.headers.get("User-Agent", "").lower()
-    if any(bot in user_agent for bot in BAD_BOTS):
-        abort(403)
 
 
 def get_operator_from_id(item_id):
