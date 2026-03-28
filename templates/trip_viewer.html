@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Debug Viewer — Linia</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e6;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #map {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 1;
+        }
+
+        /* Search bars container */
+        .viewer-bars {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: min(640px, calc(100vw - 24px));
+        }
+
+        .viewer-row {
+            display: flex;
+            gap: 6px;
+        }
+
+        .viewer-row input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            background: rgba(15, 15, 25, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: #e0e0e6;
+            font-size: 13px;
+            font-family: 'Inter', monospace;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .viewer-row input::placeholder { color: #6b6b80; }
+
+        .viewer-row input:focus {
+            border-color: rgba(115, 215, 0, 0.5);
+            box-shadow: 0 0 0 3px rgba(115, 215, 0, 0.1);
+        }
+
+        .viewer-row.row-stop input:focus {
+            border-color: rgba(77, 163, 255, 0.5);
+            box-shadow: 0 0 0 3px rgba(77, 163, 255, 0.1);
+        }
+
+        .viewer-row .row-label {
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 10px;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .row-trip .row-label { background: rgba(115, 215, 0, 0.12); color: #73d700; }
+        .row-stop .row-label { background: rgba(77, 163, 255, 0.12); color: #4da3ff; }
+
+        .viewer-row button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: transform 0.15s, opacity 0.2s;
+            white-space: nowrap;
+        }
+
+        .viewer-row button:hover { transform: scale(1.03); }
+        .viewer-row button:active { transform: scale(0.97); }
+        .viewer-row button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .row-trip button { background: linear-gradient(135deg, #73d700, #5ab800); color: #0a0a0f; }
+        .row-stop button { background: linear-gradient(135deg, #4da3ff, #0070d2); color: #fff; }
+
+        /* Bottom panel */
+        .bottom-panel {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            max-height: 45vh;
+            background: rgba(15, 15, 25, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px 16px 0 0;
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bottom-panel.visible { transform: translateY(0); }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            flex-shrink: 0;
+            gap: 10px;
+        }
+
+        .panel-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e0e0e6;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .operator-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        .badge-flixbus { background: rgba(115, 215, 0, 0.15); color: #73d700; }
+        .badge-blablacar { background: rgba(0, 112, 210, 0.15); color: #4da3ff; }
+        .badge-unknown { background: rgba(255,255,255,0.08); color: #9aa0a6; }
+        .badge-stop { background: rgba(255, 180, 50, 0.15); color: #ffb432; }
+
+        .panel-close {
+            background: rgba(255,255,255,0.06);
+            border: none;
+            color: #9aa0a6;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            flex-shrink: 0;
+        }
+
+        .panel-close:hover { background: rgba(255,255,255,0.12); color: #e0e0e6; }
+
+        .panel-body {
+            overflow-y: auto;
+            padding: 8px 12px 16px;
+            flex: 1;
+        }
+
+        /* Timeline */
+        .timeline-list { list-style: none; padding: 0 0 0 6px; }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .timeline-item:hover { background: rgba(255,255,255,0.04); }
+
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 17px;
+            top: 30px;
+            bottom: -10px;
+            width: 2px;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .timeline-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .timeline-item.is-flixbus .timeline-dot { background: #73d700; border-color: #73d700; }
+        .timeline-item.is-blablacar .timeline-dot { background: #4da3ff; border-color: #4da3ff; }
+
+        .timeline-content { display: flex; flex-direction: column; gap: 2px; }
+        .timeline-city { font-size: 13px; font-weight: 500; color: #e0e0e6; }
+        .timeline-time { font-size: 11px; color: #6b6b80; font-variant-numeric: tabular-nums; }
+
+        /* Route list (for stop_info) */
+        .route-list { list-style: none; padding: 0; }
+
+        .route-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .route-item:hover { background: rgba(255,255,255,0.05); }
+
+        .route-item .route-op-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .route-op-dot.dot-flixbus { background: #73d700; }
+        .route-op-dot.dot-blablacar { background: #4da3ff; }
+        .route-op-dot.dot-unknown { background: #9aa0a6; }
+
+        .route-item .route-name {
+            font-size: 13px;
+            color: #e0e0e6;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .route-item .route-op-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: #6b6b80;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+        }
+
+        .loading-overlay.visible { display: flex; }
+
+        .loading-box {
+            background: rgba(20, 20, 35, 0.95);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 28px 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .spinner {
+            width: 28px;
+            height: 28px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: #73d700;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { font-size: 13px; color: #9aa0a6; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            z-index: 3000;
+            background: rgba(30, 30, 45, 0.95);
+            border: 1px solid rgba(255, 80, 80, 0.3);
+            color: #ff6b6b;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+        }
+
+        .toast.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Leaflet popup override */
+        .leaflet-popup-content-wrapper {
+            background: rgba(20, 20, 35, 0.95) !important;
+            color: #e0e0e6 !important;
+            border-radius: 10px !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 13px !important;
+            border: 1px solid rgba(255,255,255,0.08) !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
+        }
+
+        .leaflet-popup-tip { background: rgba(20, 20, 35, 0.95) !important; }
+
+        /* Custom markers */
+        .trip-marker {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            transition: transform 0.15s;
+        }
+
+        .trip-marker:hover { transform: scale(1.4); }
+        .trip-marker.op-flixbus { background: #73d700; }
+        .trip-marker.op-blablacar { background: #0070d2; }
+        .trip-marker.op-unknown { background: #9aa0a6; }
+
+        .stop-main-marker {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            background: #ffb432;
+            box-shadow: 0 2px 10px rgba(255,180,50,0.5);
+            transition: transform 0.15s;
+        }
+
+        .stop-main-marker:hover { transform: scale(1.3); }
+
+        /* Responsive */
+        @media (max-width: 520px) {
+            .viewer-row { flex-direction: column; gap: 6px; }
+            .viewer-row .row-label { justify-content: center; padding: 6px; }
+            .bottom-panel { max-height: 55vh; }
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <div class="viewer-bars">
+        <div class="viewer-row row-trip">
+            <span class="row-label">Trip</span>
+            <input type="text" id="tripInput" placeholder="FLX_N1392-1-1420062026-NIE#UKG-00" autocomplete="off" />
+            <button id="loadTripBtn">Voir</button>
+        </div>
+        <div class="viewer-row row-stop">
+            <span class="row-label">Stop</span>
+            <input type="text" id="stopInput" placeholder="FLX_dcbca53c-9603-11e6-9066-549f350fcb0c" autocomplete="off" />
+            <button id="loadStopBtn">Voir</button>
+        </div>
+    </div>
+
+    <div class="bottom-panel" id="bottomPanel">
+        <div class="panel-header">
+            <h3 id="panelTitle"></h3>
+            <span class="operator-badge" id="operatorBadge"></span>
+            <button class="panel-close" id="panelClose">×</button>
+        </div>
+        <div class="panel-body" id="panelBody"></div>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-box">
+            <div class="spinner"></div>
+            <span class="loading-text" id="loadingText">Chargement…</span>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    {% if preloaded_trip_id %}
+    <script>window.PRELOADED_TRIP_ID = "{{ preloaded_trip_id }}";</script>
+    {% endif %}
+
+    <script>
+    (function () {
+        // --- Map ---
+        const map = L.map('map', {
+            center: [50.05, 14.25],
+            zoom: 5,
+            zoomControl: false,
+            attributionControl: true
+        });
+        L.control.zoom({ position: 'topleft' }).addTo(map);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            subdomains: 'abcd',
+            maxZoom: 20,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        }).addTo(map);
+
+        // --- DOM ---
+        const tripInput = document.getElementById('tripInput');
+        const loadTripBtn = document.getElementById('loadTripBtn');
+        const stopInput = document.getElementById('stopInput');
+        const loadStopBtn = document.getElementById('loadStopBtn');
+        const bottomPanel = document.getElementById('bottomPanel');
+        const panelTitle = document.getElementById('panelTitle');
+        const panelBody = document.getElementById('panelBody');
+        const panelClose = document.getElementById('panelClose');
+        const operatorBadge = document.getElementById('operatorBadge');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const loadingText = document.getElementById('loadingText');
+        const toast = document.getElementById('toast');
+
+        let polyline = null;
+        let markers = [];
+
+        // --- Helpers ---
+        function showLoading(msg) {
+            loadingText.textContent = msg || 'Chargement…';
+            loadingOverlay.classList.add('visible');
+        }
+        function hideLoading() { loadingOverlay.classList.remove('visible'); }
+
+        let toastTimeout;
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.classList.add('visible');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => toast.classList.remove('visible'), 4000);
+        }
+
+        function clearMap() {
+            if (polyline) { map.removeLayer(polyline); polyline = null; }
+            markers.forEach(m => map.removeLayer(m));
+            markers = [];
+            bottomPanel.classList.remove('visible');
+            panelBody.innerHTML = '';
+            operatorBadge.textContent = '';
+            operatorBadge.className = 'operator-badge';
+        }
+
+        function escapeHTML(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>'"]/g, t => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[t]||t));
+        }
+
+        // --- OSRM routing ---
+        async function getRoadGeometry(stops) {
+            if (!stops || stops.length < 2) return null;
+            const coords = stops.map(s => `${s.stop_lon},${s.stop_lat}`).join(';');
+            try {
+                const res = await fetch(`https://router.project-osrm.org/route/v1/driving/${coords}?geometries=geojson&overview=full`);
+                const data = await res.json();
+                if (data.code === 'Ok' && data.routes && data.routes.length > 0) {
+                    return data.routes[0].geometry;
+                }
+            } catch (e) { console.error('OSRM error:', e); }
+            return null;
+        }
+
+        // ===========================================
+        //  TRIP DETAILS
+        // ===========================================
+        async function loadTrip(tripId) {
+            if (!tripId) return;
+            clearMap();
+            showLoading('Chargement du trajet…');
+            loadTripBtn.disabled = true;
+
+            try {
+                const res = await fetch(`/api/trip_details/${encodeURIComponent(tripId)}`);
+                const data = await res.json();
+
+                if (!res.ok || data.error) {
+                    showToast(data.error || 'Trajet non trouvé.');
+                    return;
+                }
+
+                const opName = data.operator === 'flixbus' ? 'FlixBus' :
+                               data.operator === 'blablacar_bus' ? 'BlaBlaCar' : 'Inconnu';
+                const badgeClass = data.operator === 'flixbus' ? 'badge-flixbus' :
+                                   data.operator === 'blablacar_bus' ? 'badge-blablacar' : 'badge-unknown';
+                operatorBadge.textContent = opName;
+                operatorBadge.className = 'operator-badge ' + badgeClass;
+
+                const lineColor = data.operator === 'flixbus' ? '#73d700' : '#0070d2';
+                const markerClass = data.operator === 'flixbus' ? 'op-flixbus' :
+                                    data.operator === 'blablacar_bus' ? 'op-blablacar' : 'op-unknown';
+
+                const bounds = L.latLngBounds();
+                if (data.stops && data.stops.length > 0) {
+                    data.stops.forEach(stop => {
+                        const el = document.createElement('div');
+                        el.className = 'trip-marker ' + markerClass;
+                        const icon = L.divIcon({ html: el, className: '', iconSize: [12, 12], iconAnchor: [6, 6] });
+                        const m = L.marker([stop.stop_lat, stop.stop_lon], { icon })
+                            .bindPopup(`<strong>${escapeHTML(stop.stop_name)}</strong>${stop.arrival_time ? '<br>' + stop.arrival_time : ''}`)
+                            .addTo(map);
+                        markers.push(m);
+                        bounds.extend([stop.stop_lat, stop.stop_lon]);
+                    });
+                }
+
+                let latlngs = [];
+                if (data.stops && data.stops.length >= 2) {
+                    showLoading('Calcul de l\'itinéraire routier…');
+                    const geom = await getRoadGeometry(data.stops);
+                    if (geom && geom.coordinates) latlngs = geom.coordinates.map(c => [c[1], c[0]]);
+                }
+                if (latlngs.length === 0 && data.shape_points && data.shape_points.length > 0) {
+                    latlngs = data.shape_points.map(p => [p[0], p[1]]);
+                }
+                if (latlngs.length === 0 && data.stops && data.stops.length >= 2) {
+                    latlngs = data.stops.map(s => [s.stop_lat, s.stop_lon]);
+                }
+                if (latlngs.length > 0) {
+                    polyline = L.polyline(latlngs, {
+                        color: lineColor, weight: 5, opacity: 0.85, lineJoin: 'round', lineCap: 'round'
+                    }).addTo(map);
+                    latlngs.forEach(ll => bounds.extend(ll));
+                }
+                if (bounds.isValid()) map.fitBounds(bounds, { padding: [50, 50], duration: 1 });
+
+                // Panel
+                panelTitle.textContent = `${data.stops.length} arrêts — ${tripId}`;
+                let html = '<ul class="timeline-list">';
+                data.stops.forEach(stop => {
+                    const opClass = data.operator === 'flixbus' ? 'is-flixbus' :
+                                    data.operator === 'blablacar_bus' ? 'is-blablacar' : '';
+                    html += `<li class="timeline-item ${opClass}">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-city">${escapeHTML(stop.stop_name)}</span>
+                            ${stop.arrival_time ? `<span class="timeline-time">${escapeHTML(stop.arrival_time)}</span>` : ''}
+                        </div>
+                    </li>`;
+                });
+                html += '</ul>';
+                panelBody.innerHTML = html;
+                bottomPanel.classList.add('visible');
+
+            } catch (err) {
+                console.error(err);
+                showToast('Erreur réseau — impossible de charger le trajet.');
+            } finally {
+                hideLoading();
+                loadTripBtn.disabled = false;
+            }
+        }
+
+        // ===========================================
+        //  STOP INFO
+        // ===========================================
+        async function loadStop(stopId) {
+            if (!stopId) return;
+            clearMap();
+            showLoading('Chargement de l\'arrêt…');
+            loadStopBtn.disabled = true;
+
+            try {
+                const res = await fetch(`/api/stop_info/${encodeURIComponent(stopId)}`);
+                const data = await res.json();
+
+                if (!res.ok || data.error) {
+                    showToast(data.error || 'Arrêt non trouvé.');
+                    return;
+                }
+
+                const stopInfo = data.stop_info;
+                const routes = data.routes || [];
+
+                // Main stop marker
+                const el = document.createElement('div');
+                el.className = 'stop-main-marker';
+                const icon = L.divIcon({ html: el, className: '', iconSize: [18, 18], iconAnchor: [9, 9] });
+                const m = L.marker([stopInfo.stop_lat, stopInfo.stop_lon], { icon })
+                    .bindPopup(`<strong>${escapeHTML(stopInfo.stop_name)}</strong><br><code style="font-size:11px;color:#9aa0a6;">${escapeHTML(stopInfo.stop_id)}</code>`)
+                    .addTo(map);
+                m.openPopup();
+                markers.push(m);
+
+                map.flyTo([stopInfo.stop_lat, stopInfo.stop_lon], 10, { duration: 1 });
+
+                // Badge
+                operatorBadge.textContent = 'STOP';
+                operatorBadge.className = 'operator-badge badge-stop';
+
+                // Panel — route list
+                panelTitle.textContent = `${escapeHTML(stopInfo.stop_name)} — ${routes.length} lignes`;
+
+                if (routes.length === 0) {
+                    panelBody.innerHTML = '<div style="padding:16px;text-align:center;color:#6b6b80;">Aucune ligne ne dessert cet arrêt.</div>';
+                } else {
+                    let html = '<ul class="route-list">';
+                    routes.forEach(route => {
+                        const dotClass = route.operator === 'flixbus' ? 'dot-flixbus' :
+                                         route.operator === 'blablacar_bus' ? 'dot-blablacar' : 'dot-unknown';
+                        const opLabel = route.operator === 'flixbus' ? 'Flix' :
+                                        route.operator === 'blablacar_bus' ? 'BlaB' : '?';
+                        html += `<li class="route-item" data-trip-id="${escapeHTML(route.trip_id)}">
+                            <span class="route-op-dot ${dotClass}"></span>
+                            <span class="route-name">${escapeHTML(route.display_name)}</span>
+                            <span class="route-op-label">${opLabel}</span>
+                        </li>`;
+                    });
+                    html += '</ul>';
+                    panelBody.innerHTML = html;
+
+                    // Click on route → load trip
+                    panelBody.querySelectorAll('.route-item').forEach(item => {
+                        item.addEventListener('click', () => {
+                            const tripId = item.dataset.tripId;
+                            if (tripId) {
+                                tripInput.value = tripId;
+                                loadTrip(tripId);
+                            }
+                        });
+                    });
+                }
+
+                bottomPanel.classList.add('visible');
+
+            } catch (err) {
+                console.error(err);
+                showToast('Erreur réseau — impossible de charger l\'arrêt.');
+            } finally {
+                hideLoading();
+                loadStopBtn.disabled = false;
+            }
+        }
+
+        // --- Events ---
+        loadTripBtn.addEventListener('click', () => loadTrip(tripInput.value.trim()));
+        tripInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') loadTrip(tripInput.value.trim()); });
+
+        loadStopBtn.addEventListener('click', () => loadStop(stopInput.value.trim()));
+        stopInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') loadStop(stopInput.value.trim()); });
+
+        panelClose.addEventListener('click', () => bottomPanel.classList.remove('visible'));
+
+        // --- Auto-load ---
+        const preloadedTripId = window.PRELOADED_TRIP_ID || null;
+        if (preloadedTripId) {
+            tripInput.value = preloadedTripId;
+            loadTrip(preloadedTripId);
+        }
+    })();
+    </script>
+</body>
+</html>

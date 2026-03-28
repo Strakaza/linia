@@ -632,6 +632,11 @@ def index():
         return redirect(f"/{detected_lang}/")
     return _render_page("home", "fr", "landing.html")
 
+@app.route('/_debug/trip')
+@app.route('/_debug/trip/<path:trip_id>')
+def debug_trip_viewer(trip_id=None):
+    return render_template('trip_viewer.html', preloaded_trip_id=trip_id)
+
 @app.route('/download/gtfs_unifie')
 def download_unified_gtfs():
     try:
