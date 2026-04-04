@@ -98,4 +98,3 @@ Les données de transport proviennent de sources ouvertes :
 
 *   **FlixBus** : Via data.gouv.fr
 *   **BlaBlaCar Bus** : Via data.gouv.fr
-```
