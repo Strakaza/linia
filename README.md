@@ -96,12 +96,12 @@ Le script `build_gtfs.py` met à jour les données à intervalles réguliers :
 
 ```mermaid
 flowchart LR
-    A[Flux FlixBus] --> C[Extraction & Normalisation]
-    B[Flux BlaBlaCar] --> C
-    C --> D[Fusion & Master Stops]
-    D --> E[Suppression des doublons]
-    E --> F[gtfs.sqlite]
-    E --> G[unified_gtfs.zip]
+    A["Flux FlixBus"] --> C["Extraction & Normalisation"]
+    B["Flux BlaBlaCar"] --> C
+    C --> D["Fusion & Master Stops"]
+    D --> E["Suppression des doublons"]
+    E --> F["gtfs.sqlite"]
+    E --> G["unified_gtfs.zip"]
 ```
 
 1. **Téléchargement** des flux officiels depuis `data.gouv.fr`.
