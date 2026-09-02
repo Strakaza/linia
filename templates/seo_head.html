@@ -1,0 +1,74 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+{# Title & meta description dynamiques #}
+<title>{{ page_title }}</title>
+<meta name="description" content="{{ page_description }}">
+
+{# Robots par défaut index/follow, surcharge possible plus tard #}
+<meta name="robots" content="index,follow">
+
+{# Canonical #}
+<link rel="canonical" href="{{ canonical_url }}">
+
+{# Open Graph #}
+<meta property="og:image" content="https://liniabus.eu/static/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://liniabus.eu/static/og-image.png">
+{% if og_locale %}
+<meta property="og:locale" content="{{ og_locale }}">
+{% endif %}
+{% if og_locale_alternates %}
+{% for locale in og_locale_alternates %}
+<meta property="og:locale:alternate" content="{{ locale }}">
+{% endfor %}
+{% endif %}
+
+{# Twitter #}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="{{ og_url }}">
+<meta name="twitter:title" content="{{ og_title }}">
+<meta name="twitter:description" content="{{ og_description }}">
+<meta name="twitter:image" content="https://liniabus.eu/static/logo.png">
+
+{# PWA / assets #}
+<meta name="theme-color" content="#34a853">
+<link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+
+{# CSS global #}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=9">
+
+{# Hreflang alternates #}
+{% include 'hreflang.html' %}
+
+{# JSON-LD structured data optionnel #}
+{% if structured_data_jsonld %}
+<script type="application/ld+json">
+{{ structured_data_jsonld | safe }}
+</script>
+{% endif %}
+
+{# Script i18n global #}
+<script id="linia-i18n-data" type="application/json">
+{
+    "currentLang": {{ current_lang | tojson }},
+    "translations": {{ t_dict | tojson }}
+}
+</script>
+<script>
+    (function () {
+        try {
+            const dataEl = document.getElementById('linia-i18n-data');
+            if (dataEl) {
+                const parsed = JSON.parse(dataEl.textContent);
+                window.CURRENT_LANG = parsed.currentLang;
+                window.TRANSLATIONS = parsed.translations;
+            }
+        } catch (e) {
+            console.error('Error loading translations:', e);
+        }
+    })();
+</script>
+<script src="{{ url_for('static', filename='i18n.js') }}" defer></script>

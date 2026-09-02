@@ -1,0 +1,10 @@
+{% if hreflang_urls %}
+    {% for code, url in hreflang_urls.items() %}
+        {% if code == 'x-default' %}
+<link rel="alternate" hreflang="x-default" href="{{ url }}">
+        {% else %}
+<link rel="alternate" hreflang="{{ code }}" href="{{ url }}">
+        {% endif %}
+    {% endfor %}
+{% endif %}
+

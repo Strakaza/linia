@@ -1,0 +1,20 @@
+User-agent: *
+Disallow: /api/
+Disallow: /download/
+
+User-agent: Yandex
+Disallow: /api/
+Disallow: /download/
+Crawl-delay: 2
+
+User-agent: Baiduspider
+Disallow: /api/
+Disallow: /download/
+Crawl-delay: 2
+
+User-agent: bingbot
+Disallow: /api/
+Disallow: /download/
+Crawl-delay: 1
+
+Sitemap: https://liniabus.eu/sitemap.xml
